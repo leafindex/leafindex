@@ -8,7 +8,7 @@ namespace ScLib
 {
     public class Tests
     {
-        private const string XMLFILENAME = @"C:\CSharp\LeafIdx\DataSets\ambulance-all-assaults-ward.xml";
+        private const string XMLFILENAME = @"C:\CSharp\LeafIndex\DataSets\ambulance-all-assaults-ward.xml";
         private ACOAssaultFinder _finder = null;
         private ACOAssaultFinder MyFinder
         {

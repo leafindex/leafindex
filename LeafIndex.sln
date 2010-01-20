@@ -5,6 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScLib", "ScLib\ScLib.csproj
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "C:\...\Website\", "Website\", "{FC2046DE-3C69-4E45-9F11-7FC2C8F4D057}"
 	ProjectSection(WebsiteProperties) = preProject
+		ProjectReferences = "{7CC0D52A-6387-486E-9036-39302F93677A}|ScLib.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/Website"
 		Debug.AspNetCompiler.PhysicalPath = "Website\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Website\"
