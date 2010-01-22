@@ -4,9 +4,10 @@
   letter-spacing: 1px
 }
 table {
-  margin: 20px 0
+  border: 1px solid #a659aa;
+  margin: 20px 0;
 }
-table thead th {
+table th {
   font-size: 11px;
   font-weight: normal;
   text-align: left
@@ -15,8 +16,33 @@ table th.number, table td.number {
   text-align: right;
   width: 100px
 }
+table td, table th {
+  color: #00613c;
+  padding: 2px 5px
+}
 table td.number {
   font-family: "Palatino Linotype", Palatino, "Times New Roman", Times, serif
+}
+th a {
+  color: #a659aa
+}
+th.sortable {
+  cursor: pointer
+}
+th.sortable:hover {
+  background-color: #ffefd1
+}
+#navmenu {
+  font-size: 11px;
+  margin: 10px 0 25px 0
+}
+#navmenu a {
+  color: #6895c1;
+  margin-right: 20px
+}
+#navmenu a:hover, #navmenu a:focus{
+  color: #41A85D;
+  text-decoration: none
 }
 
 .HasFocus

@@ -1,5 +1,5 @@
 ﻿$(document).ready(function(){
-    InitNavMenu();
+    makeNavMenu();
     $(".userinput")
 			.focus(HighlightOnFocus)
 			.blur(HighlightOffOnBlur)

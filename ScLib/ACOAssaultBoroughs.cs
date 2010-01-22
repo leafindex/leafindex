@@ -13,25 +13,34 @@ namespace ScLib
 		public ACOAssaultBoroughs(string xmlfilename)
 		{
 				XDocument xdoc = XDocument.Load(xmlfilename);
-
-				var boroughs = from b in xdoc.Descendants("ROW")
-											 group b
-											 by (string)b.Element("District_Name")
-											 into g
-											 select new
-											 {
-												borough = g.Key,
-												sum = g.Sum(b => {
-													int r;
-													Int32.TryParse(b.Element("Count_12-2007_to_11-2009").Value, out r);
-													return r;
-												}),
-												count = g.Count()
-											 };
-
-				foreach (var borough in boroughs)
+				try
 				{
-					_boroughs.Add(new ACOAssaultBorough(borough.borough, borough.sum, borough.count));
+
+					var boroughs = from b in xdoc.Descendants("ROW")
+												 group b
+												 by (string)b.Element("District_Name")
+													 into g
+													 select new
+													 {
+														 borough = g.Key,
+														 sum = g.Sum(b =>
+														 {
+															 int r;
+															 Int32.TryParse(b.Element("Count_12-2007_to_11-2009").Value, out r);
+															 return r;
+														 }),
+														 count = g.Count()
+													 };
+
+					foreach (var borough in boroughs)
+					{
+						_boroughs.Add(new ACOAssaultBorough(borough.borough, borough.sum, borough.count));
+					}
+				}
+				catch (Exception ex)
+				{
+					_errorMessage = ex.Message;
+					_boroughs.Clear();
 				}
 		}
 		
