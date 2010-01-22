@@ -10,17 +10,12 @@
   <script type="text/javascript" src="ACOAssaults1.js"></script>
 </head>
 <body>
-<div id="navmenu"></div>
+	<h2>Ambulance Call Outs to Assault Incidents</h2>
 	<form action="">
 		<div>
 		<label for="boroughSearch">Borough: </label><input type="text" id="boroughSearch"/>
 		</div>
 	</form>
-	<table id="boroughTable">
-	<thead><tr><th>Borough</th><th class="number">Total Number of Assaults</th><th class="number">Number of Wards in Borough</th></tr></thead>
-	<tbody>
-	<%=BoroughList%>
-	</tbody>
-	</table>
+	<%=Boroughs%>
 </body>
 </html>

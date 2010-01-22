@@ -7,7 +7,7 @@
     <script type="text/javascript" src="Shared.js"></script>
 <script type="text/javascript">
     $(function() {
-        InitNavMenu();
+        makeNavMenu();
         $("#lnkMatch").click(Match);
         $("#lnkReplace").click(Replace);
         $("#lnkClear").click(Clear);
@@ -46,7 +46,6 @@
 </script>
 </head>
 <body>
-<div id="navmenu"></div>
 <h2>AJC Tests</h2>
 Search <input id="inputstring" type="text" value="Amount $1,234.56 Now" />
 Replace <input id="replacement" type="text" value="" />
