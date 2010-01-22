@@ -1,10 +1,11 @@
-﻿$(function(){
-	$("#boroughSearch")
+﻿$(function() {
+    InitNavMenu();
+    $("#boroughSearch")
 		.liveUpdate("#boroughTable")
 		.focus();
-	setupTable("#boroughTable");
+    setupTable("#boroughTable");
 });
-function setupTable(t){
+function setupTable(t) {
 	t=$(t);
 	var td=t.find("thead tr th");
 	td.filter(".number").each(function(){
