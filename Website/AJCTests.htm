@@ -13,18 +13,25 @@
         $("#lnkClear").click(Clear);
     });
     function Replace() {
-        var r = new RegExp($("#myregex").val(), "g");
+        var r = MakeRegex();
         var str = $("#inputstring").val();
-
         var replaced = str.replace(r, $("#replacement").val() );
         Say(replaced);
     }
     function Match() {
-        var r = new RegExp($("#myregex").val());
+        var r = MakeRegex();
         var str = $("#inputstring").val();
         var m = str.match(r);
         Say($("#myregex").val() + " on " + str);
         ReportMatch(m);
+    }
+    function MakeRegex() {
+        var r;
+        if( $("#doglobal").is(':checked') )
+            r = new RegExp($("#myregex").val(), "g");
+        else
+            r = new RegExp($("#myregex").val());
+        return r;            
     }
     function ReportMatch(m) {
         if (m == null) {
@@ -51,6 +58,7 @@
 Search <input id="inputstring" type="text" value="Amount $1,234.56 Now" />
 Replace <input id="replacement" type="text" value="" />
 Regex <input id="myregex" type="text" value="[^\d.]*" />
+Global <input id="doglobal" type="checkbox" />
 <a id="lnkMatch" href="#">Match</a>
 <a id="lnkReplace" href="#">Replace</a>
 <a id="lnkClear" href="#">Clear</a>
