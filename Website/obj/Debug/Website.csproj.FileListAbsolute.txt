@@ -5,3 +5,10 @@ C:\inetpub\leafindex\Website\obj\Debug\Website.dll
 C:\inetpub\leafindex\Website\obj\Debug\Website.pdb
 C:\inetpub\leafindex\Website\bin\ScLib.dll
 C:\inetpub\leafindex\Website\bin\ScLib.pdb
+C:\CSharp\leafindex\Website\bin\Website.dll
+C:\CSharp\leafindex\Website\bin\Website.pdb
+C:\CSharp\leafindex\Website\bin\ScLib.dll
+C:\CSharp\leafindex\Website\bin\ScLib.pdb
+C:\CSharp\leafindex\Website\obj\Debug\ResolveAssemblyReference.cache
+C:\CSharp\leafindex\Website\obj\Debug\Website.dll
+C:\CSharp\leafindex\Website\obj\Debug\Website.pdb
