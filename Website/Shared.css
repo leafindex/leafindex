@@ -1,4 +1,22 @@
-﻿body {
+﻿body, input {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 13px;
+  letter-spacing: 1px
+}
+table {
+  margin: 20px 0
+}
+table thead th {
+  font-size: 11px;
+  font-weight: normal;
+  text-align: left
+}
+table th.number, table td.number {
+  text-align: right;
+  width: 100px
+}
+table td.number {
+  font-family: "Palatino Linotype", Palatino, "Times New Roman", Times, serif
 }
 
 .HasFocus

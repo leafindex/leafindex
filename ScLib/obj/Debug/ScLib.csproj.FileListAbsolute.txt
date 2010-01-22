@@ -1,0 +1,5 @@
+C:\inetpub\leafindex\ScLib\bin\Debug\ScLib.dll
+C:\inetpub\leafindex\ScLib\bin\Debug\ScLib.pdb
+C:\inetpub\leafindex\ScLib\obj\Debug\ResolveAssemblyReference.cache
+C:\inetpub\leafindex\ScLib\obj\Debug\ScLib.dll
+C:\inetpub\leafindex\ScLib\obj\Debug\ScLib.pdb
