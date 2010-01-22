@@ -1,6 +1,4 @@
-﻿// JScript File
-
-function InitNavMenu()
+﻿function InitNavMenu()
 {
     var delim = "&nbsp;:&nbsp;";
     var str = delim + "<a href='ACOAssaults.htm'>ACOAssaults</a>" + delim;
