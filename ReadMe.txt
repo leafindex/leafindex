@@ -1,8 +1,9 @@
-21 Jan 2009 : 16:41
+21 Jan 2009 : 16:46
 
 We might be beginning to get there, but we need to stabilise on the following:
 commit whole directory tree, or just the code - not obj directories etc
 scale of change between commits - longer gaps increase the merge conflicts
+editor tab setting 
 
 More significantly, some agreement on what we're trying to write, and 
 how to write it.
