@@ -3,9 +3,7 @@
     var getSortKey;
 		if($(this).hasClass("number")){
 			getSortKey=function(cell){
-				console.log(cell.text().replace(/^[^d.]*/,""));
-				var key=parseFloat(cell.text().replace(/^[^d.]*/,""));
-				console.log(key);
+				var key=parseFloat(cell.text().replace(/[^\d.]*/g,""));
 				return isNaN(key)?0:key;
 			};
 		}
@@ -17,6 +15,7 @@
 			}
 			else{
 				getSortKey=function(cell){
+					console.log(cell.text());
 					return cell.text().toUpperCase();
 				};
 			}
@@ -48,6 +47,7 @@ function setupTable(t){
 	sortableTable(t);
 }
 $(function(){
+	InitNavMenu();
 	$("#boroughSearch")
 		.tableSearch("#boroughTable")
 		.focus();
