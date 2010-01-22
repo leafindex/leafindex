@@ -1,7 +1,8 @@
 ﻿function InitNavMenu()
 {
     var delim = "&nbsp;:&nbsp;";
-    var str = delim + "<a href='ACOAssaults.htm'>ACOAssaults</a>" + delim;
+    var str = delim + "<a href='ACOAssaults.htm'>ACOAssaults</a>" + delim
+        + "<a href='ACOAssaults1.aspx'>ACOAssaults1</a>" + delim;
     $("#navmenu").html( str );
 }
 
