@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
+    <script type="text/javascript" src="Shared.js"></script>
+<script type="text/javascript">
+    $(function() {
+        InitNavMenu();
+        $("#lnkMatch").click(Match);
+        $("#lnkReplace").click(Replace);
+        $("#lnkClear").click(Clear);
+    });
+    function Replace() {
+        var r = new RegExp($("#myregex").val(), "g");
+        var str = $("#inputstring").val();
+
+        var replaced = str.replace(r, $("#replacement").val() );
+        Say(replaced);
+    }
+    function Match() {
+        var r = new RegExp($("#myregex").val());
+        var str = $("#inputstring").val();
+        var m = str.match(r);
+        Say($("#myregex").val() + " on " + str);
+        ReportMatch(m);
+    }
+    function ReportMatch(m) {
+        if (m == null) {
+            Say("No Match");
+            return;
+        }
+        var s = "Match at position " + m.index + ":\n";
+        for (i = 0; i < m.length; i++) {
+            s += m[i];
+        }
+        Say(s);
+    }
+    function Say(str) {
+        $("#Results").append(str + "<br/>");
+    }
+    function Clear() {
+        $("#Results").html("");
+    }
+</script>
+</head>
+<body>
+<div id="navmenu"></div>
+<h2>AJC Tests</h2>
+Search <input id="inputstring" type="text" value="Amount $1,234.56 Now" />
+Replace <input id="replacement" type="text" value="" />
+Regex <input id="myregex" type="text" value="[^\d.]*" />
+<a id="lnkMatch" href="#">Match</a>
+<a id="lnkReplace" href="#">Replace</a>
+<a id="lnkClear" href="#">Clear</a>
+<br />
+<div id="Results">
+</div>
+
+</body>
+</html>
