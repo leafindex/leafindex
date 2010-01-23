@@ -48,12 +48,12 @@ namespace ScLib
             return Filter(results, frequency).ToArray();
         }
 
-        Regex r_top = new Regex(@"top\D*(?<count>\d+)");
-        Regex r_bottom = new Regex(@"bottom\D*(?<count>\d+)");
-        Regex r_plusminus = new Regex(@"(?<from>\d+).*\+.*\-\D*(?<to>\d+)");
-        Regex r_range = new Regex(@"(?<from>\d+)\D+(?<to>\d+)");
-        Regex r_over = new Regex(@"(?<from>\d+).*\+");
-        Regex r_exact = new Regex(@"(?<from>\d+)");
+        public static Regex r_top = new Regex(@"top\D*(?<count>\d+)");
+        public static Regex r_bottom = new Regex(@"bottom\D*(?<count>\d+)");
+        public static Regex r_plusminus = new Regex(@"(?<from>\d+).*\+.*\-\D*(?<to>\d+)");
+        public static Regex r_range = new Regex(@"(?<from>\d+)\D+(?<to>\d+)");
+        public static Regex r_over = new Regex(@"(?<from>\d+).*\+");
+        public static Regex r_exact = new Regex(@"(?<from>\d+)");
 
         private List<ACOAssaultWard> Filter(List<ACOAssaultWard> wards, string frequency)
         {
@@ -85,15 +85,15 @@ namespace ScLib
             return wards;
         }
 
-        private int From(Match m)
+        public static int From(Match m)
         {
             return Convert.ToInt32(m.Groups["from"].Value);
         }
-        private int To(Match m)
+        public static int To(Match m)
         {
             return Convert.ToInt32(m.Groups["to"].Value);
         }
-        private int Count(Match m)
+        public static int Count(Match m)
         {
             return Convert.ToInt32(m.Groups["count"].Value);
         }
@@ -127,10 +127,10 @@ namespace ScLib
                 return wards;
             List<ACOAssaultWard> results = new List<ACOAssaultWard>();
             int cutoff = CalculateCutoff( wards, count, largest );
-            foreach (ACOAssaultWard w in wards)
-                if( Beyond( w.Total, cutoff, largest ) )
-                    results.Add(w);
-            return results;
+            if (largest)
+                return FilterRange(wards, cutoff, int.MaxValue);
+            else
+                return FilterRange(wards, 0, cutoff );
         }
 
         private int CalculateCutoff(List<ACOAssaultWard> wards, int count, bool largest)
