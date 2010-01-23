@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using Xunit.Extensions;
 using System.Text.RegularExpressions;
 
 namespace ScLib
@@ -118,6 +119,33 @@ namespace ScLib
             Match m = r_top.Match("top 17");
             Assert.True(m.Success);
             Assert.True(m.Groups["count"].Value == "17");
+        }
+
+        [Theory]
+        [InlineData("200 +- 10", true, 200, 10)]
+        [InlineData(" 0+-0 ", true, 0, 0)]
+        [InlineData(" 6 7 + - 8 9 ", true, 6, 8)]
+        [InlineData("100 50 +-", false, 0, 0)]
+        public void RegexPlusMinus(string input, bool success, int from, int to )
+        {
+            Match m = ACOAssaultFinder.r_plusminus.Match(input);
+            Assert.True(success == m.Success, "Did not expect " + m.Success + " on " + input);
+            if (m.Success)
+            {
+                Assert.True(from == ACOAssaultFinder.From(m), input + " from=" + ACOAssaultFinder.From(m));
+                Assert.True(to == ACOAssaultFinder.To(m), input + " to=" + ACOAssaultFinder.To(m));
+            }
+        }
+
+        [Fact]
+        public void CSharpTwoQuestionMarks()
+        {
+            string x = null;
+            string y = x ?? "hello";
+            string z = y ?? "goodbye";
+            Assert.Null(x);
+            Assert.True(y == "hello");
+            Assert.True(z == "hello");
         }
     }
 }
