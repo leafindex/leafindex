@@ -11,7 +11,7 @@ public class ACOAssaults : IHttpHandler {
 
 			context.Response.ContentType = "text/plain";
 			string borough = (context.Request["borough"] ?? "").Trim();
-			string frequency = (context.Request["frequency"]??"").Trim();
+			string frequency = (context.Request["frequency"] ?? "").Trim();
 
 			string grail = borough + "/" + frequency,
 				path = context.Request.PhysicalApplicationPath;
