@@ -52,6 +52,35 @@ namespace ScLib
         }
 
         [Fact]
+        public void ModulariseCode()
+        {
+            IEnumerable<myWard> results = GetWardsInBorough(SOUTHWARK);
+            int count = 0;
+            foreach (myWard w in results)
+                Console.WriteLine(String.Format("{0} {1}", ++count, w.ward));
+        }
+
+        public class myWard : Object
+        {
+            public string ward;
+            public int a;
+        }
+
+        private IEnumerable<myWard> GetWardsInBorough(string borough)
+        {
+            XDocument xdoc = XDocument.Load(xmlfilename);
+            return from w in xdoc.Descendants("ROW")
+                        where (string)w.Element("District_Name") == borough
+                        orderby (string)w.Element("Ward_Name")
+                        select new myWard() 
+                        {
+                            ward = (string)w.Element("District_Name"),
+                            a = MyIntParse(w.Element("Count_12-2007_to_11-2009").Value)
+                        };
+        }
+
+
+        [Fact]
         public void CopeWithBlankCountUsingMyIntParse()
         {
             string borough = "City of London";

@@ -13,14 +13,19 @@ namespace ScLib
 
         [Theory]
         [InlineData("Southwark", "Top 5", 5)]
+        [InlineData("Southwark", "200 300", 6)]
         [InlineData("City", "bottom 3", 17)]
         public void CheckVarious(string borough, string frequency, int expected )
         {
-            ACOAssaultFinder finder = new ACOAssaultFinder(FILENAME);
+            ACOAssaultsByLinq finder = new ACOAssaultsByLinq(FILENAME);
+            //ACOAssaultWard[] wards = finder.Find(borough, frequency);
+            //Console.WriteLine(borough + "/" + frequency + " expected " + expected);
+            //foreach (ACOAssaultWard w in wards)
+            //    Console.WriteLine(w.WardName + " (" + w.DistrictName + ") " + w.Total);
+
             int actual = finder.Find(borough, frequency).Length;
             Assert.True(expected == actual, String.Format("{0} != {1} for {2} / {3}",
                 expected, actual, borough, frequency));
-
         }
     }
 }

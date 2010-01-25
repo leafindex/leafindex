@@ -13,9 +13,11 @@ public class ACOAssaults : IHttpHandler
         context.Response.ContentType = "text/plain";
         string borough = (context.Request["borough"] ?? "").Trim();
         string frequency = (context.Request["frequency"] ?? "").Trim();
-        string grail = borough + "/" + frequency;
+        string grail = borough + " and " + frequency;
         string path = context.Request.PhysicalApplicationPath;
-        string fullfilename = System.IO.Path.Combine(path, ConfigurationManager.AppSettings["ACOAssaultsXmlFile"]);
+        //string fullfilename = System.IO.Path.Combine(path, ConfigurationManager.AppSettings["ACOAssaultsXmlFile"]);
+        //string fullfilename = ConfigurationManager.AppSettings["ACOAssaultsXmlFile"];
+        string fullfilename = @"C:\CSharp\LeafIndex\DataSets\ambulance-all-assaults-ward.xml";
 
         ACOAssaultsByLinq finder = new ACOAssaultsByLinq(fullfilename);
         ACOAssaultWard[] results = finder.Find(borough, frequency);
@@ -23,6 +25,7 @@ public class ACOAssaults : IHttpHandler
         
         StringBuilder msg = new StringBuilder();
         msg.Append("<result><grail>" + grail + "</grail><count>" + results.Length + "</count>");
+        msg.Append("<error>OK</error>");
         foreach (ACOAssaultWard w in results)
             msg.Append( "<ward><name>" + w.GetFullName(show_district) + "</name><total>" + w.Total + "</total></ward>" );
         
