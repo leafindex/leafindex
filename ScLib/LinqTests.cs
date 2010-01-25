@@ -127,6 +127,12 @@ namespace ScLib
             DoTopBottom(CITY_OF_LONDON, 10, true);
             DoTopBottom(CITY_OF_LONDON, 3, false);
         }
+
+        [Fact]
+        public void NumericRange()
+        {
+            DoNumericRange(SOUTHWARK, 200, 300);
+        }
         [Fact]
         public void CaseIndependent()
         {
@@ -150,6 +156,15 @@ namespace ScLib
             Assert.True("Hello".ToUpper().Contains("HELL"));
         }
 
+
+        private void DoNumericRange(string borough, int from, int to)
+        {
+            object[] wards = GetWardsNumericRange(borough, from, to );
+            Console.WriteLine( "Wards in " + borough + " in range " + from + " to " + to + " returned " + wards.Length);
+            foreach (var ward in wards)
+                Console.WriteLine(ward.ToString());
+        }
+
         private void DoTopBottom(string borough, int count, bool do_top)
         {
             object[] wards = GetWardsTopBottom(borough, count, do_top);
@@ -157,12 +172,13 @@ namespace ScLib
             foreach (var ward in wards )
                 Console.WriteLine(ward.ToString());
         }
-        private object[] GetWardsTopBottom(string borough, int count, bool do_top )
+
+        private object[] GetWardsNumericRange(string borough, int from, int to)
         {
             borough = borough.Trim().ToUpper();
             XDocument xdoc = XDocument.Load(xmlfilename);
             var wards = from w in xdoc.Descendants("ROW")
-                        where w.Element("District_Name").Value.ToUpper().Contains( borough )
+                        where w.Element("District_Name").Value.ToUpper().Contains(borough)
                         orderby MyIntParse(w.Element("Count_12-2007_to_11-2009").Value) descending
                         select new
                         {
@@ -170,6 +186,23 @@ namespace ScLib
                             borough = w.Element("District_Name").Value,
                             incidents = MyIntParse(w.Element("Count_12-2007_to_11-2009").Value)
                         };
+            return wards.Where(w => w.incidents >= from && w.incidents <= to).ToArray();
+        }
+
+        private object[] GetWardsTopBottom(string borough, int count, bool do_top )
+        {
+            borough = borough.Trim().ToUpper();
+            XDocument xdoc = XDocument.Load(xmlfilename);
+            var wards = from w in xdoc.Descendants("ROW")
+                        where w.Element("District_Name").Value.ToUpper().Contains(borough)
+                        orderby MyIntParse(w.Element("Count_12-2007_to_11-2009").Value) descending
+                        select new
+                        {
+                            ward = w.Element("Ward_Name").Value,
+                            borough = w.Element("District_Name").Value,
+                            incidents = MyIntParse(w.Element("Count_12-2007_to_11-2009").Value)
+                        };
+
             if (wards.Count() <= count)
                 return wards.ToArray();
             if (!do_top)
@@ -180,7 +213,6 @@ namespace ScLib
             else
                 return wards.TakeWhile( w => w.incidents <= cutoff).Reverse().ToArray();
         }
-
 
         private int MyIntParse(string str)
         {
