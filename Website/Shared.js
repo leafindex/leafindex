@@ -1,7 +1,8 @@
 ﻿function makeNavMenu(){
 	$("<div id='navmenu'/>")
 		.html("<a href='ACOAssaults.htm'>ACOAssaults</a>"+
-			"<a href='ACOAssaults1.aspx'>ACOAssaults1</a>"+
+			"<a href='ACOAssaults1.aspx'>ACOAssaults1</a>" +
+			"<a href='ACOLinq.aspx'>ACOLinq</a>" +
 			"<a href='AJCTests.htm'>AJCTests</a>")
 		.prependTo("body")
 }
