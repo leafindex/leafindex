@@ -15,6 +15,5 @@ namespace ScLib
 				public string BoroughName { get { return _boroughName; } }
 				public int AssaultCount { get { return _assaultCount; } }
 				public int WardCount { get { return _wardCount; } }
-
     }
 }

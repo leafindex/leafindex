@@ -15,8 +15,8 @@ namespace ScLib
 				XDocument xdoc = XDocument.Load(xmlfilename);
 				try
 				{
-
 					var boroughs = from b in xdoc.Descendants("ROW")
+												 orderby (string)b.Element("District_Name")
 												 group b
 												 by (string)b.Element("District_Name")
 													 into g
@@ -31,7 +31,6 @@ namespace ScLib
 														 }),
 														 count = g.Count()
 													 };
-
 					foreach (var borough in boroughs)
 					{
 						_boroughs.Add(new ACOAssaultBorough(borough.borough, borough.sum, borough.count));
