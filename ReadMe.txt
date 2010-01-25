@@ -8,4 +8,6 @@ editor tab setting - I prefer 4
 More significantly, some agreement on what we're trying to write, and 
 how to write it.
 
+AJC
+
 	
