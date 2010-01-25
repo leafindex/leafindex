@@ -24,6 +24,16 @@ namespace ScLib
             _districtname = dr[AcoConsts.ColDistrict_Name].ToString();
             int.TryParse( dr[AcoConsts.ColTotal].ToString(), out _total );
         }
+
+        public ACOAssaultWard(string wardname, string districtname, int total)
+        {
+            _wardname = wardname;
+            _wardcode = "";
+            _districtname = districtname;
+            _districtcode = "";
+            _total = total;
+        }
+
         public string WardName { get { return _wardname; } }
         public string DistrictName { get { return _districtname; } }
         public int Total { get { return _total; } }
