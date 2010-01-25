@@ -128,12 +128,12 @@ namespace ScLib
         [InlineData("100 50 +-", false, 0, 0)]
         public void RegexPlusMinus(string input, bool success, int from, int to )
         {
-            Match m = ACOAssaultFinder.r_plusminus.Match(input);
+            Match m = FrequencyParser.r_plusminus.Match(input);
             Assert.True(success == m.Success, "Did not expect " + m.Success + " on " + input);
             if (m.Success)
             {
-                Assert.True(from == ACOAssaultFinder.From(m), input + " from=" + ACOAssaultFinder.From(m));
-                Assert.True(to == ACOAssaultFinder.To(m), input + " to=" + ACOAssaultFinder.To(m));
+                Assert.True(from == FrequencyParser.GetFrom(m), input + " from=" + FrequencyParser.GetFrom(m));
+                Assert.True(to == FrequencyParser.GetTo(m), input + " to=" + FrequencyParser.GetTo(m));
             }
         }
 

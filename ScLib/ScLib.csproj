@@ -55,12 +55,15 @@
   <ItemGroup>
     <Compile Include="ACOAssaultBoroughs.cs" />
     <Compile Include="ACOAssaultFinder.cs" />
+    <Compile Include="ACOAssaultsByLinq.cs" />
+    <Compile Include="ACOAssaultsByLinqTests.cs" />
     <Compile Include="ACOAssaultWard.cs" />
     <Compile Include="AcoConsts.cs" />
     <Compile Include="ACOAssaultBorough.cs" />
     <Compile Include="ACOAssaultWardsPerBorough.cs" />
     <Compile Include="ACOAssaultWard1.cs" />
     <Compile Include="cdhTests.cs" />
+    <Compile Include="FrequencyParser.cs" />
     <Compile Include="LinqTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests.cs" />
