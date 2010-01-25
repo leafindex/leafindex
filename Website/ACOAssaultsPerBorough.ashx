@@ -13,13 +13,15 @@ public class ACOAssaultsPerBorough : IHttpHandler {
     public void ProcessRequest (HttpContext context) {
 
 			context.Response.ContentType = "text/plain";
-			string borough = (context.Request["borough"] ?? "").Trim(),
-				xmlPath = context.Request.PhysicalApplicationPath + ConfigurationManager.AppSettings["ACOAssaultsXmlFile"];
+			string borough = (context.Request["borough"] ?? "").Trim();
 
-			List<ACOAssaultWard1> wards = new ACOAssaultWardsPerBorough(xmlPath, borough).Wards;
-			JavaScriptSerializer serializer = new JavaScriptSerializer();
-			string json = serializer.Serialize(wards);
-			context.Response.Write(json);
+			if (borough != String.Empty)
+			{
+				string xmlPath = context.Request.PhysicalApplicationPath + ConfigurationManager.AppSettings["ACOAssaultsXmlFile"];
+				List<ACOAssaultWard1> wards = new ACOAssaultWardsPerBorough(xmlPath, borough).Wards;
+				JavaScriptSerializer serializer = new JavaScriptSerializer();
+				context.Response.Write(serializer.Serialize(wards));
+			}
 		}
  
     public bool IsReusable {
