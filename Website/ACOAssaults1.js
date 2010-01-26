@@ -129,7 +129,7 @@ function wardsDrill(cell){
 				$.each(data, function(i,row){
 					s+="<tr><td>"+htmlEncode(row.Ward)+"</td><td>"+htmlEncode(row.Assaults)+"</td></tr>";
 				});
-				s="<tr><td colspan=\"2\"><table width=\"100%\"><tr><th>Ward</th><th>Number of Assaults</th></tr>"+s;
+				s="<tr><td colspan=\"2\"><table cellspacing=\"0\"><tr><th>Ward</th><th>Number of Assaults</th></tr>"+s;
 				s+="</table></td><td>&nbsp;</td></tr>";
 				$(s)
 					.insertAfter(tr)

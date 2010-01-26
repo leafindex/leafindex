@@ -36,16 +36,19 @@ td.subTable {
 .subTable table {
   border: 1px solid #a659aa;
   font-size: 11px;
-  margin: 5px 0
+  margin: 5px 0;
+  width: 100%
 }
 .subTable th {
-  color: #783e25
+  color: #783e25;
+  background-color: #fff;
 }
 .subTable td {
+  background-color: #fff;
   color: #005bc4
 }
 tr.highlight, td.highlight {
-  background-color: #fff8eb
+  background-color: #ffefd1
 }
 tr.highlight td {
   color: #005bc4
