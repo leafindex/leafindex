@@ -15,9 +15,7 @@ public class ACOAssaults : IHttpHandler
         string frequency = (context.Request["frequency"] ?? "").Trim();
         string grail = borough + " and " + frequency;
         string path = context.Request.PhysicalApplicationPath;
-        //string fullfilename = System.IO.Path.Combine(path, ConfigurationManager.AppSettings["ACOAssaultsXmlFile"]);
-        //string fullfilename = ConfigurationManager.AppSettings["ACOAssaultsXmlFile"];
-        string fullfilename = @"C:\CSharp\LeafIndex\DataSets\ambulance-all-assaults-ward.xml";
+        string fullfilename = System.IO.Path.Combine(path, ConfigurationManager.AppSettings["ACOAssaultsXmlFile"]);
 
         ACOAssaultsByLinq finder = new ACOAssaultsByLinq(fullfilename);
         ACOAssaultWard[] results = finder.Find(borough, frequency);

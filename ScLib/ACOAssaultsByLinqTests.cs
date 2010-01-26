@@ -9,15 +9,13 @@ namespace ScLib
 {
     public class ACOAssaultsByLinqTests
     {
-        public const string FILENAME = @"C:\CSharp\LeafIndex\DataSets\ambulance-all-assaults-ward.xml";
-
         [Theory]
         [InlineData("Southwark", "Top 5", 5)]
         [InlineData("Southwark", "200 300", 6)]
         [InlineData("City", "bottom 3", 17)]
         public void CheckVarious(string borough, string frequency, int expected )
         {
-            ACOAssaultsByLinq finder = new ACOAssaultsByLinq(FILENAME);
+            ACOAssaultsByLinq finder = new ACOAssaultsByLinq(TestData.XmlFileName);
             //ACOAssaultWard[] wards = finder.Find(borough, frequency);
             //Console.WriteLine(borough + "/" + frequency + " expected " + expected);
             //foreach (ACOAssaultWard w in wards)
