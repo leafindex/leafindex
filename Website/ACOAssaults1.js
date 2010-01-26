@@ -1,78 +1,131 @@
-﻿$.fn.sortableTable=function(){
+﻿$.fn.superTable=function(options){
 	return this.each(function(){
-		var table=$(this);
-		$('thead th',table)
-			.addClass("sortable hover")
-			.wrapInner("<a href='#'/>")
-			.each(function(column){
-				var getSortKey;
-				if($(this).hasClass("number")){
-					getSortKey=function(cell){
-						var key=parseFloat(cell.text().replace(/[^\d.]*/g,""));
-						return isNaN(key)?0:key;
-					};
-				}
-				else{
-					if($(this).hasClass("date")){
-						getSortKey=function(cell) {
-							return Date.parse(cell.text());
+		var table;
+		function sortable(){
+			$('thead th',table)
+				.addClass("sortable hover")
+				.wrapInner("<a href='#'/>")
+				.each(function(column){
+					var getSortKey;
+					if($(this).hasClass("number")){
+						getSortKey=function(cell){
+							var key=parseFloat(cell.text().replace(/[^\d.]*/g,""));
+							return isNaN(key)?0:key;
 						};
 					}
 					else{
-						getSortKey=function(cell){
-							return cell.text().toUpperCase();
-						};
+						if($(this).hasClass("date")){
+							getSortKey=function(cell) {
+								return Date.parse(cell.text());
+							};
+						}
+						else{
+							getSortKey=function(cell){
+								return cell.text().toUpperCase();
+							};
+						}
 					}
+				});
+		}
+				
+/*					$(this).click(function(){
+						var t=$(this);
+						var direction=(t.data("sort")==1)?-1:1;
+						t.data("sort",direction);
+						var rows=table.find("tbody > tr").get();
+						$.each(rows,function(i,row){
+							row.sortKey=getSortKey($(row).children("td:eq("+column+")"));
+						});
+						rows.sort(function(a,b){
+							return (a.sortKey<b.sortKey)?-direction:((a.sortKey>b.sortKey)?direction:0);
+						});
+						$.each(rows,function(i,row){
+							table.children("tbody").append(row);
+							row.sortKey=null;
+						});
+						return false;
+					});*/
+		function searchable(ctl){
+			var rows,cache;
+			function subRowsHide(r){
+				if(r.length){
+					r.removeClass("highlight").hide();
 				}
-				$(this).click(function(){
-					var t=$(this);
-					var direction=(t.data("sort")==1)?-1:1;
-					t.data("sort",direction);
-					var rows=table.find("tbody > tr").get();
-					$.each(rows,function(i,row){
-						row.sortKey=getSortKey($(row).children("td:eq("+column+")"));
+			}
+			function subRowsShow(r){
+			}
+			function filter(){
+				var subRows=table.find("tbody > tr.subTable:visible");
+				subRowsHide(subRows);
+				var term=$.trim(ctl.val().toLowerCase());
+				if(!term){
+					rows.show();
+				}
+				else{
+					rows.hide();
+					cache.each(function(i){
+						if(this.indexOf(term)>-1){
+							$(rows[i]).show();
+						}
 					});
-					rows.sort(function(a,b){
-						return (a.sortKey<b.sortKey)?-direction:((a.sortKey>b.sortKey)?direction:0);
-					});
-					$.each(rows,function(i,row){
-						table.children("tbody").append(row);
-						row.sortKey=null;
-					});
+				}
+				subRowsShow(subRows);
+			}
+			rows=table.find("tbody > tr");
+			cache=rows.find("td:first").map(function(){
+					return $(this).text().toLowerCase();
+				});
+			ctl=$(ctl);
+			ctl
+				.focus()
+				.keyup(filter).keyup()
+				.parents("form").submit(function(){
 					return false;
 				});
-			});
-	});
-};
-$.fn.tableSearch=function(table){
-	var rows,cache;
-	function filter(){
-		var term=$.trim($(this).val().toLowerCase());
-		if(!term){
-			rows.show();
 		}
-		else{
-			rows.hide();
-			cache.each(function(i){
-				if(this.indexOf(term)>-1){
-					$(rows[i]).show();
+		function goodlooking(){
+			var th=table.find("thead > tr > th");
+			th.filter(".number").each(function(){
+				table.find("tbody > tr > td:nth-child("+(th.index(this)+1)+")").addClass("number");
+			});
+		}
+		function click(e){
+			var cell=$(e.target).closest("td, th");
+//			alert(cell.index());
+			if(cell.is("th")){
+			}
+			else{
+				var f=table.data("superTableEvent"+(cell.index()+1));
+				if(f){
+					f(cell);
 				}
-			});
+			}
+			return false;
 		}
-	}
-	table=$(table);
-	if(table.length){
-		rows=table.find("tbody > tr");
-		cache=rows.find("td:first").map(function(){
-				return $(this).text().toLowerCase();
-			});
-		this
-			.keyup(filter).keyup()
-			.parents("form").submit(function(){
-				return false;
-			});
-	}
-	return this;
+		function clicking(){
+			if(options.clickable){
+				var tr=table.find("tbody > tr");
+				$.each(options.clickable,function(i,click){
+					var c=click.col;
+					table.data("superTableEvent"+c,click.event)
+					tr
+						.find("td:nth-child("+c+")")
+						.wrapInner("<a href='#'/>")
+						.addClass("hover");
+				});
+			}
+			table.click(click);
+		}
+		table=$(this);
+		if(table.length){
+			goodlooking();
+			clicking();
+			sortable();
+			if(options.searchable){
+				searchable(options.searchable);
+			}
+		}
+	});
 };
 function htmlEncode(s){
 	if(!s){
@@ -129,14 +182,14 @@ function wardsDrill(cell){
 				$.each(data, function(i,row){
 					s+="<tr><td>"+htmlEncode(row.Ward)+"</td><td>"+htmlEncode(row.Assaults)+"</td></tr>";
 				});
-				s="<tr><td colspan=\"2\"><table width=\"100%\"><tr><th>Ward</th><th>Number of Assaults</th></tr>"+s;
+				s="<tr><td colspan=\"2\"><table cellspacing=\"0\"><tr><th>Ward</th><th>Number of Assaults</th></tr>"+s;
 				s+="</table></td><td>&nbsp;</td></tr>";
 				$(s)
 					.insertAfter(tr)
 					.filter("tr:first")
-						.addClass("wards")
+						.addClass("subTable wards")
 						.find("td:first").has("table")
-							.addClass("subTable highlight")
+							.addClass("highlight")
 							.end()
 						.find("table")
 							.find("tr > :nth-child(2)").addClass("number");
@@ -144,32 +197,10 @@ function wardsDrill(cell){
 		});
 	}
 }
-function mainTableClick(e){
-	var t=($(e.target).closest("td"));
-	switch(t.index()){
-		case 2:
-			wardsDrill(t);
-			break;
-	}
-	return false;
-}
-function setupTable(t){
-	t=$(t);
-	var th=t.find("thead > tr > th");
-	th.filter(".number").each(function(){
-		t.find("tbody > tr > td:nth-child("+(th.index(this)+1)+")").addClass("number");
-	});
-	t.children("tbody:first")
-		.click(mainTableClick)
-		.find("tr > td:nth-child(3)")
-			.wrapInner("<a href='#'/>")
-			.addClass("hover");
-	t.sortableTable();
-}
 $(function(){
 	makeNavMenu();
-	$("#boroughSearch")
-		.tableSearch("#boroughTable")
-		.focus();
-	setupTable("#boroughTable");
+	$("#boroughTable").superTable({
+		"searchable": "#boroughSearch",
+		"clickable": [{"col": 3, "event": wardsDrill}]
+	});
 });
