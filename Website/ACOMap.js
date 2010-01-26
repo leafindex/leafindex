@@ -61,9 +61,9 @@ function draw() {
 
             DoBlob(ctx, 330, 290, "Kensington");
             DoBlob(ctx, 220, 330, "Hounslow");
-            DoBlob(ctx, 310, 280, "Hammersmith");
-            DoBlob(ctx, 240, 280, "Ealing");
-            DoBlob(ctx, 190, 250, "Hillingdon");
+            DoBlob(ctx, 310, 290, "Hammersmith");
+            DoBlob(ctx, 240, 270, "Ealing");
+            DoBlob(ctx, 190, 240, "Hillingdon");
             
             // DoBlob(ctx, 400, 280, "City");
         }
