@@ -10,27 +10,54 @@ table {
 table th {
   font-size: 11px;
   font-weight: normal;
+  padding: 2px 5px;
   text-align: left
 }
 table th.number, table td.number {
   text-align: right;
   width: 100px
 }
-table td, table th {
+table td {
   color: #00613c;
   padding: 2px 5px
+}
+table td.hover, table th.hover {
+  cursor: pointer
+}
+table td.hover:hover, table th.hover:hover {
+  background-color: #ffefd1
 }
 table td.number {
   font-family: "Palatino Linotype", Palatino, "Times New Roman", Times, serif
 }
+td.subTable {
+  padding: 0 5px
+}
+.subTable table {
+  border: 1px solid #a659aa;
+  font-size: 11px;
+  margin: 5px 0
+}
+.subTable th {
+  color: #783e25
+}
+.subTable td {
+  color: #005bc4
+}
+tr.highlight, td.highlight {
+  background-color: #fff8eb
+}
+tr.highlight td {
+  color: #005bc4
+}
+td.highlight {
+  border-bottom: 5px solid #fff
+}
 th a {
   color: #a659aa
 }
-th.sortable {
-  cursor: pointer
-}
-th.sortable:hover {
-  background-color: #ffefd1
+td a {
+  color: #00613c
 }
 #navmenu {
   font-size: 11px;

@@ -16,15 +16,15 @@ namespace Website
 			List<ACOAssaultBorough> boroughs = new ACOAssaultBoroughs(xmlPath).Boroughs;
 			if (boroughs.Count > 0)
 			{
-				StringBuilder b = new StringBuilder("<table id=\"boroughTable\">");
+				StringBuilder b = new StringBuilder("<table id=\"boroughTable\" cellspacing=\"0\">");
 				b.Append("<thead><tr>");
 				b.Append("<th>Borough</th>");
-				b.Append("<th class=\"number\">Total Number of Assaults</th>");
+				b.Append("<th class=\"number\">Number of Assaults</th>");
 				b.Append("<th class=\"number\">Number of Wards in Borough</th>");
 				b.Append("</tr></thead><tbody>");
 				foreach (var borough in boroughs)
 				{
-					b.Append("<tr><td>" + borough.BoroughName + "</td><td>" + borough.AssaultCount + "</td><td>" + borough.WardCount + "</td></tr>");
+					b.Append("<tr><td>" + borough.Borough + "</td><td>" + borough.Assaults + "</td><td>" + borough.Wards + "</td></tr>");
 				}
 				b.Append("</tbody></table>");
 				_boroughs = b.ToString();
