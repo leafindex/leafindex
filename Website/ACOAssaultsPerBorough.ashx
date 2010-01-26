@@ -12,7 +12,7 @@ public class ACOAssaultsPerBorough : IHttpHandler {
     
     public void ProcessRequest (HttpContext context) {
 
-			context.Response.ContentType = "text/plain";
+			context.Response.ContentType = "application/json; charset=utf-8";
 			string borough = (context.Request["borough"] ?? "").Trim();
 
 			if (borough != String.Empty)
@@ -29,5 +29,4 @@ public class ACOAssaultsPerBorough : IHttpHandler {
             return false;
         }
     }
-
 }

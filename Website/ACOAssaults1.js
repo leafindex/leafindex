@@ -2,8 +2,8 @@
 	return this.each(function(){
 		var table=$(this);
 		$('thead th',table)
-			.addClass("sortable")
-			.wrapInner("<a href='#'>")
+			.addClass("sortable hover")
+			.wrapInner("<a href='#'/>")
 			.each(function(column){
 				var getSortKey;
 				if($(this).hasClass("number")){
@@ -74,12 +74,96 @@ $.fn.tableSearch=function(table){
 	}
 	return this;
 };
+function htmlEncode(s){
+	if(!s){
+		return "&nbsp;";
+	}
+	var s1="",s2=s.toString(),i=s2.length;
+	for(var j=0;j<i;j++){
+		var c=s2.charAt(j);
+		if(c<" "||c>"~"){
+			c="&#"+c.charCodeAt()+";";
+		}
+		else {
+			switch(c){
+				case "&":
+					c="&amp;";break;
+				case "<":
+					c="&lt;";break;
+				case ">":
+					c="&gt;";break;
+				case "\"":
+					c="&quot;";break;
+				case "'":
+					c="&#39;";break;
+			}
+		}
+		s1+=c;
+	}
+	return s1;
+}
+function wardsDrill(cell){
+	var tr=cell.parent();
+	tr.toggleClass("highlight");
+	var wd=tr.next();
+	if(wd.length){
+		if(wd.hasClass("wards")){
+			if(wd.is(":visible")){
+				wd.hide();
+			}
+			else{
+				wd.show();
+			}
+			return;
+		}
+	}
+	var s="";
+	var borough=tr.children("td:first").text();
+	if(borough){
+		$.ajax({
+			url:"ACOAssaultsPerBorough.ashx",
+			cache:false,
+			data:"borough="+borough,
+			dataType:"json",
+			success:function(data){
+				$.each(data, function(i,row){
+					s+="<tr><td>"+htmlEncode(row.Ward)+"</td><td>"+htmlEncode(row.Assaults)+"</td></tr>";
+				});
+				s="<tr><td colspan=\"2\"><table width=\"100%\"><tr><th>Ward</th><th>Number of Assaults</th></tr>"+s;
+				s+="</table></td><td>&nbsp;</td></tr>";
+				$(s)
+					.insertAfter(tr)
+					.filter("tr:first")
+						.addClass("wards")
+						.find("td:first").has("table")
+							.addClass("subTable highlight")
+							.end()
+						.find("table")
+							.find("tr > :nth-child(2)").addClass("number");
+			}
+		});
+	}
+}
+function mainTableClick(e){
+	var t=($(e.target).closest("td"));
+	switch(t.index()){
+		case 2:
+			wardsDrill(t);
+			break;
+	}
+	return false;
+}
 function setupTable(t){
 	t=$(t);
 	var th=t.find("thead > tr > th");
 	th.filter(".number").each(function(){
 		t.find("tbody > tr > td:nth-child("+(th.index(this)+1)+")").addClass("number");
 	});
+	t.children("tbody:first")
+		.click(mainTableClick)
+		.find("tr > td:nth-child(3)")
+			.wrapInner("<a href='#'/>")
+			.addClass("hover");
 	t.sortableTable();
 }
 $(function(){
