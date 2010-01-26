@@ -5,46 +5,45 @@
 			$('thead th',table)
 				.addClass("sortable hover")
 				.wrapInner("<a href='#'/>")
-				.each(function(column){
-					var getSortKey;
-					if($(this).hasClass("number")){
-						getSortKey=function(cell){
+				.each(function(){
+					var th=$(this);
+					if(th.hasClass("number")){
+						th.data("sortFunction",function(cell){
 							var key=parseFloat(cell.text().replace(/[^\d.]*/g,""));
 							return isNaN(key)?0:key;
-						};
+						});
 					}
 					else{
-						if($(this).hasClass("date")){
-							getSortKey=function(cell) {
+						if(th.hasClass("date")){
+							th.data("sortFunction",function(cell) {
 								return Date.parse(cell.text());
-							};
+							});
 						}
 						else{
-							getSortKey=function(cell){
+							th.data("sortFunction",function(cell){
 								return cell.text().toUpperCase();
-							};
+							});
 						}
 					}
 				});
 		}
-				
-/*					$(this).click(function(){
-						var t=$(this);
-						var direction=(t.data("sort")==1)?-1:1;
-						t.data("sort",direction);
-						var rows=table.find("tbody > tr").get();
-						$.each(rows,function(i,row){
-							row.sortKey=getSortKey($(row).children("td:eq("+column+")"));
-						});
-						rows.sort(function(a,b){
-							return (a.sortKey<b.sortKey)?-direction:((a.sortKey>b.sortKey)?direction:0);
-						});
-						$.each(rows,function(i,row){
-							table.children("tbody").append(row);
-							row.sortKey=null;
-						});
-						return false;
-					});*/
+		function sort(th){
+			var sortFunc=th.data("sortFunction");
+			var rows=table.find("tbody > tr").get();
+			var column=th.index();
+			var direction=(th.data("sortDirection")==1)?-1:1;
+			th.data("sortDirection",direction);
+			$.each(rows,function(i,row){
+				row.sortKey=sortFunc($(row).children("td:eq("+column+")"));
+			});
+			rows.sort(function(a,b){
+				return (a.sortKey<b.sortKey)?-direction:((a.sortKey>b.sortKey)?direction:0);
+			});
+			$.each(rows,function(i,row){
+				table.children("tbody").append(row);
+				row.sortKey=null;
+			});
+		}
 		function searchable(ctl){
 			var rows,cache;
 			function subRowsHide(r){
@@ -91,8 +90,8 @@
 		}
 		function click(e){
 			var cell=$(e.target).closest("td, th");
-			alert(cell.index());
 			if(cell.is("th")){
+				sort(cell);
 			}
 			else{
 				var f=table.data("superTableEvent"+(cell.index()+1));
@@ -107,7 +106,7 @@
 				var tr=table.find("tbody > tr");
 				$.each(options.clickable,function(i,click){
 					var c=click.col;
-					table.data("superTableEvent"+c,click.event)
+					table.data("superTableEvent"+c,click.event);
 					tr
 						.find("td:nth-child("+c+")")
 						.wrapInner("<a href='#'/>")
