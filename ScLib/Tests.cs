@@ -4,7 +4,6 @@ using System.Text;
 using Xunit;
 using Xunit.Extensions;
 using System.Text.RegularExpressions;
-using System.IO;
 
 namespace ScLib
 {
@@ -26,7 +25,7 @@ namespace ScLib
         {
             string xmlfilename = TestData.XmlFileName;
             Console.WriteLine(xmlfilename);
-            Assert.True(File.Exists(xmlfilename), "No file " + xmlfilename);
+            Assert.True(System.IO.File.Exists(xmlfilename), "No file " + xmlfilename);
         }
 
         [Fact]
