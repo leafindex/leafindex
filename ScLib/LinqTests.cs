@@ -10,9 +10,7 @@ namespace ScLib
 {
     public class LinqTests
     {
-        public const string FILENAME = @"C:\CSharp\LeafIndex\DataSets\ambulance-all-assaults-ward.xml";
-
-        private string xmlfilename { get { return FILENAME; } }
+        private string xmlfilename { get { return TestData.XmlFileName; } }
 
         [Fact]
         public void HelloWorld()
@@ -23,7 +21,7 @@ namespace ScLib
         [Fact]
         public void FileExists()
         {
-            Assert.True( System.IO.File.Exists( FILENAME ) );
+            Assert.True(System.IO.File.Exists(xmlfilename));
         }
         [Fact]
         public void CanLoadFile()
