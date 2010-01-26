@@ -1,6 +1,10 @@
 ﻿$(document).ready(function() {
     makeNavMenu();
     draw();
+    $("#canvas").click(function(e){
+			var offset = $(e.target).offset();
+			alert("you clicked the canvas here: x="+(e.pageX-offset.left)+",y="+(e.pageY-offset.top));
+    });
 });
 
 var _blobno;
