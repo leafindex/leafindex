@@ -91,7 +91,7 @@
 		}
 		function click(e){
 			var cell=$(e.target).closest("td, th");
-			alert(cell.index());
+//			alert(cell.index());
 			if(cell.is("th")){
 			}
 			else{
