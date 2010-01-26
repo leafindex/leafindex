@@ -4,21 +4,29 @@ using System.Text;
 using Xunit;
 using Xunit.Extensions;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace ScLib
 {
     public class Tests
     {
-        private const string XMLFILENAME = @"C:\CSharp\LeafIndex\DataSets\ambulance-all-assaults-ward.xml";
         private ACOAssaultFinder _finder = null;
         private ACOAssaultFinder MyFinder
         {
             get
             {
                 if (_finder == null)
-                    _finder = new ACOAssaultFinder(XMLFILENAME);
+                    _finder = new ACOAssaultFinder(TestData.XmlFileName);
                 return _finder;
             }
+        }
+
+        [Fact]
+        public void TestDataXmlFileName()
+        {
+            string xmlfilename = TestData.XmlFileName;
+            Console.WriteLine(xmlfilename);
+            Assert.True(File.Exists(xmlfilename), "No file " + xmlfilename);
         }
 
         [Fact]
