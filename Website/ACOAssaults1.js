@@ -186,7 +186,6 @@
 		}
 		function subTabling(cell,func,type){
 			var tr=cell.parent();
-			var subRow=subRowCache[rows.index(tr)][type];
 			var done="",highlight=false;
 			$.each(subRowCache[rows.index(tr)],function(t,subRow){
 				if(t===type){
@@ -302,7 +301,7 @@ function wardsDrill(tr,callback){
 			dataType:"json",
 			success:function(data){
 				var s="";
-				$.each(data, function(i,row){
+				$.each(data,function(i,row){
 					s+="<tr><td>"+htmlEncode(row.Ward)+"</td><td>"+htmlEncode(row.Assaults)+"</td></tr>";
 				});
 				s="<table cellspacing=\"0\"><thead><tr><th>Ward</th><th class=\"number\">Number of Assaults</th></tr></thead><tbody>"+s+"</tbody></table>";
@@ -321,7 +320,7 @@ function monthsDrill(tr,callback){
 			dataType:"json",
 			success:function(data){
 				var s="";
-				$.each(data, function(i,row){
+				$.each(data,function(i,row){
 					s+="<tr><td>"+htmlEncode(row.Month)+"</td><td>"+htmlEncode(row.Assaults)+"</td></tr>";
 				});
 				s="<table cellspacing=\"0\"><thead><tr><th class=\"month\">Month</th><th class=\"number\">Number of Assaults</th></tr></thead><tbody>"+s+"</tbody></table>";
@@ -333,8 +332,8 @@ function monthsDrill(tr,callback){
 $(function(){
 	makeNavMenu();
 	$("#boroughTable").superTable({
-		"searchable": {"searchCtl": "#boroughSearch", "searchColumn": 1},
-		"clickable": [{"column": 3, "superFunc": "subTable", "superFuncFunc": wardsDrill},
-			{"column": 2, "superFunc": "subTable", "superFuncFunc": monthsDrill}]
+		"searchable":{"searchCtl":"#boroughSearch","searchColumn":1},
+		"clickable":[{"column":3,"superFunc":"subTable","superFuncFunc":wardsDrill},
+			{"column":2,"superFunc":"subTable","superFuncFunc":monthsDrill}]
 	});
 });
