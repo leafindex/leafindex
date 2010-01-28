@@ -30,9 +30,6 @@ table td.hover:hover, table th.hover:hover {
 table td.number {
   font-family: "Palatino Linotype", Palatino, "Times New Roman", Times, serif
 }
-td.subTable {
-  padding: 0 5px
-}
 .subTable table {
   border: 1px solid #a659aa;
   font-size: 11px;
@@ -43,6 +40,9 @@ td.subTable {
   color: #783e25;
   background-color: #fff;
 }
+.subTable a {
+  color: #783e25;
+}
 .subTable td {
   background-color: #fff;
   color: #005bc4
@@ -52,9 +52,6 @@ tr.highlight, td.highlight {
 }
 tr.highlight td {
   color: #005bc4
-}
-td.highlight {
-  border-bottom: 5px solid #fff
 }
 th a {
   color: #a659aa

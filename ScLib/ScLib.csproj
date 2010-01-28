@@ -63,6 +63,8 @@
     <Compile Include="ACOAssaultWardsPerBorough.cs" />
     <Compile Include="ACOAssaultWard1.cs" />
     <Compile Include="cdhTests.cs" />
+    <Compile Include="ACOAssaultMonth.cs" />
+    <Compile Include="ACOAssaultMonthsPerBorough.cs" />
     <Compile Include="FrequencyParser.cs" />
     <Compile Include="LinqTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

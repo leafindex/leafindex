@@ -19,26 +19,27 @@
 			this.click(test1);
 			return this;
 		};
+		function testClick(){
+			alert(arguments[0]);
+			alert(arguments[1]);
+		}
 		$(function(){
-			$("#test1")
-				.doTest()
-				.click(function(){
-					var r;
-					if(!r){
-						r=1;
+			$("#test1").click(function(){
+				function uid() {
+					function S4() {
+						return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
 					}
-					else{
-						r+=1;
-					}
-					alert("jQuery click: "+r);
-					return false;
+					return (S4()+S4()+S4()+S4());
+				}
+				alert(uid());
+				return false;
 			});
 		});
 	</script>
 </head>
 <body>
 <h2>cdh Tests</h2>
-<a href="" id="test1">test1</a>
+<a href="#" id="test1">test1</a>
 <div id="Results">
 </div>
 </body>
