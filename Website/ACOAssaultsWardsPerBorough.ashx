@@ -1,4 +1,4 @@
-<%@ WebHandler Language="C#" Class="ACOAssaultsPerBorough" Debug="true"%>
+<%@ WebHandler Language="C#" Class="ACOAssaultsWardsPerBorough"%>
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Configuration;
 using System.Text;
 using ScLib;
 
-public class ACOAssaultsPerBorough : IHttpHandler {
+public class ACOAssaultsWardsPerBorough : IHttpHandler {
     
     public void ProcessRequest (HttpContext context) {
 
