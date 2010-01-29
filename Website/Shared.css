@@ -33,22 +33,45 @@ table td.number {
 .subTable table {
   border: 1px solid #a659aa;
   font-size: 11px;
-  margin: 5px 0;
+  margin: 0 0 5px 0;
   width: 100%
 }
 .subTable th {
-  color: #783e25;
   background-color: #fff;
+  color: #783e25
 }
 .subTable a {
-  color: #783e25;
+  color: #783e25
 }
 .subTable td {
   background-color: #fff;
   color: #005bc4
 }
+.subTableClose {
+  cursor: pointer;
+  font-size: 10px;
+  height: 10px;
+  padding-left: 2px;
+  text-align: center
+}
+.subTableClose a {
+  color: #a659aa;
+  text-decoration: none
+}
+.subTableClose span {
+  font-size: 10px
+}
+.subTableClose:hover {
+  background-color: #a659aa
+}
+.subTableClose:hover a {
+  color: #ffefd1
+}
 tr.highlight, td.highlight {
   background-color: #ffefd1
+}
+td.highlight {
+  padding-top: 0
 }
 tr.highlight td {
   color: #005bc4
@@ -86,4 +109,3 @@ td a {
 {
 	display:none;
 }
-
