@@ -52,6 +52,13 @@
       <DependentUpon>ACOAssaults1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="ACOMap.aspx.cs">
+      <DependentUpon>ACOMap.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ACOMap.aspx.designer.cs">
+      <DependentUpon>ACOMap.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ACOAssaultsMonthsPerBorough.ashx" />
+    <Content Include="ACOMap.aspx" />
     <Content Include="images\progress.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

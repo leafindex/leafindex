@@ -66,7 +66,7 @@ namespace ScLib
                     );
         }
 
-        private int MyIntParse(string str)
+        public static int MyIntParse(string str)
         {
             str = str.Trim();
             if (str == "")
