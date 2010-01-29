@@ -13,3 +13,9 @@ function Sayuser(msg){
 function DebugSayuser(msg){
 	$("#lblDebugSayuser").text(msg);
 }
+function ShowProgress(onoff) {
+    if (onoff)
+        $("#lblProgress").html("<img src='images/progress.gif' width='13' height='13'/>");
+    else
+        $("#lblProgress").html("");
+}
