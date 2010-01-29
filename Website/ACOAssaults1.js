@@ -1,6 +1,6 @@
 ﻿$.fn.superTable=function(options){
 	return this.each(function(){
-		var table,rows,colCnt,subRowCache,hasSubRowCache;
+		var table,rows,colCnt,subRowCache,hasSubRowCache,reHeight=false;
 		function uid() {
 			function S4() {
 				return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
@@ -10,6 +10,12 @@
 		function setColCnt(){
 			if(!colCnt){	
 				colCnt=rows.filter(":first").children().length;
+			}
+		}
+		function resetHeight(){
+			if(reHeight){
+				table.css("height","auto");
+				reHeight=false;
 			}
 		}
 		function sortable(thisTable){
@@ -49,16 +55,17 @@
 				});
 		}
 		function sort(th){
-			var sortFunc=th.data("sortFunction");
+			var sortFunc=th.data("sortFunction"),sortRows;
 			var direction=(th.data("sortDirection")==1)?-1:1;
 			th.data("sortDirection",direction);
 			var column=th.index();
-			var sortTable=th.closest("table");
-			var sortRows;
+			var sortTable=th.closest("table"),mainTable=true,tHeight;
 			if(sortTable[0]==table[0]){
+				tHeight=table.height();
 				sortRows=rows.get();
 			}
 			else{
+				mainTable=false;
 				sortRows=sortTable.find("tbody > tr").get();
 			}
 			$.each(sortRows,function(i,row){
@@ -72,13 +79,19 @@
 				tbody.append(row);
 				row.sortKey=null;
 			});
-			$.each(rows,function(i,row){
-				$.each(subRowCache[i],function(t,subRow){
-					if(subRow.is(":visible")){
-						$(row).after(subRow);
-					}
+			if(mainTable){
+				$.each(rows,function(i,row){
+					$.each(subRowCache[i],function(t,subRow){
+						if(subRow.is(":visible")){
+							$(row).after(subRow);
+							reHeight=true;
+						}
+					});
 				});
-			});
+				if(reHeight&&(table.height()!=tHeight)){//ie8?!
+					table.height(tHeight);
+				}
+			}
 		}
 		function searchable(){
 			var ctl,cache;
@@ -97,6 +110,7 @@
 								}
 							}
 						});
+						resetHeight();
 					}
 				}
 				function subRowingAllShow(){
@@ -152,25 +166,12 @@
 				thisTable.find("tbody > tr > td:nth-child("+(th.index(this)+1)+")").addClass("number");
 			});
 		}
-		function click(e){
-			var cell=$(e.target).closest("td, th");
-			if(cell.is("th")){
-				sort(cell);
-			}
-			else{
-				var f=table.data("superTableClick"+(cell.index()+1));
-				if(f){
-					f(cell);
-				}
-			}
-			return false;
-		}
 		function addSubTable(row,type,subTable,colsToUse){
 			if(subTable){
 				setColCnt();
 				var c=parseInt(colsToUse,10);
 				c=isNaN(c)||c>colCnt?colCnt:c;
-				var prefix="<tr><td"+(c>1?" colspan=\""+c+"\"":"")+">";
+				var prefix="<tr><td"+(c>1?" colspan=\""+c+"\"":"")+"><div class=\"subTableClose\"><a href=\"#\">▲</a></div>";
 				var suffix=c===colCnt?"</td></tr>":"</td><td"+(colCnt-c>1?" colspan=\""+(colCnt-c)+"\"":"")+">&nbsp;</td></tr>";
 				var st=$(prefix+subTable+suffix)
 					.insertAfter(row)
@@ -206,6 +207,9 @@
 						highlight=subRow.is(":visible");
 					}
 				}
+				if(done&&highlight){
+					return false;
+				}
 			});
 			if(done){
 				if(!highlight){
@@ -222,6 +226,50 @@
 					addSubTable(tr,type,subTable,colsToUse);
 				});
 			}
+			resetHeight();
+		}
+		function subTableClose(subRow){
+			var row,highlight=false;
+			row=subRow.prev();
+			while(row.is(".subTable")){
+				row=row.prev();
+			}
+			subRow.hide();
+			subRow=subRow[0];
+			$.each(subRowCache[rows.index(row)],function(t,sr){
+				if(sr[0]!=subRow){
+					if(!highlight){
+						highlight=sr.is(":visible");
+						if(highlight){
+							return false;
+						}
+					}
+				}
+			});
+			if(!highlight){
+				row.removeClass("highlight");
+			}
+			resetHeight();
+		}
+		function click(e){
+			var targ=$(e.target).closest("div, td, th");
+			if(targ.is("th")){
+				sort(targ);
+			}
+			else{
+				if(targ.is("div")){
+					if(targ.hasClass("subTableClose")){
+						subTableClose(targ.closest("tr"));
+					}
+				}
+				else{
+					var f=table.data("superTableClick"+(targ.index()+1));
+					if(f){
+						f(targ);
+					}
+				}
+			}
+			return false;
 		}
 		function clicking(){
 			if(typeof(options)=="object"&&typeof(options.clickable)=="object"){
