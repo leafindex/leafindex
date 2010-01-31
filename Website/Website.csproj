@@ -52,6 +52,20 @@
       <DependentUpon>ACOAssaults1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="ACOMap.aspx.cs">
+      <DependentUpon>ACOMap.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ACOMap.aspx.designer.cs">
+      <DependentUpon>ACOMap.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ACOMapR.aspx.cs">
+      <DependentUpon>ACOMapR.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ACOMapR.aspx.designer.cs">
+      <DependentUpon>ACOMapR.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -73,11 +87,15 @@
     <Content Include="ACOMap.htm" />
     <Content Include="ACOMap.js" />
     <Content Include="cdhTests.htm" />
-    <Content Include="excanvas.js" />
     <Content Include="images\boroughmap.gif" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ACOAssaultsMonthsPerBorough.ashx" />
+    <Content Include="ACOMap.aspx" />
+    <Content Include="ACOMapR.aspx" />
+    <Content Include="ACOMapR.js" />
+    <Content Include="excanvas.js" />
+    <Content Include="images\progress.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />

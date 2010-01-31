@@ -14,17 +14,20 @@
 Count of all Assault incidents and injuries recorded by London Ambulance Service, 
 per month, per ward in London from December 2007 to November 2009, taken from a
 <a href="http://data.london.gov.uk/datastore/package/ambulance-call-outs-assault-incidents">GLA Page</a>.
-Now uses LINQ to read the XML.
+Now uses LINQ to read the XML and a progress indicator, and supports IE6.<p/>
 </div>
 <div id="searchform">
 Borough <input type="text" id="txtBorough" class="userinput" value="Southwark" />
  and Frequency <input type="text" id="txtFrequency" class="userinput" value="top 5" />
+ <span id="lblProgress"></span>
+ <br />
  <span id="lblHelp" class="SayuserMessage"></span>
  <br />
 <span id="lblSayuser" class="SayuserMessage"></span>&nbsp;<br />
 <span id="lblDebugSayuser" class="SayuserMessage"></span>&nbsp;<br />
 </div>
-<div id="details">
+<div>
+<span id="lblList"></span>
 </div>
 
 <div class="Invisible" id="hlpBorough">e.g. Lambeth, Southwark etc</div>

@@ -250,5 +250,20 @@ namespace ScLib
                 return Convert.ToInt32(str);
         }
 
+        [Fact]
+        public void ACOAssaultBoroughsNoMonths()
+        {
+            List<ACOAssaultBorough> boroughs = new ACOAssaultBoroughs(xmlfilename).Boroughs;
+            Assert.True(boroughs.Count == 33);
+        }
+        [Fact]
+        public void ACOAssaultBoroughsWithMonths()
+        {
+            List<ACOAssaultBorough> boroughs = ACOAssaultBoroughs.ReadInclMonths(xmlfilename);
+            Assert.True(boroughs.Count == 33);
+            foreach (ACOAssaultBorough b in boroughs)
+                Console.WriteLine( b.Borough + " " + b.MonthlyFiguresAsCsv());
+        }
+
     }
 }
