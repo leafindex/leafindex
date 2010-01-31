@@ -21,7 +21,6 @@ namespace Website
             {
                 StringBuilder b = new StringBuilder();
                 int max_assaults = 0;
-                b.AppendLine( "<p>" + boroughs.Count + " boroughs</p>" );
                 b.AppendLine("<script type='text/javascript'>");
                 b.AppendLine("function LoadData() {");
                 b.AppendLine("var i = 0;");
@@ -37,18 +36,6 @@ namespace Website
                 b.AppendLine("</script>");
 
                 _myscript = b.ToString();
-                //StringBuilder b = new StringBuilder("<table id=\"boroughTable\" cellspacing=\"0\">");
-                //b.Append("<thead><tr>");
-                //b.Append("<th>Borough</th>");
-                //b.Append("<th class=\"number\">Number of Assaults</th>");
-                //b.Append("<th class=\"number\">Number of Wards in Borough</th>");
-                //b.Append("</tr></thead><tbody>");
-                //foreach (var borough in boroughs)
-                //{
-                //    b.Append("<tr><td>" + borough.Borough + "</td><td>" + borough.Assaults + "</td><td>" + borough.Wards + "</td></tr>");
-                //}
-                //b.Append("</tbody></table>");
-                //_boroughs = b.ToString();
             }
             else
             {

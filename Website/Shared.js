@@ -19,3 +19,4 @@ function ShowProgress(onoff) {
     else
         $("#lblProgress").html("");
 }
+
