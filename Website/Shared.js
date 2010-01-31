@@ -4,6 +4,7 @@
 			"<a href='ACOAssaults1.aspx'>ACOAssaults1</a>" +
 			"<a href='ACOLinq.aspx'>ACOLinq</a>" +
 			"<a href='ACOMap.aspx'>ACOMap</a>" +
+			"<a href='ACOMapR.aspx'>ACOMapR</a>" +
 			"<a href='AJCTests.htm'>AJCTests</a>")
 		.prependTo("body")
 }

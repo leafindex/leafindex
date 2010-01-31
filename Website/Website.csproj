@@ -59,6 +59,13 @@
     <Compile Include="ACOMap.aspx.designer.cs">
       <DependentUpon>ACOMap.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ACOMapR.aspx.cs">
+      <DependentUpon>ACOMapR.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ACOMapR.aspx.designer.cs">
+      <DependentUpon>ACOMapR.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -83,12 +90,14 @@
     <Content Include="Copy %282%29 of ACOAssaults1.js" />
     <Content Include="Copy %283%29 of ACOAssaults1.js" />
     <Content Include="Copy of ACOAssaults1.js" />
-    <Content Include="excanvas.js" />
     <Content Include="images\boroughmap.gif" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ACOAssaultsMonthsPerBorough.ashx" />
     <Content Include="ACOMap.aspx" />
+    <Content Include="ACOMapR.aspx" />
+    <Content Include="ACOMapR.js" />
+    <Content Include="excanvas.js" />
     <Content Include="images\progress.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
