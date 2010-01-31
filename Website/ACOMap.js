@@ -2,65 +2,140 @@
     makeNavMenu();
     LoadData();
     LoadLocations();
-    $("#lnkReset").click(function() { draw(); });
-    $("#lnkData").click(function() { CheckData(); });
+    $("#BoroughDetail").hide();
     $(".MonthLink").mouseenter(function() { MonthClick(this); });
     $("#month0").addClass("MonthSelected");
     draw();
     $("#canvas").click(function(e) {
-        var offset = $(e.target).offset();
-        ClickAt((e.pageX - offset.left), (e.pageY - offset.top));
+        var x, y, offset;
+        // offset = $(e.target).offset(); // fails in IE
+        offset = $("#canvas").offset();
+        x = e.pageX - offset.left;
+        y = e.pageY - offset.top;
+        ClickAt(x, y, offset);
     });
     $("#imgMap").load(function() { draw(); });
 });
 
-var _show_month = 1;
+var _show_month = 0;
 
 function MonthClick(elt) {
     str = elt.id.substr(5);
     var x = 1 * str;
-    _show_month = 1 + x;
+    _show_month = x;
     draw();
     $(".MonthLink").removeClass("MonthSelected");
     $(elt).addClass("MonthSelected");
+    $(".BoroughDetail").remove();
+    $(".BoroughGraph").remove();
 }
 
-function CheckData() {
-    Sayuser(_data.length + " items in data " + GetBoroughFigure("Southwark", 1) );
-}
-
-function ClickAt(x, y) {
-    var i, boro;
+function ClickAt(x, y, offset ) {
+    var i, boro, elt;
     for (i = 0; i < _locations.length; i++) {
         boro = _locations[i];
         if (PointForBorough(boro, x, y)) {
-            Sayuser(boro[0] + " Month:" + _show_month + " Value:" + GetBoroughFigure( boro[0], _show_month ) );
+            elt = $("<div class='BoroughDetail'>" + MakeBoroughDetail(boro) + "</div>");
+            elt.css({ "left": (x + offset.left) + "px", "top": (y + offset.top) + "px" });
+            elt.show();
+            elt.appendTo("body");
             return;
         }
     }
-    Sayuser("No borough at " + x + "," + y);
 }
 
 function PointForBorough(boro, x, y) {
     if (PointsNear(boro[1], boro[2], x, y, 4))
         return true;
-    if (PointsNear(boro[3], boro[4], x, y, boro[5] ))
+    if (PointsNear(boro[3], boro[4], x, y, boro[5]))
         return true;
     return false;
 }
 
-function PointsNear(x0, y0, x1, y1, tolerance ) {
+function PointsNear(x0, y0, x1, y1, tolerance) {
     var diff = x0 - x1;
     if (diff < 0)
         diff = 0 - diff;
     if (diff > tolerance)
-        return false;    
+        return false;
     diff = y0 - y1;
     if (diff < 0)
         diff = 0 - diff;
     if (diff > tolerance)
         return false;
-    return true;                
+    return true;
+}
+
+function MakeBoroughDetail(boro) {
+    //return boro[0] + "<br/>" + MakeMonthYear(_show_month) + "<br/>" + GetBoroughFigure(boro[0], _show_month) + " Incidents";
+    return "<a class='MonthGraphLink' onClick='javascript:ShowGraph(this);' href='#'>" + boro[0] + "</a><br/><b>" + GetBoroughFigure(boro[0], _show_month) + "</b>";
+}
+
+function ShowGraph(elt) {
+    var offset = $(elt).parent().offset();
+    ShowBoroughGraphAt($(elt).text(), offset.left, offset.top);
+}
+
+var BGWIDTH = 200;
+var BGHEIGHT = 100;
+function ShowBoroughGraphAt(borough, x, y) {
+    var graphid = "bgraph" + $(".BoroughGraph").length;
+
+    elt = $("<div class='BoroughGraph'>" + MakeBoroughHeading( borough ) + "<br/><canvas id='" + graphid + "' width='" + BGWIDTH + "' height='" + BGHEIGHT + "'></canvas></div>");
+    elt.css({ "left": x + "px", "top": y + "px" });
+    elt.show();
+    elt.appendTo("body");
+
+    DrawBoroughGraph(borough, graphid);
+}
+
+function MakeBoroughHeading(borough) {
+    return borough + " <b>" + GetBoroughFigure(borough, _show_month) + "</b>";
+}
+
+var NUM_POINTS = 24;
+
+// http://www.mail-archive.com/jquery-en@googlegroups.com/msg49278.html is a complicated solution...
+// http://blog.poundbang.in/post/29578240/excanvas-js-getting-it-to-work-with-dynamically-added looked good
+function DrawBoroughGraph(borough, graphid) {
+    var x, xdiff, i, y, blockwidth, mycontext;
+    var canvas = document.getElementById(graphid);
+
+    if (typeof G_vmlCanvasManager != 'undefined') {
+        canvas = G_vmlCanvasManager.initElement(canvas);
+    }    
+
+    xdiff = BGWIDTH / (NUM_POINTS + 3);
+    blockwidth = 1;
+
+    if (canvas.getContext) {
+        var ctx = canvas.getContext("2d");
+
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, BGHEIGHT);
+        ctx.lineTo(BGWIDTH, BGHEIGHT);
+        ctx.stroke();
+
+        x = xdiff;
+        ctx.lineWidth = xdiff - 2;
+
+        for (i = 0; i < NUM_POINTS; i++) {
+            y = BGHEIGHT * (GetBoroughFigure(borough, i) * 1.0 / _max_assaults);
+
+            if (i == _show_month)
+                ctx.strokeStyle = "#0000ff";
+            else
+                ctx.strokeStyle = "#999999";
+            ctx.beginPath();
+            ctx.moveTo(x, BGHEIGHT - y);
+            ctx.lineTo(x, BGHEIGHT);
+            ctx.stroke();
+            x += xdiff;
+            if (i % 12 == 0)
+                x += xdiff;
+        }
+    }
 }
 
 
@@ -69,7 +144,7 @@ function GetBoroughFigure(borough, idx) {
     for (i = 0; i < _data.length; i++) {
         b = _data[i];
         if (b[0] == borough) {
-            return b[idx];
+            return b[idx + 1];
         }
     }
     alert(borough + " not found");
@@ -125,9 +200,11 @@ function LoadLocations()
     AddLocation(190, 240, "Hillingdon");
 }
 
+var RADIUS = 40;
+
 function AddLocation(x, y, borough) {
     var i = _locations.length;
-    var radius = (40.0 * GetBoroughFigure(borough, 1)) / _max_assaults;
+    var radius = (1.0 * RADIUS * GetBoroughFigure(borough, 1)) / _max_assaults;
     _locations[i] = new Array(borough, x, y, CalcBlobX(i), CalcBlobY(i), radius );
 }
 
@@ -176,7 +253,7 @@ function DoBlob(ctx, i) {
     blobx = boro[3];
     bloby = boro[4];
 
-    var radius = (40.0 * GetBoroughFigure(borough, _show_month)) / _max_assaults;
+    var radius = RADIUS * Math.sqrt(GetBoroughFigure(borough, _show_month)) / Math.sqrt(_max_assaults);
 
     SetStyleForBlob(ctx, i);
 
