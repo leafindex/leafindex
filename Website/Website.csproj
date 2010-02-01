@@ -87,9 +87,6 @@
     <Content Include="ACOMap.htm" />
     <Content Include="ACOMap.js" />
     <Content Include="cdhTests.htm" />
-    <Content Include="Copy %282%29 of ACOAssaults1.js" />
-    <Content Include="Copy %283%29 of ACOAssaults1.js" />
-    <Content Include="Copy of ACOAssaults1.js" />
     <Content Include="images\boroughmap.gif" />
   </ItemGroup>
   <ItemGroup>
