@@ -24,8 +24,7 @@ function MonthClick(elt) {
     RDraw();
     $(".MonthLink").removeClass("MonthSelected");
     $(elt).addClass("MonthSelected");
-    $(".BoroughDetail").remove();
-    $(".BoroughGraph").remove();
+    $(".BoroughDetail, .BoroughGraph").remove();
 }
 
 function ClickAt(x, y, offset) {
@@ -196,6 +195,7 @@ function AddLocation(x, y, borough) {
 }
 
 function RDraw() {
+		$("#notepad").empty();
     var paper = Raphael("notepad", 800, 640);
     var left_offset = (800 - 500) / 2;
     var top_offset = (600 - 398) / 2;
