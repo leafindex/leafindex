@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>LeafIndex Branding</title>
+    <link href="Shared.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
+    <script type="text/javascript" src="Shared.js"></script>
+    <script type="text/javascript" src="AnyPage.js"></script>  
+</head>
+<body>
+
+<h2>LeafIndex Branding</h2>
+
+Our font styles are <span class="Stress">Georgia, "Times New Roman", Times, serif;</span>. We like 
+the serifed look for its legibility and are amused by some of the digits 
+<span class="Stress">-25.1184834123223</span>.
+<p />
+Our standard colours and styles are are
+<ul>
+<li><span class="MyGreen">MyGreen</span></li>
+<li><span class="MyPurple">MyPurple</span></li>
+<li><span class="MyLinkColour">MyLinkColour</span></li>
+<li><span class="MyYellowBackground">MyYellowBackground</span></li>
+<li><span class="Stress">Stress</span> is MyPurple and Bold</li>
+</ul>
+<p />
+Page navigation elements are set by <span class="Stress">makeNavMenu()</span> in Shared.js. This is
+called from the ready() function, e.g. as in AnyPage.js:
+<pre>
+$(document).ready(function() {
+    makeNavMenu();
+});
+</pre>
+
+
+
+</body>
+</html>

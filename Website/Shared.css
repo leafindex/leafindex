@@ -1,8 +1,19 @@
 ﻿body, input {
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 13px;
-  letter-spacing: 1px
+  letter-spacing: 1px;
+  color:Black;
+  background-color:White;
+  margin:5px;
 }
+
+.MyLinkColour { color:#6895c1; }
+.MyGreen { color:#00613c; }
+.MyPurple, .Stress { color:#a659aa; }
+.MyYellowBackground { background-color:#ffefd1; }
+
+.Stress { font-weight:bold; }
+
 table {
   border: 1px solid #a659aa;
   margin: 20px 0;
@@ -82,18 +93,27 @@ th a {
 td a {
   color: #00613c
 }
+
+
 #navmenu {
   font-size: 11px;
-  margin: 10px 0 25px 0
+  margin: 10px -5px 10px -5px;
+  padding:0px 5px 10px 5px;
+  border-bottom:solid 1px #6895c1;
 }
-#navmenu a {
+#navmenu a, #ThumbnailTable A  {
   color: #6895c1;
-  margin-right: 20px
+  /*margin-right: 20px*/
+  text-decoration: none;
 }
-#navmenu a:hover, #navmenu a:focus{
+#navmenu a:hover, #navmenu a:focus, #ThumbnailTable A:hover{
   color: #41A85D;
-  text-decoration: none
+  text-decoration: underline;
 }
+
+#ThumbnailTable td { padding:5px; width:200px; }
+
+
 
 .HasFocus
 {
@@ -108,4 +128,24 @@ td a {
 .Invisible
 {
 	display:none;
+}
+
+#bottombar
+{
+    border-top:solid 1px #6895c1;
+    margin:10px -5px 0px -5px;
+    padding:10px 5px 0px 5px;
+    font-size:0.8em;
+    color:#999999;
+    margin-left:-5px;
+    margin-right:-5px;
+}
+
+pre
+{
+    margin-left:20px;
+    margin-right:20px;
+    border:solid 2px #00613c;
+    color:#00613c;
+    padding:10px;
 }
