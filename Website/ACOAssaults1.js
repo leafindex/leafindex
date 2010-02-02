@@ -378,7 +378,6 @@ function monthsDrill(tr,callback){
 	}
 }
 $(function(){
-	makeNavMenu();
 	$("#boroughTable").superTable({
 		"searchable":{"searchCtl":"#boroughSearch","searchColumn":1},
 		"clickable":[{"column":3,"superFunc":"subTable","superFuncFunc":wardsDrill},
