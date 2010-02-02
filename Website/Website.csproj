@@ -94,7 +94,10 @@
     <Content Include="ACOMap.aspx" />
     <Content Include="ACOMapR.aspx" />
     <Content Include="ACOMapR.js" />
+    <Content Include="AnyPage.js" />
+    <Content Include="Branding.htm" />
     <Content Include="excanvas.js" />
+    <Content Include="Home.htm" />
     <Content Include="images\flags\Bulgaria.gif" />
     <Content Include="images\flags\Cuba.gif" />
     <Content Include="images\flags\Germany.gif" />
@@ -102,6 +105,14 @@
     <Content Include="images\flags\Poland.gif" />
     <Content Include="images\flags\Russia.gif" />
     <Content Include="images\progress.gif" />
+    <Content Include="images\screenshots\ACOAssaults.PNG" />
+    <Content Include="images\screenshots\ACOAssaults1.PNG" />
+    <Content Include="images\screenshots\ACOMapR.PNG" />
+    <Content Include="images\screenshots\PopulationCrash.PNG" />
+    <Content Include="images\thumbnails\ACOAssaults.PNG" />
+    <Content Include="images\thumbnails\ACOAssaults1.PNG" />
+    <Content Include="images\thumbnails\ACOMapR.PNG" />
+    <Content Include="images\thumbnails\PopulationCrash.PNG" />
     <Content Include="PopulationCrash.htm" />
     <Content Include="PopulationCrash.js" />
     <Content Include="raphael-min.js" />

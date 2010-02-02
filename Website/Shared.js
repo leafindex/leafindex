@@ -1,4 +1,18 @@
-﻿function makeNavMenu(){
+﻿function makeNavMenu() {
+    $("<div id='navmenu'/>")
+        .html("<a href='Home.htm'>Home</a>"
+        + "&nbsp;:&nbsp;Ambulance Call Outs"
+        + "&nbsp;<a href='ACOAssaults1.aspx'>Summary</a>"
+        + "&nbsp;<a href='ACOMapR.aspx'>Map</a>"
+        + "&nbsp;<a href='ACOAssaults.htm'>Query</a>&nbsp;:"
+        + "&nbsp;<a href='PopulationCrash.htm'>Population Crash</a>"
+        + "&nbsp;<a href='http://leafindex.blogspot.com'>Blog</a>"
+    ).prependTo("body");
+    
+    $("<div id='bottombar'>").html( "&copy;2009 Chris Heywood / Jonathan Clarke" ).appendTo( "body" );
+}
+
+function makeNavMenuOld(){
 	$("<div id='navmenu'/>")
 		.html("<a href='ACOAssaults.htm'>ACOAssaults</a>"+
 			"<a href='ACOAssaults1.aspx'>ACOAssaults1</a>" +
