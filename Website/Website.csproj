@@ -95,7 +95,15 @@
     <Content Include="ACOMapR.aspx" />
     <Content Include="ACOMapR.js" />
     <Content Include="excanvas.js" />
+    <Content Include="images\flags\Bulgaria.gif" />
+    <Content Include="images\flags\Cuba.gif" />
+    <Content Include="images\flags\Germany.gif" />
+    <Content Include="images\flags\Japan.gif" />
+    <Content Include="images\flags\Poland.gif" />
+    <Content Include="images\flags\Russia.gif" />
     <Content Include="images\progress.gif" />
+    <Content Include="PopulationCrash.htm" />
+    <Content Include="PopulationCrash.js" />
     <Content Include="raphael-min.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
