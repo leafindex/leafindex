@@ -62,6 +62,8 @@
     
     </div>
     </div>
+    
+    <div class="ClearBoth"></div>
     </form>
 </body>
 </html>
