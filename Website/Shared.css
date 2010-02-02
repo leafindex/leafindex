@@ -101,19 +101,39 @@ td a {
   padding:0px 5px 10px 5px;
   border-bottom:solid 1px #6895c1;
 }
-#navmenu a, #ThumbnailTable A  {
+A, #navmenu a, #ThumbnailTable A  {
   color: #6895c1;
   /*margin-right: 20px*/
   text-decoration: none;
 }
-#navmenu a:hover, #navmenu a:focus, #ThumbnailTable A:hover{
+A:hover, #navmenu a:hover, #navmenu a:focus, #ThumbnailTable A:hover{
   color: #41A85D;
   text-decoration: underline;
 }
 
+#navmenulinks 
+{
+    float:left;
+    padding:8px 0 0 5px;
+}
+#navmenulogo
+{
+    float:left;
+}
+#navmenuright
+{
+    padding:8px 5px 0 0;
+    float:right;
+    font-size:1.2em;
+    font-weight:bold;
+}
+
 #ThumbnailTable td { padding:5px; width:200px; }
 
-
+.ClearBoth
+{
+    clear:both;
+}
 
 .HasFocus
 {
