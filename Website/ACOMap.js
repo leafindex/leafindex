@@ -1,5 +1,4 @@
 ﻿$(document).ready(function() {
-    makeNavMenu();
     LoadData();
     LoadLocations();
     $("#BoroughDetail").hide();
