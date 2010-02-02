@@ -5,7 +5,8 @@
 			"<a href='ACOLinq.aspx'>ACOLinq</a>" +
 			"<a href='ACOMap.aspx'>ACOMap</a>" +
 			"<a href='ACOMapR.aspx'>ACOMapR</a>" +
-			"<a href='AJCTests.htm'>AJCTests</a>")
+			"<a href='ACOMapR.aspx'>ACOMapR</a>" +
+			"<a href='PopulationCrash.htm'>Population Crash</a>")
 		.prependTo("body")
 }
 function Sayuser(msg){
