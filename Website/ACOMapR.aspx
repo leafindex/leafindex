@@ -4,12 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
-    <title>Map of Ambulance Incidents using Raphael</title>
+    <title>LeafIndex: Ambulance Call Outs to Assaults - Map</title>
     <link href="Shared.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
-    <script type="text/javascript" src="Shared.js"></script>
-    <script type="text/javascript" src="raphael-min.js"></script>
-    <script type="text/javascript" src="ACOMapR.js"></script>    
+    <script type="text/javascript" src="/js/Shared.js"></script>
+    <script type="text/javascript" src="/js/raphael-min.js"></script>
+    <script type="text/javascript" src="/js/ACOMapR.js"></script>    
   <style type="text/css">
   .MonthLink { width:100px; background-color:#ccccff; margin-bottom:3px; padding:3px; font-size:0.8em; }
   .MonthSelected { background-color:#9999ff; }
@@ -23,6 +23,8 @@
     width:200px; }
   </style></head>
 <body>
+	<h2>Ambulance Call Outs to Assault Incidents</h2>
+	<ul class="linkList"><li>Map</li><li><a href='ACOAssaults1.aspx'>Summary</a></li><li><a href='ACOAssaults.htm'>Query</a></li></ul><br class="clear"/>
     <form id="form1" runat="server">
     <div>
     <%=MyScript %>
@@ -63,7 +65,7 @@
     </div>
     </div>
     
-    <div class="ClearBoth"></div>
+    <br class="clear"/>
     </form>
 </body>
 </html>

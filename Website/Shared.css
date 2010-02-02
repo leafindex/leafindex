@@ -1,171 +1,207 @@
 ﻿body, input {
+  background-color: #fff;
+  color: #000;
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 13px;
   letter-spacing: 1px;
-  color:Black;
-  background-color:White;
   margin:5px;
 }
-
-.MyLinkColour { color:#6895c1; }
-.MyGreen { color:#00613c; }
-.MyPurple, .Stress { color:#a659aa; }
-.MyYellowBackground { background-color:#ffefd1; }
-
-.Stress { font-weight:bold; }
-
-table {
+a {
+  color: #005bc4
+}
+a:hover, a:focus {
+  background-color: #ffefd1;
+  text-decoration: none;
+}
+#navmenu {
+  border-bottom: solid 1px #c9d7f1;
+  margin: 10px -5px 20px -5px;
+  padding: 0px 5px 7px 5px;
+}
+#navmenuLinks {
+  font-size: 11px;
+  float: left;
+  padding: 8px 15px 0 5px
+}
+#navmenuLinks a {
+  margin-right: 15px;
+  text-decoration: underline
+}
+#navmenuLinks a.dropdownMenuing {
+  text-decoration: none
+}
+#navmenuLogo {
+  float: left;
+}
+#navmenuLogo a:hover{
+  background-color: #fff;
+}  
+#navmenuName {
+  float: right;
+  font-weight: bold;
+  padding: 8px 5px 0 0
+}
+#navmenuName a {
+  color: #783E25;
+  text-decoration: none
+}
+.dropdownMenu {
+  background-color: #fff;
+  border-left: solid 1px #c9d7f1;
+  border-top: solid 1px #c9d7f1;
+  border-right: solid 1px #005bc4;
+  border-bottom: solid 1px #005bc4;
+  font-size: 11px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1001
+}
+.dropdownMenu a {
+  display: block;
+  margin: 3px 0;
+  padding: 2px
+}
+a.dropdownMenuing {
+  text-decoration: none
+}
+span.dropdownMenuLink {
+  text-decoration: underline
+}
+.dropdownMenuThing {
+  text-decoration: none;
+  font-size: 10px;
+  margin-left: 2px
+}
+.linkList {
+  font-size: 11px;
+  list-style: none;
+  padding-left: 0
+}
+.linkList li {
+  float: left;
+  margin-top: -8px;
+  margin-bottom: 15px;
+  padding-right: 10px
+}
+.linkList li:first-child {
+  font-weight: bold;
+  letter-spacing: 2px
+}
+br.clear {
+  clear: both
+}
+#bottombar {
+  border-top: solid 1px #c9d7f1;
+  color: #999;
+  font-size: 11px;
+  margin: 25px -5px 0 -5px;
+  padding: 10px 0 0 5px;
+}
+.superTable {
   border: 1px solid #a659aa;
   margin: 20px 0;
 }
-table th {
+.superTable th {
   font-size: 11px;
   font-weight: normal;
   padding: 2px 5px;
   text-align: left
 }
-table th.number, table td.number {
+.superTable th.number, .superTable td.number {
   text-align: right;
   width: 100px
 }
-table td {
+.superTable td {
   color: #00613c;
   padding: 2px 5px
 }
-table td.hover, table th.hover {
+.superTable td.hover, .superTable th.hover {
   cursor: pointer
 }
-table td.hover:hover, table th.hover:hover {
+.superTable td.hover:hover, .superTable th.hover:hover {
   background-color: #ffefd1
 }
-table td.number {
+.superTable td.number {
   font-family: "Palatino Linotype", Palatino, "Times New Roman", Times, serif
 }
-.subTable table {
+.superTable tr.highlight, .superTable td.highlight {
+  background-color: #ffefd1
+}
+.superTable td.highlight {
+  padding-top: 0
+}
+.superTable tr.highlight td {
+  color: #005bc4
+}
+.superTable th a {
+  color: #a659aa
+}
+.superTable td a {
+  color: #00613c
+}
+.superTableSubTable table {
   border: 1px solid #a659aa;
   font-size: 11px;
   margin: 0 0 5px 0;
   width: 100%
 }
-.subTable th {
+.superTableSubTable th {
   background-color: #fff;
   color: #783e25
 }
-.subTable a {
+.superTableSubTable th a {
   color: #783e25
 }
-.subTable td {
+.superTableSubTable td {
   background-color: #fff;
   color: #005bc4
 }
-.subTableClose {
+div.superTableSubTableClose {
   cursor: pointer;
   font-size: 10px;
   height: 10px;
   padding-left: 2px;
   text-align: center
 }
-.subTableClose a {
+div.superTableSubTableClose a {
   color: #a659aa;
   text-decoration: none
 }
-.subTableClose span {
+div.superTableSubTableClose span {
   font-size: 10px
 }
-.subTableClose:hover {
+div.superTableSubTableClose:hover {
   background-color: #a659aa
 }
-.subTableClose:hover a {
+div.superTableSubTableClose:hover a {
   color: #ffefd1
 }
-tr.highlight, td.highlight {
-  background-color: #ffefd1
+div.superTableSubTableClose a:hover {
+  background-color: transparent
 }
-td.highlight {
-  padding-top: 0
+#ThumbnailTable {
+  border: 1px solid #a659aa;
 }
-tr.highlight td {
-  color: #005bc4
+#ThumbnailTable td {
+  font-size: 11px;
+  padding: 10px;
+  width: 200px
 }
-th a {
-  color: #a659aa
-}
-td a {
+#ThumbnailTable a {
   color: #00613c
 }
-
-
-#navmenu {
-  font-size: 11px;
-  margin: 10px -5px 10px -5px;
-  padding:0px 5px 10px 5px;
-  border-bottom:solid 1px #6895c1;
+.MyLinkColour { color:#6895c1; }
+.MyGreen { color:#00613c; }
+.MyPurple, .Stress { color:#a659aa; }
+.MyYellowBackground { background-color:#ffefd1; }
+.Stress { font-weight:bold; }
+.HasFocus {
+	background-color: yellow;
 }
-A, #navmenu a, #ThumbnailTable A  {
-  color: #6895c1;
-  /*margin-right: 20px*/
-  text-decoration: none;
-}
-A:hover, #navmenu a:hover, #navmenu a:focus, #ThumbnailTable A:hover{
-  color: #41A85D;
-  text-decoration: underline;
-}
-
-#navmenulinks 
-{
-    float:left;
-    padding:8px 0 0 5px;
-}
-#navmenulogo
-{
-    float:left;
-}
-#navmenuright
-{
-    padding:8px 5px 0 0;
-    float:right;
-    font-size:1.2em;
-    font-weight:bold;
-}
-
-#ThumbnailTable td { padding:5px; width:200px; }
-
-.ClearBoth
-{
-    clear:both;
-}
-
-.HasFocus
-{
-	background-color:Yellow;
-}
-
-.SayuserMessage
-{
-	color:Red;
+.SayuserMessage {
+	color: Red;
 	font-weight:bold;
 }
-.Invisible
-{
+.Invisible {
 	display:none;
-}
-
-#bottombar
-{
-    border-top:solid 1px #6895c1;
-    margin:10px -5px 0px -5px;
-    padding:10px 5px 0px 5px;
-    font-size:0.8em;
-    color:#999999;
-    margin-left:-5px;
-    margin-right:-5px;
-}
-
-pre
-{
-    margin-left:20px;
-    margin-right:20px;
-    border:solid 2px #00613c;
-    color:#00613c;
-    padding:10px;
 }

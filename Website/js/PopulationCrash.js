@@ -39,14 +39,15 @@ function AddPoint(country, change) {
 
 function ShowData() {
     var i, c;
-    var tbl = "<table><tr><th>Country</th><th>%age change</th>";
+    var tbl = "<table id='popcrash'><thead><tr><th>Country</th><th>%age change</th></thead><tbody>";
     for (i = 0; i < _country_data.length; i++) {
         c = _country_data[i];
         tbl += "<tr><td>" + c[0] + "</td><td>" + c[1] + "</td></tr>";
         ShowFlag(c);
     }
-    tbl += "</table>";
+    tbl += "</tbody></table>";
     $("#RawData").html(tbl);
+    $("#popcrash").superTable();
 }
 
 function ShowFlag(c) {

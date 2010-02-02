@@ -42,9 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ACOAssaults.htm" />
-    <Content Include="ACOAssaults.js" />
+    <Content Include="js\ACOAssaults.js" />
     <Content Include="Shared.css" />
-    <Content Include="Shared.js" />
+    <Content Include="js\Shared.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -69,7 +69,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ACOAssaults.ashx" />
+    <Content Include="handler\ACOAssaults.ashx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ScLib\ScLib.csproj">
@@ -79,43 +79,55 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ACOAssaults1.aspx" />
-    <Content Include="ACOAssaults1.js" />
-    <Content Include="AJCTests.htm" />
+    <Content Include="js\ACOAssaults1.js" />
+    <Content Include="tests\AJCTests.htm" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ACOAssaultsWardsPerBorough.ashx" />
+    <Content Include="handler\ACOAssaultsWardsPerBorough.ashx" />
     <Content Include="ACOMap.htm" />
-    <Content Include="ACOMap.js" />
-    <Content Include="cdhTests.htm" />
+    <Content Include="js\ACOMap.js" />
+    <Content Include="tests\cdhTests.htm" />
     <Content Include="images\boroughmap.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ACOAssaultsMonthsPerBorough.ashx" />
+    <Content Include="handler\ACOAssaultsMonthsPerBorough.ashx" />
     <Content Include="ACOMap.aspx" />
     <Content Include="ACOMapR.aspx" />
-    <Content Include="ACOMapR.js" />
-    <Content Include="AnyPage.js" />
+    <Content Include="js\ACOMapR.js" />
     <Content Include="Branding.htm" />
-    <Content Include="excanvas.js" />
+    <Content Include="Credits.htm" />
+    <Content Include="js\excanvas.js" />
+    <Content Include="favicon.ico" />
     <Content Include="Home.htm" />
+    <Content Include="images\flags\Belarus.gif" />
+    <Content Include="images\flags\BosniaAndHerzegovina.gif" />
     <Content Include="images\flags\Bulgaria.gif" />
+    <Content Include="images\flags\Croatia.gif" />
     <Content Include="images\flags\Cuba.gif" />
+    <Content Include="images\flags\Georgia.gif" />
     <Content Include="images\flags\Germany.gif" />
+    <Content Include="images\flags\Greenland.gif" />
+    <Content Include="images\flags\Guyana.gif" />
+    <Content Include="images\flags\Hungary.gif" />
     <Content Include="images\flags\Japan.gif" />
+    <Content Include="images\flags\Latvia.gif" />
+    <Content Include="images\flags\Lithuania.gif" />
+    <Content Include="images\flags\Moldova.gif" />
+    <Content Include="images\flags\Niue.gif" />
     <Content Include="images\flags\Poland.gif" />
+    <Content Include="images\flags\Romania.gif" />
     <Content Include="images\flags\Russia.gif" />
+    <Content Include="images\flags\Ukraine.gif" />
+    <Content Include="images\flags\VirginIslands.gif" />
+    <Content Include="images\Logo2.png" />
     <Content Include="images\progress.gif" />
-    <Content Include="images\screenshots\ACOAssaults.PNG" />
-    <Content Include="images\screenshots\ACOAssaults1.PNG" />
-    <Content Include="images\screenshots\ACOMapR.PNG" />
-    <Content Include="images\screenshots\PopulationCrash.PNG" />
     <Content Include="images\thumbnails\ACOAssaults.PNG" />
     <Content Include="images\thumbnails\ACOAssaults1.PNG" />
     <Content Include="images\thumbnails\ACOMapR.PNG" />
     <Content Include="images\thumbnails\PopulationCrash.PNG" />
     <Content Include="PopulationCrash.htm" />
-    <Content Include="PopulationCrash.js" />
-    <Content Include="raphael-min.js" />
+    <Content Include="js\PopulationCrash.js" />
+    <Content Include="js\raphael-min.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -24,7 +24,7 @@ function FetchResults(borough, frequency){
 	var callback = function(xml){
 		DisplayResults(xml);
 	};
-	$.post("ACOAssaults.ashx", data, callback ); 
+	$.post("/handler/ACOAssaults.ashx", data, callback ); 
 }
 
 function DisplayResults(xml) {
