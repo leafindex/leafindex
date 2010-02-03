@@ -6,8 +6,8 @@
 	<title>LeafIndex: Ambulance Call Outs to Assaults - Summary</title>
   <link href="Shared.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
-  <script type="text/javascript" src="/js/Shared.js"></script>
-  <script type="text/javascript" src="/js/ACOAssaults1.js"></script>
+  <script type="text/javascript" src="./js/Shared.js"></script>
+  <script type="text/javascript" src="./js/ACOAssaults1.js"></script>
 </head>
 <body>
 	<h2>Ambulance Call Outs to Assault Incidents</h2>
