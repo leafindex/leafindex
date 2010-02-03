@@ -95,6 +95,7 @@
     <Content Include="ACOMap.aspx" />
     <Content Include="ACOMapR.aspx" />
     <Content Include="images\logo.png" />
+    <Content Include="images\thumbnails\BlairAtChilcot.PNG" />
     <Content Include="js\ACOMapR.js" />
     <Content Include="Branding.htm" />
     <Content Include="Credits.htm" />
