@@ -90,6 +90,7 @@
     <Content Include="images\boroughmap.gif" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BlairAtChilcot.htm" />
     <Content Include="handler\ACOAssaultsMonthsPerBorough.ashx" />
     <Content Include="ACOMap.aspx" />
     <Content Include="ACOMapR.aspx" />
@@ -97,6 +98,7 @@
     <Content Include="js\ACOMapR.js" />
     <Content Include="Branding.htm" />
     <Content Include="Credits.htm" />
+    <Content Include="js\BlairAtChilcot.js" />
     <Content Include="js\excanvas.js" />
     <Content Include="favicon.ico" />
     <Content Include="Home.htm" />
