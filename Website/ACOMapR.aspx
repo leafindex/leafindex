@@ -7,9 +7,9 @@
     <title>LeafIndex: Ambulance Call Outs to Assaults - Map</title>
     <link href="Shared.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/Shared.js"></script>
-    <script type="text/javascript" src="/js/raphael-min.js"></script>
-    <script type="text/javascript" src="/js/ACOMapR.js"></script>    
+    <script type="text/javascript" src="./js/Shared.js"></script>
+    <script type="text/javascript" src="./js/raphael-min.js"></script>
+    <script type="text/javascript" src="./js/ACOMapR.js"></script>    
   <style type="text/css">
   .MonthLink { width:100px; background-color:#ccccff; margin-bottom:3px; padding:3px; font-size:0.8em; }
   .MonthSelected { background-color:#9999ff; }
