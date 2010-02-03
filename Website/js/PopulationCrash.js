@@ -53,7 +53,7 @@ function ShowData() {
 function ShowFlag(c) {
     var width = 122, height = 62, fc, rwidth, elt;
     fc = "FlagContainer" + TrimmedName( c );
-    $("#Flags").append("<div class='FlagContainer' id='" + fc + "'></div>");
+    $("#Flags").append("<div class='FlagOutside'><div class='FlagTitle'>" + c[0] + "<br/>" + c[1] + "%</div><div class='FlagContainer' id='" + fc + "'></div></div>");
     
     var paper = Raphael(fc, width, height);
     var src = "images/flags/" + TrimmedName(c) + ".gif";
