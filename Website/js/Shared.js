@@ -1,14 +1,13 @@
 ﻿ function makeNavMenu() {
 	var m=$("<div id='navmenu'/>")
-		.html("<div id='navmenuLogo'><a href='Home.htm'><img src='images/logo2.png' alt='Logo' width='32' height='31' border='0'/></a></div>"
+		.html("<div id='navmenuLogo'><a href='Home.htm'><img src='images/logo.png' alt='LeafIndex' width='52' height='60' border='0'/></a></div>"
+			+ "<div id='navmenuName'><a href='Home.htm'>LeafIndex</a></div>"
 			+ "<div id='navmenuLinks'><a href='Home.htm'>Home</a>"
 			+ "<a href='#' class='dropdownMenuing assaults' id='assaults'>Ambulance Call Outs To Assaults</a>"
 			+ "<a href='PopulationCrash.htm'>Population Crash</a>"
 			+ "<a href='http://leafindex.blogspot.com'>Blog</a>"
 			+ "<a href='Credits.htm'>Credits</a>"
-			+ "</div>"
-			+ "<div id='navmenuName'><a href='Home.htm'>LeafIndex</a></div>"
-			+ "<br class='clear'/>");
+			+ "</div>");
 	makeDropdownMenu(
 		m.find(".dropdownMenuing").filter(".assaults"),
 			"<a href='ACOAssaults1.aspx'>Summary</a>","<a href='ACOMapR.aspx'>Map</a>","<a href='ACOAssaults.htm'>Query</a>");
@@ -48,7 +47,7 @@ function dropdownMenu(menuLink){
   var o=menuLink.offset();
   d.appendTo("body")
   d
-		.css({"left":(o.left+menuLink.outerWidth()-d.outerWidth())+"px","top":(o.top+menuLink.outerHeight()+5)+"px"})
+		.css({"left":(o.left+menuLink.outerWidth()-d.outerWidth())+"px","top":(o.top+menuLink.outerHeight()+7)+"px"})
 		.show();
 	$(document).bind("mousedown.dropdownMenu",function(e){
 		var t=$(e.target);
