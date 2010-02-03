@@ -21,7 +21,6 @@ a:hover, a:focus {
 }
 #navmenuLinks {
   font-size: 11px;
-  float: left;
   padding: 8px 15px 0 5px
 }
 #navmenuLinks a {
@@ -33,17 +32,17 @@ a:hover, a:focus {
 }
 #navmenuLogo {
   float: left;
+  margin-top: -7px
 }
 #navmenuLogo a:hover{
   background-color: #fff;
 }  
 #navmenuName {
-  float: right;
   font-weight: bold;
   padding: 8px 5px 0 0
 }
 #navmenuName a {
-  color: #783E25;
+  color: #000;
   text-decoration: none
 }
 .dropdownMenu {
