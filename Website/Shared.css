@@ -15,9 +15,8 @@ a:hover, a:focus {
 }
 #navmenu {
   border-bottom: solid 1px #c9d7f1;
-  height:34px;
-  margin: 0px -5px 20px -5px;
-  padding: 0px 5px 0px 5px;
+  margin: 10px -5px 20px -5px;
+  padding: 0px 5px 7px 5px;
 }
 #navmenuLinks {
   font-size: 11px;
