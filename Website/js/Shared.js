@@ -5,6 +5,7 @@
 			+ "<div id='navmenuLinks'><a href='Home.htm'>Home</a>"
 			+ "<a href='#' class='dropdownMenuing assaults' id='assaults'>Ambulance Call Outs To Assaults</a>"
 			+ "<a href='PopulationCrash.htm'>Population Crash</a>"
+			+ "<a href='BlairAtChilcot.htm'>Blair at Chilcot</a>"
 			+ "<a href='http://leafindex.blogspot.com'>Blog</a>"
 			+ "<a href='Credits.htm'>Credits</a>"
 			+ "</div>");
