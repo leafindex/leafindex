@@ -104,7 +104,8 @@ br.clear {
   font-size: 11px;
   font-weight: normal;
   padding: 2px 5px;
-  text-align: left
+  text-align: left;
+  vertical-align: bottom
 }
 .superTable th.number, .superTable td.number {
   text-align: right;
@@ -112,7 +113,8 @@ br.clear {
 }
 .superTable td {
   color: #00613c;
-  padding: 2px 5px
+  padding: 2px 5px;
+  vertical-align: top
 }
 .superTable td.hover, .superTable th.hover {
   cursor: pointer

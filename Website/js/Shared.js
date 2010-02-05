@@ -142,16 +142,18 @@ $.fn.superTable=function(options){
 				row.sortKey=null;
 			});
 			if(mainTable){
-				$.each(rows,function(i,row){
-					$.each(subRowCache[i],function(t,subRow){
-						if(subRow.is(":visible")){
-							$(row).after(subRow);
-							reHeight=true;
-						}
+				if(hasSubRowCache){
+					$.each(rows,function(i,row){
+						$.each(subRowCache[i],function(t,subRow){
+							if(subRow.is(":visible")){
+								$(row).after(subRow);
+								reHeight=true;
+							}
+						});
 					});
-				});
-				if(reHeight&&(table.height()!=tHeight)){//ie8?!
-					table.height(tHeight);
+					if(reHeight&&(table.height()!=tHeight)){//ie8?!
+						table.height(tHeight);
+					}
 				}
 			}
 		}
@@ -317,21 +319,24 @@ $.fn.superTable=function(options){
 			var targ=$(e.target).closest("div, td, th");
 			if(targ.is("th")){
 				sort(targ);
+				return false;
 			}
 			else{
 				if(targ.is("div")){
 					if(targ.hasClass("superTableSubTableClose")){
 						subTableClose(targ.closest("tr"));
+						return false;
 					}
 				}
 				else{
 					var f=table.data("superTableClick"+(targ.index()+1));
 					if(f){
 						f(targ);
+						return false;
 					}
 				}
 			}
-			return false;
+			return true;
 		}
 		function clicking(){
 			if(typeof(options)=="object"&&typeof(options.clickable)=="object"){

@@ -7,7 +7,7 @@
     <title>Map of Ambulance Incidents</title>
   <link href="Shared.css" rel="stylesheet" type="text/css" />
   <!--[if IE]><script src="/js/excanvas.js"></script><![endif]-->
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="./js/Shared.js"></script>
   <script type="text/javascript" src="./js/ACOMap.js"></script>
   <style type="text/css">
