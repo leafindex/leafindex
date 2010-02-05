@@ -29,9 +29,9 @@
     <div>
     <%=MyScript %>
     <div style="width:1000px;float:left;">
-    <div id="notepad" style="width:800px; height:640px; border:solid 1px black;float:left;"></div>
+
     
-<div style="margin-left:10px;float:left;">
+<div style="margin-left:10px;margin-right:10px;float:left;">
 <div id="month0" class="MonthLink">Dec 2007</div>
 <div class="YearDivider"></div>
 <div  id="month1" class="MonthLink">Jan 2008</div>
@@ -58,10 +58,9 @@
 <div  id="month21" class="MonthLink">Sep</div>
 <div  id="month22" class="MonthLink">Oct</div>
 <div  id="month23" class="MonthLink">Nov</div>
-<div class="YearDivider"></div>
-
 </div>
-    
+
+<div id="notepad" style="width:800px; height:640px; border:solid 1px black;float:left;"></div>    
     </div>
     </div>
     

@@ -63,7 +63,7 @@ function PointsNear(x0, y0, x1, y1, tolerance) {
 }
 
 function MakeBoroughDetail(boro) {
-    return "<a class='MonthGraphLink' onClick='javascript:ShowGraph(this);' href='#'>" + boro[0] + "</a><br/><b>" + GetBoroughFigure(boro[0], _show_month) + "</b>";
+    return "<a class='MonthGraphLink' onClick='javascript:ShowGraph(this);return false;' href='#'>" + boro[0] + "</a><br/><b>" + GetBoroughFigure(boro[0], _show_month) + "</b>";
 }
 
 function ShowGraph(elt) {
@@ -71,12 +71,20 @@ function ShowGraph(elt) {
     ShowBoroughGraphAt($(elt).text(), offset.left, offset.top);
 }
 
+var PAPERHEIGHT = 640;
 var BGWIDTH = 200;
 var BGHEIGHT = 100;
 function ShowBoroughGraphAt(borough, x, y) {
     var graphid = "bgraph" + $(".BoroughGraph").length;
+    var overspill = y + BGHEIGHT - ($("#notepad").offset().top + PAPERHEIGHT);
+    if (overspill > 0)
+        y -= overspill;
 
     elt = $("<div class='BoroughGraph'>" + MakeBoroughHeading(borough) + "<br/><div id='" + graphid + "' width='" + BGWIDTH + "' height='" + BGHEIGHT + "'></div></div>");
+    
+//    if (y + BGHEIGHT > PAPERHEIGHT)
+//        y = PAPERHEIGHT - BGHEIGHT;
+
     elt.css({ "left": x + "px", "top": y + "px" });
     elt.show();
     elt.appendTo("body");
@@ -124,7 +132,6 @@ function DrawBoroughGraph(borough, graphid) {
             x += xdiff;
     }
 }
-
 
 function GetBoroughFigure(borough, idx) {
     var b, i = 0;
@@ -194,8 +201,8 @@ function AddLocation(x, y, borough) {
 }
 
 function RDraw() {
-		$("#notepad").empty();
-    var paper = Raphael("notepad", 800, 640);
+	$("#notepad").empty();
+	var paper = Raphael("notepad", 800, PAPERHEIGHT);
     var left_offset = (800 - 500) / 2;
     var top_offset = (600 - 398) / 2;
     var c = paper.image("images/boroughmap.gif", left_offset, top_offset, 500, 398);
@@ -240,6 +247,13 @@ function DoBlob(paper, i) {
     c = paper.circle(blobx, bloby, radius);
     c.attr("fill", colour);
     c.attr("stroke", colour);
+    c.attr("stroke-width", 2);
+    c.mouseover(function(event) {
+        this.attr("fill", "white");
+    });
+    c.mouseout(function(event) {
+    this.attr("fill", colour);
+    });
 }
 
 function MakePathString( x0, y0, x1, y1) {
