@@ -5,7 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
 	<title>LeafIndex: Ambulance Call Outs to Assaults - Summary</title>
   <link href="Shared.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="./js/Shared.js"></script>
   <script type="text/javascript" src="./js/ACOAssaults1.js"></script>
 </head>

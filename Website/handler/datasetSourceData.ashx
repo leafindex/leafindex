@@ -13,19 +13,23 @@ public class datasetSourceData : IHttpHandler
 			int	datasetId;
 			if (Int32.TryParse(context.Request["dataset"], out datasetId))
 			{
-				SqlCommand cmd = new SqlCommand("pr_datasetsSourceDataRead", new SqlConnection(ConfigurationManager.ConnectionStrings["datasets"].ConnectionString));
-				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.AddWithValue("@datasetId", datasetId);
-				cmd.Connection.Open();			
-				SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-				if (reader.Read())
+				using (SqlCommand cmd = new SqlCommand("pr_datasetsSourceDataRead", new SqlConnection(ConfigurationManager.ConnectionStrings["datasets"].ConnectionString)))
 				{
-					context.Response.CacheControl="public";
-					context.Response.AddHeader("Content-Disposition", "attachment;filename=\"" + reader[0] + "\"");
-					context.Response.ContentType = "application/octet-stream";
-					context.Response.BinaryWrite((byte[])reader[1]);
-				}
-				reader.Close();
+					cmd.CommandType = CommandType.StoredProcedure;
+					cmd.Parameters.AddWithValue("@datasetId", datasetId);
+					cmd.Connection.Open();
+					using (SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection))
+					{
+						if (reader.Read())
+						{
+							context.Response.CacheControl = "public";
+							context.Response.AddHeader("Content-Disposition", "attachment;filename=\"" + reader[0] + "\"");
+							context.Response.ContentType = "application/octet-stream";
+							context.Response.BinaryWrite((byte[])reader[1]);
+						}
+						reader.Close();
+					}					
+				}				
 			}		
 	}
 
