@@ -65,6 +65,7 @@
     <Compile Include="cdhTests.cs" />
     <Compile Include="ACOAssaultMonth.cs" />
     <Compile Include="ACOAssaultMonthsPerBorough.cs" />
+    <Compile Include="CodeScanner.cs" />
     <Compile Include="FrequencyParser.cs" />
     <Compile Include="LinqTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

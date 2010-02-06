@@ -70,6 +70,13 @@
     <Compile Include="ACOMapR.aspx.designer.cs">
       <DependentUpon>ACOMapR.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Chartjunk.aspx.cs">
+      <DependentUpon>Chartjunk.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Chartjunk.aspx.designer.cs">
+      <DependentUpon>Chartjunk.aspx</DependentUpon>
+    </Compile>
     <Compile Include="datasetsList.aspx.cs">
       <DependentUpon>datasetsList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -144,7 +151,9 @@
     <Content Include="datasetsList.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Chartjunk.aspx" />
     <Content Include="handler\datasetSourceData.ashx" />
+    <Content Include="js\Chartjunk.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />

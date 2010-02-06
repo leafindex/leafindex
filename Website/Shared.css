@@ -206,3 +206,7 @@ div.superTableSubTableClose a:hover {
 .Invisible {
 	display:none;
 }
+.ClearBoth
+{
+    clear:both;
+}

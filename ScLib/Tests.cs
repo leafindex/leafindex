@@ -4,6 +4,7 @@ using System.Text;
 using Xunit;
 using Xunit.Extensions;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace ScLib
 {
@@ -153,6 +154,36 @@ namespace ScLib
             Assert.Null(x);
             Assert.True(y == "hello");
             Assert.True(z == "hello");
+        }
+
+        [Fact]
+        public void CodeScannerHtmlCss()
+        {
+            CodeScanner cs = new CodeScanner( Path.Combine( TestData.RootDirectory, "Website" ) );
+            Assert.True( Directory.Exists(cs.RootDirectory));
+
+            int files_scanned = cs.DoHtmlCssScan( "*.css", "*.htm", "*.aspx");
+            Assert.True(files_scanned > 0);
+            Console.WriteLine("{0} inline, {1} head, rating {2}%", cs.Inline, cs.Head, cs.Percentage.ToString("0.00"));
+            foreach (CodeScannerHtmlCssAspx f in cs.MyFiles)
+                Console.WriteLine(f.Total + " in " + f.Filename);
+        }
+
+        [Fact]
+        public void CodeScannerCheckFile()
+        {
+            string  dir = Path.Combine( TestData.RootDirectory, "Website" );
+            string filename = Path.Combine(dir, "ACOMapR.aspx");
+            Assert.True(File.Exists(filename));
+
+            CodeScannerHtmlCssAspx file = new CodeScannerHtmlCssAspx(filename);
+            Console.WriteLine("{0} inline, {1} head, rating {2}%", file.Inline, file.Head, file.Percentage.ToString("0.00"));
+        }
+
+        [Fact]
+        public void CountInStrings()
+        {
+            Assert.True(3 == CodeScannerHtmlCssAspx.CountInStrings("this { has { three { braces", "{"));
         }
     }
 }
