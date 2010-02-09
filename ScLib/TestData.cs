@@ -22,9 +22,12 @@ namespace ScLib
         {
             get
             {
-                return Path.Combine(RootDirectory, @"DataSets\ambulance-all-assaults-ward.xml");
-
+                return FullFilenameInDatasets("ambulance-all-assaults-ward.xml");
             }
+        }
+        public static string FullFilenameInDatasets(string filename)
+        {
+            return Path.Combine(RootDirectory, @"DataSets\" + filename);
         }
     }
 }
