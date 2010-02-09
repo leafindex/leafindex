@@ -122,14 +122,11 @@ namespace ScLib
             Assert.True(File.Exists(policefile));
             Console.WriteLine("exists:" + policefile);
 
-            XDocument doc = XDocument.Load(policefile);
-            var places =
-                    from b in doc.Descendants("Document")
-                        .Descendants("Folder")
-                        .Descendants("Folder")
-                        .Descendants("Folder")
-                        .Descendants("Placemark")
-                    select new { name = b.Element("name").Value };
+			XElement xel = XElement.Load(policefile);
+			XNamespace ns = xel.Attribute("xmlns").Value;
+			var places =
+					from b in xel.Descendants(ns + "Placemark")
+					select new { name = b.Element(ns + "name").Value };
             foreach (var place in places)
                 Console.WriteLine(place.name);
         }
