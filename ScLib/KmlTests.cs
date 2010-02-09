@@ -5,17 +5,25 @@ using System.Text;
 using Xunit;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace ScLib
 {
     public class KmlTests
     {
-        private const string FILENAME = @"C:\Documents and Settings\Jo Clarke\My Documents\Hardwix\Datasets\UKLocationsFromKml.kml";
+        // private const string FILENAME = @"C:\Documents and Settings\Jo Clarke\My Documents\Hardwix\Datasets\UKLocationsFromKml.kml";
         //private const string FILENAME = @"C:\Documents and Settings\Jo Clarke\My Documents\Hardwix\Datasets\TestLocations.kml";
+
+        private string FILENAME
+        {
+            get { return TestData.FullFilenameInDatasets("UKLocationsFromKml.kml"); }
+        }
+
         [Fact]
         public void FileExists()
         {
             Assert.True(File.Exists(FILENAME));
+            Console.WriteLine("File exists " + FILENAME);
         }
         [Fact]
         public void UKLocationsFromKmlLoad()
@@ -85,6 +93,45 @@ namespace ScLib
             PlaceWithLoops p = u.GetPlace("ENGLAND");
             Assert.NotNull(p);
             Console.WriteLine(p.MyExtent);
+        }
+
+        [Fact]
+        public void ForCDHTampered()
+        {
+            string policefile = FILENAME;
+
+            Assert.True(File.Exists(policefile));
+            Console.WriteLine("exists:" + policefile);
+
+            XDocument doc = XDocument.Load(policefile);
+            var places =
+                    from b in doc.Descendants("Document")
+                        .Descendants("Folder")
+                        .Descendants("Folder")
+                        .Descendants("Folder")
+                        .Descendants("Placemark")
+                    select new { name = b.Element("name").Value };
+            foreach (var place in places)
+                Console.WriteLine(place.name);
+        }
+        [Fact]
+        public void ForCDHUKPolice()
+        {
+            string policefile = TestData.FullFilenameInDatasets("UKPolice.kml");
+
+            Assert.True(File.Exists(policefile));
+            Console.WriteLine("exists:" + policefile);
+
+            XDocument doc = XDocument.Load(policefile);
+            var places =
+                    from b in doc.Descendants("Document")
+                        .Descendants("Folder")
+                        .Descendants("Folder")
+                        .Descendants("Folder")
+                        .Descendants("Placemark")
+                    select new { name = b.Element("name").Value };
+            foreach (var place in places)
+                Console.WriteLine(place.name);
         }
     }
 }

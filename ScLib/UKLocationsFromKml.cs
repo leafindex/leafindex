@@ -178,6 +178,10 @@ namespace ScLib
                 KmlCoord c = new KmlCoord(m.Groups["x"].Value, m.Groups["y"].Value, m.Groups["z"].Value);
                 _list.Add(c);
                 _extent.Inflate(c);
+                if (c.X < -6.0)
+                {
+                    Console.WriteLine(c.ToString() + " <- " + m.Value );
+                }
             }
 	    }
 
