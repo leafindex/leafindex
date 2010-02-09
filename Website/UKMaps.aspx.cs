@@ -101,12 +101,11 @@ namespace Website
         private string GetKmlFileForSource(string source)
         {
             if (source == SOURCE_COUNTRIES)
-                return System.IO.Path.Combine(Request.PhysicalApplicationPath, ConfigurationManager.AppSettings["UKLocationsFromKml"]);
+                return System.IO.Path.Combine(Request.PhysicalApplicationPath, @"..\DataSets\UKLocationsFromKml.kml" );
             if (source == SOURCE_POLICE)
-                return System.IO.Path.Combine(Request.PhysicalApplicationPath, ConfigurationManager.AppSettings["UKPolice"]);
+                return System.IO.Path.Combine(Request.PhysicalApplicationPath, @"..\DataSets\UKPolice.kml");
 
             return System.IO.Path.Combine(Request.PhysicalApplicationPath, @"..\DataSets\" + source + ".kml" );
-            // throw new Exception("GetKmlFileForSource does not handle " + source);
         }
     }
 }
