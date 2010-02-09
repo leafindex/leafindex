@@ -11,24 +11,25 @@ namespace ScLib
 {
     public class KmlTests
     {
-        // private const string FILENAME = @"C:\Documents and Settings\Jo Clarke\My Documents\Hardwix\Datasets\UKLocationsFromKml.kml";
-        //private const string FILENAME = @"C:\Documents and Settings\Jo Clarke\My Documents\Hardwix\Datasets\TestLocations.kml";
-
-        private string FILENAME
+        private string UkCountriesFile
         {
             get { return TestData.FullFilenameInDatasets("UKLocationsFromKml.kml"); }
+        }
+        private string PoliceFile
+        {
+            get { return TestData.FullFilenameInDatasets("UKPolice.kml"); }
         }
 
         [Fact]
         public void FileExists()
         {
-            Assert.True(File.Exists(FILENAME));
-            Console.WriteLine("File exists " + FILENAME);
+            Assert.True(File.Exists(UkCountriesFile));
+            Console.WriteLine("File exists " + UkCountriesFile);
         }
         [Fact]
         public void UKLocationsFromKmlLoad()
         {
-            UKLocationsFromKml u = new UKLocationsFromKml(FILENAME);
+            UKLocationsFromKml u = new UKLocationsFromKml(UkCountriesFile);
             List<string> places = u.GetPlacenames();
             Console.WriteLine(places.Count + " places");
             for (int i = 0; i < 20 && i < places.Count; i++)
@@ -51,6 +52,21 @@ namespace ScLib
                 PrintXYZ(coll[i]);
         }
 
+        [Fact]
+        public void RegexDoesExponent()
+        {
+            string input = "-0.0003995174,53.54520000000001,0 4.825540000000001e-007,53.5445,0 0.0003004826,53.5429,0";
+            MatchCollection coll = KmlLoop.Parse(input);
+            for (int i = 0; i < 10 && i < coll.Count; i++)
+                PrintXYZ(coll[i]);
+        }
+        [Fact]
+        public void DoubleParseDoesExponent()
+        {
+            double x = double.Parse("4.825540000000001e-007");
+            Console.WriteLine(x);
+        }
+
         private void PrintXYZ(Match m)
         {
             Console.WriteLine( ":" + m.Value + ":x=" + m.Groups["x"].Value + ":y=" + m.Groups["y"].Value + ":z=" + m.Groups["z"].Value + ":" );
@@ -68,7 +84,7 @@ namespace ScLib
         public void BailiwickOfGuernsey()
         {
             string name = "Bailiwick of Guernsey";
-            UKLocationsFromKml u = new UKLocationsFromKml(FILENAME);
+            UKLocationsFromKml u = new UKLocationsFromKml(UkCountriesFile);
             PlaceWithLoops p = u.GetPlace(name);
             Assert.NotNull(p);
             Assert.True(p.MyExtent.MinX < p.MyExtent.MaxX, "X not set");
@@ -82,53 +98,75 @@ namespace ScLib
         [Fact]
         public void France()
         {
-            UKLocationsFromKml u = new UKLocationsFromKml(FILENAME);
+            UKLocationsFromKml u = new UKLocationsFromKml(UkCountriesFile);
             PlaceWithLoops p = u.GetPlace("France");
             Assert.Null(p);
         }
         [Fact]
         public void England()
         {
-            UKLocationsFromKml u = new UKLocationsFromKml(FILENAME);
+            UKLocationsFromKml u = new UKLocationsFromKml(UkCountriesFile);
             PlaceWithLoops p = u.GetPlace("ENGLAND");
             Assert.NotNull(p);
             Console.WriteLine(p.MyExtent);
+            List<string> msgs = p.DebugNearby(-7.0, double.MinValue);
+            foreach (string msg in msgs)
+                Console.WriteLine(msg);
+        }
+        [Fact]
+        public void GreatBritain()
+        {
+            UKLocationsFromKml u = new UKLocationsFromKml(UkCountriesFile);
+            PlaceWithLoops p;
+            p = u.GetPlace("ENGLAND");
+            Console.WriteLine(p.Name + " " + p.MyExtent);
+            p = u.GetPlace("SCOTLAND");
+            Console.WriteLine(p.Name + " " + p.MyExtent);
+            p = u.GetPlace("WALES");
+            Console.WriteLine(p.Name + " " + p.MyExtent);
+
+            p = u.CombinePlaces("ENGLAND", "SCOTLAND", "WALES");
+            Console.WriteLine(p.Name + " " + p.MyExtent);
+
+            List<string> names = new List<string>();
+            names.Add("scotland");
+            names.Add("wales");
+            names.Add("england");
+            p = u.CombinePlaces(names);
+            Console.WriteLine(p.Name + " " + p.MyExtent);
+        }
+        [Fact]
+        public void PoliceForces()
+        {
+            UKLocationsFromKml u = new UKLocationsFromKml(PoliceFile);
+            foreach (PlaceWithLoops p in u.GetPlaces())
+            {
+                if (p.Name.Contains("Hertf"))
+                    Console.WriteLine(p.Name + " " + p.LoopCount + " loops " + p.GetLoopDesc(0) + " " + p.MyExtent);
+            }
+            PlaceWithLoops p2 = u.GetPlace("Hertfordshire Constabulary");
+            Console.WriteLine(p2.Name + " " + p2.LoopCount + " loops " + p2.GetLoopDesc(0) + " " + p2.MyExtent);
         }
 
         [Fact]
-        public void ForCDHTampered()
+        public void Kml156737()
         {
-            string policefile = FILENAME;
-
-            Assert.True(File.Exists(policefile));
-            Console.WriteLine("exists:" + policefile);
-
-            XDocument doc = XDocument.Load(policefile);
-            var places =
-                    from b in doc.Descendants("Document")
-                        .Descendants("Folder")
-                        .Descendants("Folder")
-                        .Descendants("Folder")
-                        .Descendants("Placemark")
-                    select new { name = b.Element("name").Value };
-            foreach (var place in places)
-                Console.WriteLine(place.name);
+            string filename = TestData.FullFilenameInDatasets("Kml156737.kml");
+            Assert.True(File.Exists(filename));
+            Console.WriteLine(filename);
+            UKLocationsFromKml u = new UKLocationsFromKml(filename);
+            foreach (string str in u.GetPlacenames())
+                Console.WriteLine(str);
         }
         [Fact]
-        public void ForCDHUKPolice()
+        public void Kml156738()
         {
-            string policefile = TestData.FullFilenameInDatasets("UKPolice.kml");
-
-            Assert.True(File.Exists(policefile));
-            Console.WriteLine("exists:" + policefile);
-
-			XElement xel = XElement.Load(policefile);
-			XNamespace ns = xel.Attribute("xmlns").Value;
-			var places =
-					from b in xel.Descendants(ns + "Placemark")
-					select new { name = b.Element(ns + "name").Value };
-            foreach (var place in places)
-                Console.WriteLine(place.name);
+            string filename = TestData.FullFilenameInDatasets("Kml156738.kml");
+            Assert.True(File.Exists(filename));
+            Console.WriteLine(filename);
+            UKLocationsFromKml u = new UKLocationsFromKml(filename);
+            foreach (string str in u.GetPlacenames())
+                Console.WriteLine(str);
         }
     }
 }
