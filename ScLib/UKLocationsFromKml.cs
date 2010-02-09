@@ -148,7 +148,7 @@ namespace ScLib
             if( !IsSet )
                 return 1.0;
             double result1 = width / (_MaxX - _MinX);
-            double result2 = height / (_MaxY - _MinY);
+            double result2 = height / ( (_MaxY - _MinY) * KmlLoop.LATITUDE_53_MULTIPLIER );
             return result1 < result2 ? result1 : result2;
         }
     }
@@ -301,10 +301,13 @@ namespace ScLib
             return result.ToString();
         }
 
+        public const double LATITUDE_53_MULTIPLIER = 1.65759415;
+
         private string MakeSVGPoint(double scale_factor, Extent extent, double x, double y)
         {
             return Scale(scale_factor, x, extent.MinX, extent.MaxX) + " "
-                + ScaleInvert(scale_factor, y, extent.MinY, extent.MaxY);
+                + ScaleInvert(scale_factor, y * LATITUDE_53_MULTIPLIER,
+                    extent.MinY * LATITUDE_53_MULTIPLIER, extent.MaxY * LATITUDE_53_MULTIPLIER);
         }
         private int ScaleInvert(double scale_factor, double value, double minvalue, double maxvalue)
         {
