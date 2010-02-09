@@ -11,6 +11,16 @@ namespace ScLib
     {
         private string _xmlfilename;
         private List<PlaceWithLoops> _places;
+
+        private XNamespace _MyNs = null;
+        public XNamespace MyNs
+        {
+            get
+            {
+                return _MyNs;
+            }
+        }
+
         public UKLocationsFromKml( string filename )
         {
             _xmlfilename = filename;
@@ -20,17 +30,18 @@ namespace ScLib
         public void Load()
         {
             _places = new List<PlaceWithLoops>();
-            XDocument doc = XDocument.Load(_xmlfilename);
+            XElement elt = XElement.Load(_xmlfilename);
+            _MyNs = elt.Attribute("xmlns").Value;
             var places =
-                    from b in doc.Descendants("Document")
-                        .Descendants("Folder")
-                        .Descendants("Folder")
-                        .Descendants("Folder")
-                        .Descendants("Placemark")
-                    select new PlaceWithLoops(b);
+                    from b in elt.Descendants(MyNs + "Document")
+                        //.Descendants(MyNs + "Folder")
+                        //.Descendants(MyNs + "Folder")
+                        //.Descendants(MyNs + "Folder")
+                        .Descendants(MyNs + "Placemark")
+                    select new PlaceWithLoops(b, MyNs );
             foreach (var place in places)
             {
-                if (place.LoopCount > 0)
+                if (place.IsNonTrivial() )
                     _places.Add(place);
             }
         }
@@ -58,6 +69,31 @@ namespace ScLib
                     return p;
             return null;
         }
+
+        public PlaceWithLoops CombinePlaces(IEnumerable<string> names)
+        {
+            string combined_name = "";
+            PlaceWithLoops result = new PlaceWithLoops();
+            foreach (string name in names)
+            {
+                PlaceWithLoops p = GetPlace(name);
+                if (p != null)
+                {
+                    if (combined_name == "")
+                        combined_name = name;
+                    else
+                        combined_name += "/" + name;
+                    result.Add(p);
+                }
+            }
+            result.SetName(combined_name);
+            return result;
+        }
+        public PlaceWithLoops CombinePlaces( params string [] names )
+        {
+            List<string> nlist = new List<string>(names);
+            return CombinePlaces(nlist);
+        }
     }
 
     public class Extent
@@ -84,12 +120,16 @@ namespace ScLib
 
         public void Inflate(KmlLoop kpl)
         {
-            if (kpl.MyExtent.IsSet)
+            Inflate(kpl.MyExtent);
+        }
+        public void Inflate(Extent e)
+        {
+            if (e.IsSet)
             {
-                if (_MinX == double.MinValue || kpl.MyExtent.MinX < _MinX) _MinX = kpl.MyExtent.MinX;
-                if (_MaxX == double.MinValue || kpl.MyExtent.MaxX > _MaxX) _MaxX = kpl.MyExtent.MaxX;
-                if (_MinY == double.MinValue || kpl.MyExtent.MinY < _MinY) _MinY = kpl.MyExtent.MinY;
-                if (_MaxY == double.MinValue || kpl.MyExtent.MaxY > _MaxY) _MaxY = kpl.MyExtent.MaxY;
+                if (_MinX == double.MinValue || e.MinX < _MinX) _MinX = e.MinX;
+                if (_MaxX == double.MinValue || e.MaxX > _MaxX) _MaxX = e.MaxX;
+                if (_MinY == double.MinValue || e.MinY < _MinY) _MinY = e.MinY;
+                if (_MaxY == double.MinValue || e.MaxY > _MaxY) _MaxY = e.MaxY;
             }
         }
         public override string ToString()
@@ -120,21 +160,23 @@ namespace ScLib
         public Extent MyExtent { get { return _extent; } }
 
         List<KmlLoop> _loops = new List<KmlLoop>();
-        public PlaceWithLoops(XElement elt)
+
+        public PlaceWithLoops()
         {
             _extent = new Extent();
-            _name = elt.Element("name").Value;
-            List<XElement> coords = new List<XElement>();
-            coords.AddRange( elt
-                .Descendants( "MultiGeometry" )
-                .Descendants( "Polygon" )
-                .Descendants( "outerBoundaryIs" )
-                .Descendants( "LinearRing" )
-                .Descendants( "coordinates" ) );
+            _name = "";
+        }
+        public PlaceWithLoops(XElement elt, XNamespace ns )
+        {
+            _extent = new Extent();
+            _name = elt.Element( ns + "name").Value;
 
-            foreach (XElement c in coords)
+            var coords =
+                from b in elt.Descendants(ns + "coordinates")
+                select new { str = b.Value };
+            foreach (var c in coords)
             {
-                KmlLoop kpl = new KmlLoop(c.Value);
+                KmlLoop kpl = new KmlLoop(c.str);
                 if (kpl.CoordCount > 0)
                 {
                     _loops.Add(kpl);
@@ -143,7 +185,18 @@ namespace ScLib
             }
         }
         public string Name { get { return _name; } }
+        public void SetName(string value)
+        {
+            _name = value;
+        }
         public int LoopCount { get { return _loops.Count; } }
+
+        public void Add(PlaceWithLoops p)
+        {
+            _extent.Inflate(p.MyExtent);
+            foreach (KmlLoop kl in p._loops)
+                _loops.Add(kl);
+        }
 
         public string GetLoopDesc(int i)
         {
@@ -151,12 +204,35 @@ namespace ScLib
                 return _loops[i].CoordCount + " coords e.g." + _loops[i].GetCoord(0).ToString();
             return "";
         }
+
         public List<string> MakeSVGPathStrings(int width, int height)
         {
+            return MakeSVGPathStrings(width, height, MyExtent);
+        }
+        public List<string> MakeSVGPathStrings(int width, int height, Extent e)
+        {
             List<string> result = new List<string>();
-            double scale_factor = MyExtent.CalculateScaleFactor(width, height);
+            double scale_factor = e.CalculateScaleFactor(width, height);
             foreach (KmlLoop kl in _loops)
-                result.Add(kl.MakeSVGPathString(scale_factor, this.MyExtent));
+                result.Add(kl.MakeSVGPathString(scale_factor, e));
+            return result;
+        }
+
+        public bool IsNonTrivial()
+        {
+            if (LoopCount == 0)
+                return false;
+            foreach (KmlLoop kl in _loops)
+                if (kl.CoordCount > 1)
+                    return true;
+            return false;
+        }
+
+        public List<string> DebugNearby(double x, double y)
+        {
+            List<string> result = new List<string>();
+            foreach (KmlLoop kl in _loops)
+                result.AddRange( kl.DebugNearby(x, y) );
             return result;
         }
     }
@@ -175,20 +251,17 @@ namespace ScLib
             _extent = new Extent();
             foreach (Match m in Parse(coords))
             {
-                KmlCoord c = new KmlCoord(m.Groups["x"].Value, m.Groups["y"].Value, m.Groups["z"].Value);
+                KmlCoord c = new KmlCoord(m.Groups["x"].Value, m.Groups["y"].Value, m.Groups["z"].Value, m.Value );
                 _list.Add(c);
                 _extent.Inflate(c);
-                if (c.X < -6.0)
-                {
-                    Console.WriteLine(c.ToString() + " <- " + m.Value );
-                }
             }
 	    }
 
         public static MatchCollection Parse(string input )
         {
             if (r_coord == null)
-                r_coord = new Regex(@"(?<x>[+-]{0,1}\d+(\.\d+){0,1})\s*\,\s*(?<y>[+-]{0,1}\d+(\.\d+){0,1})\s*\,\s*(?<z>[+-]{0,1}\d+(\.\d+){0,1})");
+                r_coord = new Regex(@"(?<x>[+-e\d\.]+),(?<y>[+-e\d\.]+),(?<z>[+-e\d\.]+)");
+                //r_coord = new Regex(@"(?<x>[+-]{0,1}\d+(\.\d+){0,1})\s*\,\s*(?<y>[+-]{0,1}\d+(\.\d+){0,1})\s*\,\s*(?<z>[+-]{0,1}\d+(\.\d+){0,1})");
             return r_coord.Matches(input);
         }
         public KmlCoord GetCoord(int i)
@@ -241,17 +314,37 @@ namespace ScLib
         {
             return (int)(scale_factor * (value - minvalue) + 0.5);
         }
+
+        public List<string> DebugNearby(double x, double y)
+        {
+            List<string> result = new List<string>();
+            for( int i = 0; i < _list.Count; i++ )
+            {
+                KmlCoord kc = _list[i];
+                if (kc.Nearby(x, y))
+                {
+                    if (i > 0)
+                        result.Add(String.Format("{0}) {1}", i - 1, _list[i-1].ToString()));
+                    result.Add(String.Format("{0}) {1}", i, kc.ToString()));
+                    if( i + 1 < _list.Count )
+                        result.Add(String.Format("{0}) {1}", i + 1, _list[i + 1].ToString()));
+                }
+            }
+            return result;
+        }
     }
     public class KmlCoord
     {
         private double _x, _y, _z;
-        public KmlCoord(string x, string y, string z)
+        private string _msg;
+        public KmlCoord(string x, string y, string z, string msg )
         {
             try
             {
                 _x = double.Parse(x);
                 _y = double.Parse(y);
                 _z = double.Parse(z);
+                _msg = msg;
             }
             catch
             {
@@ -263,7 +356,29 @@ namespace ScLib
         public double Z { get { return _z; } }
         public override string ToString()
         {
-            return _x.ToString("0.0000") + "," + _y.ToString("0.0000");
+            return _x.ToString("0.0000") + "," + _y.ToString("0.0000") + " " + _msg;
+        }
+
+        private const double TOLERANCE = 0.0001;
+        public bool Nearby(double x, double y)
+        {
+            double diff;
+            if (x == double.MinValue && y == double.MinValue)
+                return false;
+
+            if (x != double.MinValue)
+            {
+                diff = X - x;
+                if (diff < 0 - TOLERANCE || diff > TOLERANCE)
+                    return false;
+            }
+            if (y != double.MinValue)
+            {
+                diff = Y - y;
+                if (diff < 0 - TOLERANCE || diff > TOLERANCE)
+                    return false;
+            }
+            return true;
         }
     }
 }
