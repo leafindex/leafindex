@@ -153,6 +153,7 @@
   <ItemGroup>
     <Content Include="Chartjunk.aspx" />
     <Content Include="handler\datasetSourceData.ashx" />
+    <Content Include="images\thumbnails\Chartjunk.PNG" />
     <Content Include="js\Chartjunk.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
