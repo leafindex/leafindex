@@ -167,6 +167,7 @@
   <ItemGroup>
     <Content Include="Chartjunk.aspx" />
     <Content Include="handler\datasetSourceData.ashx" />
+    <Content Include="images\thumbnails\Chartjunk.PNG" />
     <Content Include="js\Chartjunk.js" />
     <Content Include="js\London.js" />
     <Content Include="London.aspx" />
