@@ -16,6 +16,12 @@ namespace ScLib
         }
         private string _ErrorMessage;
 
+        public DataSet LondonArtsEngagement(string arttype)
+        {
+            string year = "2008/09";
+            string sql = "pr_rpt_arts_4_Engagement '" + arttype + "', '" + year + "'";
+            return ExecuteDataSet(sql);
+        }
         public DataSet LondonBoroughCrime3OffencesPerBorough( string crime, string year )
         {
             DataTable dt = new DataTable();
@@ -23,6 +29,11 @@ namespace ScLib
             if (year == "") year = "2008/09";
 
             string sql = "pr_rpt_crime_3_offencesPerBorough '" + crime + "', '" + year + "'";
+            return ExecuteDataSet(sql);
+        }
+        public DataSet LondonBoroughBegging(string year)
+        {
+            string sql = "pr_rpt_crime_5_Begging '" + year + "'";
             return ExecuteDataSet(sql);
         }
 
