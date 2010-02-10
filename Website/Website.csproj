@@ -81,6 +81,13 @@
       <DependentUpon>datasetsList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="London.aspx.cs">
+      <DependentUpon>London.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="London.aspx.designer.cs">
+      <DependentUpon>London.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UKMaps.aspx.cs">
       <DependentUpon>UKMaps.aspx</DependentUpon>
@@ -162,6 +169,8 @@
     <Content Include="handler\datasetSourceData.ashx" />
     <Content Include="images\thumbnails\Chartjunk.PNG" />
     <Content Include="js\Chartjunk.js" />
+    <Content Include="js\London.js" />
+    <Content Include="London.aspx" />
     <Content Include="UKMaps.aspx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

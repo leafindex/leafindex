@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace ScLib
 {
@@ -21,10 +22,32 @@ namespace ScLib
             }
         }
 
+        public enum KmlSet { UKCountries, Police, Counties, EnglishRegions };
+
+        public UKLocationsFromKml(KmlSet set, string directory)
+        {
+            _xmlfilename = MakeFullFilenameForSet(set, directory);
+            _places = null;
+        }
+
         public UKLocationsFromKml( string filename )
         {
             _xmlfilename = filename;
             _places = null;
+        }
+
+        public string MakeFullFilenameForSet(KmlSet set, string directory)
+        {
+            return Path.Combine(directory, MakeFilenameForSet(set));
+        }
+
+        public string MakeFilenameForSet(KmlSet set)
+        {
+            if (set == KmlSet.UKCountries) return "UKLocationsFromKml.kml";
+            if (set == KmlSet.Police) return "UKPolice.kml";
+            if (set == KmlSet.Counties) return "kml156738.kml";
+            if (set == KmlSet.EnglishRegions) return "kml156737.kml";
+            throw new Exception("MakeFilenameForSet does not handle " + set.ToString());
         }
 
         public void Load()
@@ -148,7 +171,7 @@ namespace ScLib
             if( !IsSet )
                 return 1.0;
             double result1 = width / (_MaxX - _MinX);
-            double result2 = height / (_MaxY - _MinY);
+            double result2 = height / ( (_MaxY - _MinY) * KmlLoop.LATITUDE_53_MULTIPLIER );
             return result1 < result2 ? result1 : result2;
         }
     }
@@ -301,10 +324,13 @@ namespace ScLib
             return result.ToString();
         }
 
+        public const double LATITUDE_53_MULTIPLIER = 1.65759415;
+
         private string MakeSVGPoint(double scale_factor, Extent extent, double x, double y)
         {
             return Scale(scale_factor, x, extent.MinX, extent.MaxX) + " "
-                + ScaleInvert(scale_factor, y, extent.MinY, extent.MaxY);
+                + ScaleInvert(scale_factor, y * LATITUDE_53_MULTIPLIER,
+                    extent.MinY * LATITUDE_53_MULTIPLIER, extent.MaxY * LATITUDE_53_MULTIPLIER);
         }
         private int ScaleInvert(double scale_factor, double value, double minvalue, double maxvalue)
         {

@@ -69,6 +69,7 @@ namespace Website
                 b.AppendLine("function LoadKmlMap" + mapcount + "() {");
                 b.AppendLine("var i = 0;");
                 b.AppendLine("_kmlmap" + mapcount + " = new Array();");
+                b.AppendLine("_kmlmap" + mapcount + "[i++] = '" + p.Name + "';");
 
                 List<string> paths = p.MakeSVGPathStrings(width, height, combined.MyExtent );
                 foreach (string str in paths)
