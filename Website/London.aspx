@@ -15,11 +15,16 @@
 <body>
     <form id="form1" runat="server">
     <div>
-    <span class="Stress">London</span>
+    <span class="Stress">Crimes</span>
     <asp:DropDownList ID="ddlCrime" runat="server" OnSelectedIndexChanged="RefreshClick" AutoPostBack="true" />
     <asp:DropDownList ID="ddlYear" runat="server" OnSelectedIndexChanged="RefreshClick" AutoPostBack="true" />
     <a href="javascript:ShowColumn(2);">Number of Offences</a>
     <a href="javascript:ShowColumn(3);">per 1,000 Population</a>
+    <span class="Stress">Arts</span>
+    <asp:DropDownList ID="ddlArtType" runat="server" OnSelectedIndexChanged="RefreshClick" AutoPostBack="true" />
+    <span class="Stress">Begging</span>
+    <asp:DropDownList ID="ddlBeggingYear" runat="server" OnSelectedIndexChanged="RefreshClick" AutoPostBack="true" />
+    
     <span id="lblSayuser"></span>
     <div style="height:5px;"></div>
     <div id="notepad"></div>
