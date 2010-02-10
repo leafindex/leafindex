@@ -39,6 +39,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -67,8 +68,13 @@
     <Compile Include="ACOAssaultMonthsPerBorough.cs" />
     <Compile Include="CodeScanner.cs" />
     <Compile Include="FrequencyParser.cs" />
+    <Compile Include="JsMaker.cs" />
     <Compile Include="KmlTests.cs" />
     <Compile Include="LinqTests.cs" />
+    <Compile Include="LiPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Mensa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="Tests.cs" />

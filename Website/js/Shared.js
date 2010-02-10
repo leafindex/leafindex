@@ -8,6 +8,7 @@
 			+ "<a href='BlairAtChilcot.htm'>Blair at Chilcot</a>"
 			+ "<a href='Chartjunk.aspx'>Chartjunk</a>"
             + "<a href='UKMaps.aspx'>UK Maps</a>"
+            + "<a href='London.aspx'>London</a>"
 			+ "<a href='http://leafindex.blogspot.com'>Blog</a>"
 			+ "<a href='Credits.htm'>Credits</a>"
 			+ "</div>");

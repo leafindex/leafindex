@@ -106,7 +106,7 @@
     <span class="Stress">Others</span>
     <a href="UKMaps.aspx?name=all&source=kml156737">English Regions</a>
     <a href="UKMaps.aspx?name=all&source=kml156738">Counties</a>
-    <a href="UKMaps.aspx?source=kml156738&name=Barnet&name2=Bexley&name3=Brent&name4=Bromley&name5=City+of+Westminster&name6=Camden&name7=Croydon&name8=Ealing&name9=Enfield&name10=Greenwich&name11=Hackney&name12=Hammersmith+and+Fulham&name13=Haringey&name14=Harrow&name15=Havering&name16=Hillingdon&name17=Hounslow&name18=Islington&name19=Kensington+and+Chelsea&name20=Kingston+upon+Thames&name21=Lambeth&name22=Lewisham&name23=Merton&name24=Newham&name25=Redbridge&name26=Richmond+upon+Thames&name27=Southwark&name28=Sutton&name29=Tower+Hamlets&name30=Waltham+Forest&name31=Wandsworth&name32=City+of+London">London</a>  
+    <a href="UKMaps.aspx?source=kml156738&name=Barnet&name2=Bexley&name3=Brent&name4=Bromley&name5=City+of+Westminster&name6=Camden&name7=Croydon&name8=Ealing&name9=Enfield&name10=Greenwich&name11=Hackney&name12=Hammersmith+and+Fulham&name13=Haringey&name14=Harrow&name15=Havering&name16=Hillingdon&name17=Hounslow&name18=Islington&name19=Kensington+and+Chelsea&name20=Kingston+upon+Thames&name21=Lambeth&name22=Lewisham&name23=Merton&name24=Newham&name25=Redbridge&name26=Richmond+upon+Thames&name27=Southwark&name28=Sutton&name29=Tower+Hamlets&name30=Waltham+Forest&name31=Wandsworth&name32=City+of+London&name33=Barking+and+Dagenham">London</a>  
     </div>
     <div style="float:right;">
     <span  class="Stress" id="lblSayuser"></span>

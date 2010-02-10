@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace ScLib
 {
@@ -21,10 +22,32 @@ namespace ScLib
             }
         }
 
+        public enum KmlSet { UKCountries, Police, Counties, EnglishRegions };
+
+        public UKLocationsFromKml(KmlSet set, string directory)
+        {
+            _xmlfilename = MakeFullFilenameForSet(set, directory);
+            _places = null;
+        }
+
         public UKLocationsFromKml( string filename )
         {
             _xmlfilename = filename;
             _places = null;
+        }
+
+        public string MakeFullFilenameForSet(KmlSet set, string directory)
+        {
+            return Path.Combine(directory, MakeFilenameForSet(set));
+        }
+
+        public string MakeFilenameForSet(KmlSet set)
+        {
+            if (set == KmlSet.UKCountries) return "UKLocationsFromKml.kml";
+            if (set == KmlSet.Police) return "UKPolice.kml";
+            if (set == KmlSet.Counties) return "kml156738.kml";
+            if (set == KmlSet.EnglishRegions) return "kml156737.kml";
+            throw new Exception("MakeFilenameForSet does not handle " + set.ToString());
         }
 
         public void Load()
