@@ -2,10 +2,19 @@
 var _column_index = 2;
 
 $(document).ready(function() {
+    SelectCurrentTab();
     FillBoroughData();
     LoadKmlMaps();
     DrawMap();
 });
+
+function SelectTab(tabname) {
+    $(".TabStop").removeClass("TabStopSelected");
+    $("#Tab" + tabname).addClass("TabStopSelected");
+    $(".TabOptions").hide();
+    $("#Options" + tabname).show();
+    $("#hdnTabSelected").val(tabname);
+}
 
 function ShowColumn(idx) {
     _column_index = idx;

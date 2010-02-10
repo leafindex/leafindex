@@ -11,21 +11,57 @@
     <script type="text/javascript" src="./js/raphael-min.js"></script>
     <%=MyScript %>
     <script type="text/javascript" src="./js/London.js"></script>
+    <style type="text/css">
+    .TabStopContainer
+    {
+        padding-bottom:5px;
+    }
+    .TabStop { 
+        border-left:solid 1px #a659aa;
+        border-top:solid 1px #a659aa;
+        border-right:solid 1px #a659aa;
+        margin-right:5px;
+        padding:5px;
+        background-color:#cccccc;
+    }
+    .TabStopSelected, .TabOptions
+    {
+        background-color:white;
+    }
+    .TabOptions
+    {   
+        border-left:solid 1px #a659aa;
+        border-bottom:solid 1px #a659aa;
+    }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
     <div>
-    <span class="Stress">Crimes</span>
-    <asp:DropDownList ID="ddlCrime" runat="server" OnSelectedIndexChanged="RefreshClick" AutoPostBack="true" />
-    <asp:DropDownList ID="ddlYear" runat="server" OnSelectedIndexChanged="RefreshClick" AutoPostBack="true" />
+    <div class="TabStopContainer">
+    <span id="TabCrimes" class="TabStop"><a href="javascript:SelectTab('Crimes');">Crimes</a></span>
+    <span id="TabArts" class="TabStop"><a href="javascript:SelectTab('Arts');">Arts</a></span>
+    <span id="TabBegging" class="TabStop"><a href="javascript:SelectTab('Begging');">Begging</a></span>
+    <span id="lblSayuser"></span>
+    <input type="hidden" id="hdnTabSelected" value="NotSet" runat="server" />
+    
+    </div>
+    <div id="OptionsCrimes" class="TabOptions" >
+    <asp:Button ID="Button2" runat="server" Text="Display" OnClick="RefreshClick" />
+    <asp:DropDownList ID="ddlCrime" runat="server" />
+    <asp:DropDownList ID="ddlYear" runat="server" />
     <a href="javascript:ShowColumn(2);">Number of Offences</a>
     <a href="javascript:ShowColumn(3);">per 1,000 Population</a>
-    <span class="Stress">Arts</span>
-    <asp:DropDownList ID="ddlArtType" runat="server" OnSelectedIndexChanged="RefreshClick" AutoPostBack="true" />
-    <span class="Stress">Begging</span>
-    <asp:DropDownList ID="ddlBeggingYear" runat="server" OnSelectedIndexChanged="RefreshClick" AutoPostBack="true" />
+    </div>
+    <div id="OptionsArts" class="TabOptions" >
+    <asp:Button ID="Button1" runat="server" Text="Display" OnClick="RefreshClick" />
+    <asp:DropDownList ID="ddlArtType" runat="server" />
+    </div>
+    <div id="OptionsBegging" class="TabOptions" >            
+    <asp:Button ID="Button3" runat="server" Text="Display" OnClick="RefreshClick" />
+    <asp:DropDownList ID="ddlBeggingYear" runat="server" />
+    </div>
     
-    <span id="lblSayuser"></span>
     <div style="height:5px;"></div>
     <div id="notepad"></div>
     </div>

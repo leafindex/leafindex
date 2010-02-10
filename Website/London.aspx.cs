@@ -23,7 +23,6 @@ namespace Website
                 FillDropDowns();
                 MakeScript();
             }
-            
         }
 
         protected void RefreshClick(object sender, EventArgs e)
@@ -71,6 +70,17 @@ namespace Website
             }
         }
 
+        private string TabSelected
+        {
+            get
+            {
+                return this.Request["hdnTabSelected"] ?? "Crimes";
+            }
+        }
+
+        private void MakeScriptNull()
+        {
+        }
         private void MakeScript()
         {
             int width = 1000, height = 500, mapcount = 0;
@@ -79,10 +89,21 @@ namespace Website
 
             b.AppendLine("<script type='text/javascript'>");
 
+            b.AppendLine("function SelectCurrentTab()");
+            b.AppendLine("{");
+            b.AppendLine("SelectTab( '" + TabSelected + "' );");
+            b.AppendLine("}");
+
             Mensa.SetConnectionString(ConfigurationManager.ConnectionStrings["datasets"].ToString());
             // DataTable dt = GetCrimeData();
             // DataTable dt = GetArtsData();
-            DataTable dt = GetBeggingData();
+            DataTable dt;
+            if( TabSelected == "Crimes" )
+                dt = GetCrimeData();
+            else if( TabSelected == "Arts" )
+                dt = GetArtsData();
+            else
+                dt = GetBeggingData();
             JsMaker.MakeTable(b, "_borough_data", "FillBoroughData", dt);
 
             b.AppendLine("var _kmlmap = new Array();");
