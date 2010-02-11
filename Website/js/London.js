@@ -55,6 +55,7 @@ function DrawMap() {
 
 function GetMinValue() {
     var i, itm, result = null;
+
     for (i = 0; i < _borough_data.length; i++) {
         itm = _borough_data[i];
         if (result == null || itm[_column_index] < result)
