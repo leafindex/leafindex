@@ -33,6 +33,16 @@
         border-left:solid 1px #a659aa;
         border-bottom:solid 1px #a659aa;
     }
+    .Wait
+    {
+        border:solid 3px black;
+        background-color:#cccccc;
+        position:absolute;
+        top:200px;
+        left:200px;
+        padding:20px;
+        font-size:1.2em;
+    }
     </style>
 </head>
 <body>
@@ -47,23 +57,25 @@
     
     </div>
     <div id="OptionsCrimes" class="TabOptions" >
-    <asp:Button ID="Button2" runat="server" Text="Display" OnClick="RefreshClick" />
+    <asp:Button ID="Button2" runat="server" Text="Display" OnClick="RefreshClick" CssClass="DisplayButton" />
     <asp:DropDownList ID="ddlCrime" runat="server" />
     <asp:DropDownList ID="ddlYear" runat="server" />
     <a href="javascript:ShowColumn(2);">Number of Offences</a>
     <a href="javascript:ShowColumn(3);">per 1,000 Population</a>
     </div>
     <div id="OptionsArts" class="TabOptions" >
-    <asp:Button ID="Button1" runat="server" Text="Display" OnClick="RefreshClick" />
+    <asp:Button ID="Button1" runat="server" Text="Display" OnClick="RefreshClick" CssClass="DisplayButton" />
     <asp:DropDownList ID="ddlArtType" runat="server" />
     </div>
     <div id="OptionsBegging" class="TabOptions" >            
-    <asp:Button ID="Button3" runat="server" Text="Display" OnClick="RefreshClick" />
+    <asp:Button ID="Button3" runat="server" Text="Display" OnClick="RefreshClick" CssClass="DisplayButton" />
     <asp:DropDownList ID="ddlBeggingYear" runat="server" />
     </div>
     
     <div style="height:5px;"></div>
     <div id="notepad"></div>
+    
+    <div id="WaitLoading" class="Wait">Loading the new data set</div>
     </div>
     </form>
 </body>

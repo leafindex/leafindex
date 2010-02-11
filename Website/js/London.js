@@ -6,6 +6,8 @@ $(document).ready(function() {
     FillBoroughData();
     LoadKmlMaps();
     DrawMap();
+    $("#WaitLoading").hide();
+    $(".DisplayButton").click(function() { $("#WaitLoading").show(); })
 });
 
 function SelectTab(tabname) {
