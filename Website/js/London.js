@@ -6,6 +6,8 @@ $(document).ready(function() {
     FillBoroughData();
     LoadKmlMaps();
     DrawMap();
+    $("#WaitLoading").hide();
+    $(".DisplayButton").click(function() { $("#WaitLoading").show(); })
 });
 
 function SelectTab(tabname) {
@@ -42,7 +44,7 @@ function DrawMap() {
             });
         }
     }
-    x = 600;
+    x = 400;
     y = 10;
     paper.text(x + 10, y + 40 + 10, GetMinValue());
     for (i = 0; i <= 10; i++) {
@@ -55,6 +57,7 @@ function DrawMap() {
 
 function GetMinValue() {
     var i, itm, result = null;
+
     for (i = 0; i < _borough_data.length; i++) {
         itm = _borough_data[i];
         if (result == null || itm[_column_index] < result)
