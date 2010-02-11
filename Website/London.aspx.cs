@@ -74,7 +74,7 @@ namespace Website
         {
             get
             {
-                return this.Request["hdnTabSelected"] ?? "Crimes";
+                return this.Request["hdnTabSelected"] ?? "Arts";
             }
         }
 

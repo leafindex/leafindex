@@ -44,7 +44,7 @@ function DrawMap() {
             });
         }
     }
-    x = 600;
+    x = 400;
     y = 10;
     paper.text(x + 10, y + 40 + 10, GetMinValue());
     for (i = 0; i <= 10; i++) {

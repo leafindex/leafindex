@@ -35,11 +35,22 @@ namespace ScLib
 
         private static string MakeJsValue(object p, Type type)
         {
-            if (type == typeof(int))
-                return ((int)p).ToString();
-            if (type == typeof(Decimal))
-                return ((Decimal)p).ToString();
-            return "'" + p.ToString() + "'";
+            try
+            {
+                if (type == typeof(int))
+                    return ((int)p).ToString();
+                if (type == typeof(Decimal))
+                {
+                    if (p == DBNull.Value )
+                        return "0";
+                    return ((Decimal)p).ToString();
+                }
+                return "'" + p.ToString() + "'";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception( ":" + p.ToString() + ":" + p.GetType().Name + ":" + type.Name + " threw " + ex.Message);
+            }
         }
     }
 }
