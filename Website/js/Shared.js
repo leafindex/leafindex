@@ -1,17 +1,17 @@
 ﻿ function makeNavMenu() {
 	var m=$("<div id='navmenu'/>")
-		.html("<div id='navmenuLogo'><a href='Home.htm'><img src='images/logo.png' alt='LeafIndex' width='52' height='60' border='0'/></a></div>"
-			+ "<div id='navmenuName'><a href='Home.htm'>LeafIndex</a></div>"
-			+ "<div id='navmenuLinks'><a href='Home.htm'>Home</a>"
-			+ "<a href='#' class='dropdownMenuing assaults' id='assaults'>Ambulance Call Outs To Assaults</a>"
-			+ "<a href='PopulationCrash.htm'>Population Crash</a>"
-			+ "<a href='BlairAtChilcot.htm'>Blair at Chilcot</a>"
-			+ "<a href='Chartjunk.aspx'>Chartjunk</a>"
-            + "<a href='UKMaps.aspx'>UK Maps</a>"
-            + "<a href='London.aspx'>London</a>"
-			+ "<a href='http://leafindex.blogspot.com'>Blog</a>"
-			+ "<a href='Credits.htm'>Credits</a>"
-			+ "</div>");
+		.html("<div id='navmenuLogo'><a href='Home.htm'><img src='images/logo.png' alt='LeafIndex' width='52' height='60' border='0'/></a></div>"+
+			"<div id='navmenuName'><a href='Home.htm'>LeafIndex</a></div>"+
+			"<div id='navmenuLinks'><a href='Home.htm'>Home</a>"+
+			"<a href='#' class='dropdownMenuing assaults' id='assaults'>Ambulance Call Outs To Assaults</a>"+
+			"<a href='PopulationCrash.htm'>Population Crash</a>"+
+			"<a href='BlairAtChilcot.htm'>Blair at Chilcot</a>"+
+			"<a href='Chartjunk.aspx'>Chartjunk</a>"+
+      "<a href='UKMaps.aspx'>UK Maps</a>"+
+      "<a href='London.aspx'>London</a>"+
+			"<a href='http://leafindex.blogspot.com'>Blog</a>"+
+			"<a href='Credits.htm'>Credits</a>"+
+			"</div>");
 	makeDropdownMenu(
 		m.find(".dropdownMenuing").filter(".assaults"),
 			"<a href='ACOAssaults1.aspx'>Summary</a>","<a href='ACOMapR.aspx'>Map</a>","<a href='ACOAssaults.htm'>Query</a>");
@@ -49,7 +49,7 @@ function dropdownMenu(menuLink){
     d.append(arguments[j]);
   }
   var o=menuLink.offset();
-  d.appendTo("body")
+  d.appendTo("body");
   d
 		.css({"left":(o.left+menuLink.outerWidth()-d.outerWidth())+"px","top":(o.top+menuLink.outerHeight()+7)+"px"})
 		.show();
@@ -233,26 +233,36 @@ $.fn.superTable=function(options){
 				thisTable.find("tbody > tr > td:nth-child("+(th.index(this)+1)+")").addClass("number");
 			});
 		}
-		function addSubTable(row,type,subTable,colsToUse){
-			if(subTable){
+		function addDrill(row,type,drill,colsToUse,datas){
+			if(drill){
 				setColCnt();
 				var c=parseInt(colsToUse,10);
 				c=isNaN(c)||c>colCnt?colCnt:c;
-				var prefix="<tr><td"+(c>1?" colspan=\""+c+"\"":"")+"><div class=\"superTableSubTableClose\"><a href=\"#\">▲</a></div>";
+				var prefix="<tr><td"+(c>1?" colspan=\""+c+"\"":"")+"><div class=\"superTableDrillClose\"><a href=\"#\">▲</a></div>";
 				var suffix=c===colCnt?"</td></tr>":"</td><td"+(colCnt-c>1?" colspan=\""+(colCnt-c)+"\"":"")+">&nbsp;</td></tr>";
-				var st=$(prefix+subTable+suffix)
+				var st=$(prefix+drill+suffix)
 					.insertAfter(row)
-					.addClass("superTableSubTable");
+					.addClass("superTableDrill");
 				subRowCache[rows.index(row)][type]=st;
+				if(typeof(datas)==="object"){
+					$.each(datas,function(i,o){
+						var s=o.selector,dk=o.dataKey;
+						if(s&&dk){
+							st.find(s).data(dk,o.dataVal);
+						}
+					});
+				}
 				var stt=st.children("td:first")
 					.addClass("highlight")
 					.children("table");
-				goodlooking(stt);
-				sortable(stt);
+				if(stt.length){
+					goodlooking(stt);
+					sortable(stt);
+				}
 				row.addClass("highlight");
 			}
 		}
-		function subTabling(cell,func,type){
+		function drilling(cell,func,type){
 			var tr=cell.parent();
 			var done="",highlight=false;
 			$.each(subRowCache[rows.index(tr)],function(t,subRow){
@@ -289,16 +299,16 @@ $.fn.superTable=function(options){
 				}
 			}
 			else{
-				func(tr,function(subTable,colsToUse){
-					addSubTable(tr,type,subTable,colsToUse);
+				func(tr,function(drill,colsToUse,datas){
+					addDrill(tr,type,drill,colsToUse,datas);
 				});
 			}
 			resetHeight();
 		}
-		function subTableClose(subRow){
+		function drillClose(subRow){
 			var row,highlight=false;
 			row=subRow.prev();
-			while(row.is(".superTableSubTable")){
+			while(row.is(".superTableDrill")){
 				row=row.prev();
 			}
 			subRow.hide();
@@ -319,20 +329,27 @@ $.fn.superTable=function(options){
 			resetHeight();
 		}
 		function click(e){
-			var targ=$(e.target).closest("div, td, th");
+			var targ=$(e.target).closest("div, td, th"),f;
 			if(targ.is("th")){
 				sort(targ);
 				return false;
 			}
 			else{
 				if(targ.is("div")){
-					if(targ.hasClass("superTableSubTableClose")){
-						subTableClose(targ.closest("tr"));
+					if(targ.hasClass("superTableDrillClose")){
+						drillClose(targ.closest("tr"));
 						return false;
+					}
+					else if(targ.hasClass("superTableOwnClicker")){
+						f=targ.data("ownClicker");
+						if(typeof(f)=="function"){
+							f(targ);
+							return false;
+						}
 					}
 				}
 				else{
-					var f=table.data("superTableClick"+(targ.index()+1));
+					f=table.data("superTableClick"+(targ.index()+1));
 					if(f){
 						f(targ);
 						return false;
@@ -355,11 +372,11 @@ $.fn.superTable=function(options){
 							table.data("superTableClick"+c,click.func);
 						}
 						else{
-							if(click.superFunc=="subTable"&&typeof(click.superFuncFunc)=="function"){
+							if(click.superFunc=="drill"&&typeof(click.superFuncFunc)=="function"){
 								hasSubRowCache=true;
 								var type=uid();
 								table.data("superTableClick"+c,function(cell){
-									subTabling(cell,click.superFuncFunc,type);
+									drilling(cell,click.superFuncFunc,type);
 								});
 							}
 						}
@@ -389,10 +406,12 @@ function DebugSayuser(msg){
 	$("#lblDebugSayuser").text(msg);
 }
 function ShowProgress(onoff) {
-  if(onoff)
-      $("#lblProgress").html("<img src='images/progress.gif' width='13' height='13'/>");
-  else
-      $("#lblProgress").html("");
+  if(onoff){
+		$("#lblProgress").html("<img src='images/progress.gif' width='13' height='13'/>");
+	}
+  else{
+		$("#lblProgress").html("");
+	}
 }
 $(function(){
 	makeNavMenu();

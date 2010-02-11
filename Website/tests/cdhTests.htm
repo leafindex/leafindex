@@ -4,41 +4,10 @@
 	<title>cdh tests</title>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
-		$.fn.doTest=function(){
-			var r;
-			function test1() {
-				if(!r){
-					r=1;
-				}
-				else{
-					r+=1;
-				}
-				alert("jQuery plugin: "+r);
-				return false;
-			}
-			this.click(test1);
-			return this;
-		};
-		function testClick(){
-			alert(arguments[0]);
-			alert(arguments[1]);
-		}
 		$(function(){
-			var t=0;
-			if(t){
-				alert("yes");
-			}
-			else{
-				alert("nope");
-			}
 			$("#test1").click(function(){
-				function uid() {
-					function S4() {
-						return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-					}
-					return (S4()+S4()+S4()+S4());
-				}
-				alert(uid());
+				var n=Number(undefined);
+				alert(n);
 				return false;
 			});
 		});

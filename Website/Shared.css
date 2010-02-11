@@ -140,45 +140,86 @@ br.clear {
 .superTable td a {
   color: #00613c
 }
-.superTableSubTable table {
+.superTableDrill table {
   border: 1px solid #a659aa;
   font-size: 11px;
   margin: 0 0 5px 0;
   width: 100%
 }
-.superTableSubTable th {
+.superTableDrill th {
   background-color: #fff;
   color: #783e25
 }
-.superTableSubTable th a {
+.superTableDrill th a {
   color: #783e25
 }
-.superTableSubTable td {
+.superTableDrill td {
   background-color: #fff;
   color: #005bc4
 }
-div.superTableSubTableClose {
+div.superTableDrillClose {
   cursor: pointer;
   font-size: 10px;
   height: 10px;
   padding-left: 2px;
   text-align: center
 }
-div.superTableSubTableClose a {
+div.superTableDrillClose a {
   color: #a659aa;
   text-decoration: none
 }
-div.superTableSubTableClose span {
+div.superTableDrillClose span {
   font-size: 10px
 }
-div.superTableSubTableClose:hover {
+div.superTableDrillClose:hover {
   background-color: #a659aa
 }
-div.superTableSubTableClose:hover a {
+div.superTableDrillClose:hover a {
   color: #ffefd1
 }
-div.superTableSubTableClose a:hover {
+div.superTableDrillClose a:hover {
   background-color: transparent
+}
+div.drillHead, div.drillFoot {
+  background-color: #fff;
+  border-left: 1px solid #a659aa;
+  border-right: 1px solid #a659aa;
+  font-size: 10px;
+  padding-top: 5px
+}
+div.drillHead {
+  border-top: 1px solid #a659aa;
+  color: #00613c;
+  text-align: center
+}
+div.drillFoot {
+  border-bottom: 1px solid #a659aa;
+  color: #005bc4;
+  cursor: pointer;
+  padding-right: 1px;
+  text-align: right
+}
+div.drillFoot a {
+  color: #005bc4;
+  text-decoration: none
+}
+div.drillFoot:hover {
+  background-color: #ffefd1
+}
+table.hasDrillHeadFoot {
+  border-bottom: none;
+  border-top: none;
+  margin-bottom: 0;
+}
+img.drill {
+  background-color: #fff;
+  border-left: 1px solid #a659aa;
+  border-right: 1px solid #a659aa;
+  display: block;
+  padding: 3px
+}
+.hidden {
+  display: none
 }
 #ThumbnailTable {
   border: 1px solid #a659aa;
