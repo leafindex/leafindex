@@ -66,12 +66,12 @@ function chartBHS(data,dataNameLabel,dataNameData,chartWidth,barColour,labelColo
 		"&chxt=y,x,r&chxtc=0,0|1,0|2,-"+chartWidth+
 		"&chxs=0,"+labelColour+",11,1,t|1,ffffff,1,1,t|2,"+labelColour+",11,-1,t,"+barColour+
 		"&chd=e:"+chartScaleAndEncode(barData)+
-		"&chxl=0:|"+yLabels+"2:|"+barData.reverse().join("|")+"|\" />";
+		"&chxl=0:|"+yLabels+"2:|"+barData.reverse().join("|")+"\"/>";
 }
 function drillSwitch(targ){
 	var p=targ.prevAll("img,table");
 	var a=targ.children("a");
-	var dataNotChart=a.text().toLowerCase().indexOf("data")==0;
+	var dataNotChart=a.text().toLowerCase().indexOf("data")===0;
 	p.filter("img").toggle(!dataNotChart);
 	p.filter("table").toggle(dataNotChart);
 	a.text(dataNotChart?"Chart view →":"Data view →");
@@ -112,8 +112,11 @@ function monthsDrill(tr,callback){
 				$.each(data,function(i,row){
 					s+="<tr><td>"+htmlEncode(row.Month)+"</td><td>"+htmlEncode(row.Assaults)+"</td></tr>";
 				});
-				s="<table cellspacing=\"0\"><thead><tr><th class=\"month\">Month</th><th class=\"number\">Number of Assaults</th></tr></thead><tbody>"+s+"</tbody></table>";
-				callback(s,2);
+				s="<div class=\"drillHead\">Number of Assaults per Month</div>"+
+					chartBHS(data,"Month","Assaults",300,"7dbaff","783e25","drill","chart")+
+					"<table cellspacing=\"0\" class=\"hasDrillHeadFoot hidden\"><thead><tr><th class=\"month\">Month</th><th class=\"number\">Number of Assaults</th></tr></thead><tbody>"+s+"</tbody></table>"+
+					"<div class=\"drillFoot superTableOwnClicker\"><a href=\"#\">Data view →</a></div>";
+				callback(s,2,[{"selector":".drillFoot","dataKey":"ownClicker","dataVal":drillSwitch}]);
 			}
 		});
 	}
