@@ -33,25 +33,15 @@
         border-left:solid 1px #a659aa;
         border-bottom:solid 1px #a659aa;
     }
-    .Wait
-    {
-        border:solid 3px black;
-        background-color:#cccccc;
-        position:absolute;
-        top:200px;
-        left:200px;
-        padding:20px;
-        font-size:1.2em;
-    }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
+    <div id="Tabbing">
     <div class="TabStopContainer">
-    <span id="TabArts" class="TabStop"><a href="javascript:SelectTab('Arts');">Arts</a></span>
-    <span id="TabBegging" class="TabStop"><a href="javascript:SelectTab('Begging');">Begging</a></span>
-    <span id="TabCrimes" class="TabStop"><a href="javascript:SelectTab('Crimes');">Crimes</a></span>
+    <span id="TabArts" class="TabStop"><a href="#">Arts</a></span>
+    <span id="TabBegging" class="TabStop"><a href="#">Begging</a></span>
+    <span id="TabCrimes" class="TabStop"><a href="#">Crimes</a></span>
     <span id="lblSayuser"></span>
     <input type="hidden" id="hdnTabSelected" value="NotSet" runat="server" />
     
@@ -74,8 +64,6 @@
     
     <div style="height:5px;"></div>
     <div id="notepad"></div>
-    
-    <div id="WaitLoading" class="Wait">Loading the new data set</div>
     </div>
     </form>
 </body>

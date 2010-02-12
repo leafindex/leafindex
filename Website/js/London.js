@@ -2,20 +2,41 @@
 var _column_index = 2;
 
 $(document).ready(function() {
-    SelectCurrentTab();
+		SetupTabLinks();
+    SelectTab();
     FillBoroughData();
     LoadKmlMaps();
     DrawMap();
-    $("#WaitLoading").hide();
-    $(".DisplayButton").click(function() { $("#WaitLoading").show(); })
 });
 
-function SelectTab(tabname) {
-    $(".TabStop").removeClass("TabStopSelected");
-    $("#Tab" + tabname).addClass("TabStopSelected");
-    $(".TabOptions").hide();
-    $("#Options" + tabname).show();
+function TabNameFromId(id){
+	return id.substring(3);
+}
+function FirstTabName(){
+	return TabNameFromId($(".TabStop:first","#Tabbing").attr("id"));
+}
+function SetupTabLinks(){
+	$("#TabArts,#TabBegging,#TabCrimes").click(function(){
+		ClickOnTab(TabNameFromId(this.id));
+		return false;
+	});
+}
+
+function ClickOnTab(tabname) {
     $("#hdnTabSelected").val(tabname);
+    $("#Button1").click();
+}
+
+function SelectTab(tabname) {
+		if(!tabname){
+			tabname=$("#hdnTabSelected").val();
+			if(tabname==="NotSet"){
+				tabname=FirstTabName();
+			}
+		}
+    $("#Tab" + tabname).addClass("TabStopSelected");
+    $(".TabOptions","#Tabbing").hide();
+    $("#Options" + tabname).show();
 }
 
 function ShowColumn(idx) {
@@ -28,7 +49,7 @@ function DrawMap() {
     width = 1000;
     height = 500;
 
-    _elt_array = new Array();
+    _elt_array = [];
 
     $("#notepad").html("");
 
