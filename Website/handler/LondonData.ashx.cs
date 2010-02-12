@@ -130,7 +130,7 @@ namespace Website.handler
 
             StringBuilder Sb = new StringBuilder();
             //Sb.Append("{\"" + Dt.TableName + "\" : [");
-            Sb.Append("{ [");
+            Sb.Append("[");
 
             for (int i = 0; i < Dt.Rows.Count; i++)
             {
@@ -148,7 +148,8 @@ namespace Website.handler
             }
 
             Sb = new StringBuilder(Sb.ToString().Substring(0, Sb.ToString().Length - 1));
-            Sb.Append("]};");
+            //Sb.Append("]};");
+            Sb.Append("]");
 
             return Sb.ToString();
         }
