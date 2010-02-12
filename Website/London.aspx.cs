@@ -15,9 +15,11 @@ namespace Website
     {
         private string _myscript = "";
         protected string MyScript { get { return _myscript; } }
+        private LiTimer _timer;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            _timer = new LiTimer( "Page_Load" );
             if (!IsPostBack)
             {
                 FillDropDowns();
@@ -32,6 +34,7 @@ namespace Website
 
         private void FillDropDowns()
         {
+            _timer.StartSubset("FillDropDowns");
             Mensa.SetConnectionString(ConfigurationManager.ConnectionStrings["datasets"].ToString());
             Mensa m = new Mensa();
             DataSet ds = m.LondonBoroughCrime3OffencesPerBorough("?", "?");
@@ -83,8 +86,11 @@ namespace Website
         }
         private void MakeScript()
         {
+            _timer.StartSubset("MakeScript Start");
             int width = 1000, height = 500, mapcount = 0;
             StringBuilder b = new StringBuilder();
+
+            _timer.StartSubset("MakeScript UKLocationsFromKml ctor");
             UKLocationsFromKml u = new UKLocationsFromKml(UKLocationsFromKml.KmlSet.Counties, this.DataSetDirectory);
 
             b.AppendLine("<script type='text/javascript'>");
@@ -94,6 +100,7 @@ namespace Website
             b.AppendLine("SelectTab( '" + TabSelected + "' );");
             b.AppendLine("}");
 
+            _timer.StartSubset("MakeScript GetData");
             Mensa.SetConnectionString(ConfigurationManager.ConnectionStrings["datasets"].ToString());
             // DataTable dt = GetCrimeData();
             // DataTable dt = GetArtsData();
@@ -104,13 +111,18 @@ namespace Website
                 dt = GetArtsData();
             else
                 dt = GetBeggingData();
+
+            _timer.StartSubset("MakeScript MakeTable");
             JsMaker.MakeTable(b, "_borough_data", "FillBoroughData", dt);
 
             b.AppendLine("var _kmlmap = new Array();");
 
+            _timer.StartSubset("MakeScript CombinePlaces");
             PlaceWithLoops combined = u.CombinePlaces(Boroughs);
             for( int i = 0; i < Boroughs.Length; i++ )
             {
+                _timer.StartSubset("MakeScript Boroughs Loop");
+
                 PlaceWithLoops p = u.GetPlace(Boroughs[i]);
                 if (p == null)
                     continue;
@@ -128,12 +140,15 @@ namespace Website
                 b.AppendLine("}");
                 mapcount++;
             }
+            _timer.StartSubset("MakeScript Last Few Lines");
             b.AppendLine("function LoadKmlMaps() {");
             for (int i = 0; i < mapcount; i++)
                 b.AppendLine("LoadKmlMap" + i + "();");
             b.AppendLine("}");
-
             b.AppendLine("</script>");
+
+            foreach (string timer_result in _timer.GetResults())
+                b.AppendLine("<!-- " + timer_result + " -->");
 
             _myscript = b.ToString();
         }
