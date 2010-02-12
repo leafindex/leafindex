@@ -10,7 +10,7 @@ $(document).ready(function() {
 });
 function GetAjaxData(){
 	$.ajax({
-		url:"/handler/LondonData.ashx",
+		url:"./handler/LondonData.ashx",
 		cache:false,
 		data:$(":not(#__VIEWSTATE,#__EVENTVALIDATION)","#form1").serialize(),
 		dataType:"json",
