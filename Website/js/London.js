@@ -23,7 +23,7 @@ function GetAjaxData(){
 			});
 		},
 		error:function(r){
-			alert(r.responseText);
+			alert(r.status + ": " + r.statusText);
 		}
 	});
 }
