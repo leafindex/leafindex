@@ -1,12 +1,10 @@
 ﻿var _elt_array;
 var _column_index = 2;
-var _borough_data;
+var _borough_data=[];
 
 $(document).ready(function() {
-    _borough_data = new Array();
     SetupTabLinks();
     SelectTab();
-    // FillBoroughData();
     GetAjaxData();
     LoadKmlMaps();
     DrawMap();
@@ -18,15 +16,14 @@ function GetAjaxData(){
 		data:$(":not(#__VIEWSTATE,#__EVENTVALIDATION)","#form1").serialize(),
 		dataType:"json",
 		success:function(data){
-			alert("good");
 			$.each(data,function(i,item){
-				console.log(item(0));
-				//access item.? & item.? etc
+				if(item.Fig1){
+					_borough_data.push([item.Name,item.Code,item.Fig1]);
+				}
 			});
 		},
 		error:function(r){
 			alert("error: " + r.status + ": " + r.statusText);
-//			alert(r.responseText);
 		}
 	});
 }
