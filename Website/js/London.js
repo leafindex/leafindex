@@ -4,6 +4,7 @@ var _borough_data;
 
 $(document).ready(function() {
     SetupTabLinks();
+    SetupInputChanges();
     SelectTab();
     LoadKmlMaps();
     createData();
@@ -13,7 +14,7 @@ function createData(){
 	var ins=$("#Tabbing").find(":input:not(button,[type=submit]):visible");
 	var l=ins.length;
 	for(var j=0;j<l&&j<2;j++){
-		args+="&arg"+j+1+"="+encodeURIComponent(ins.eq(j).val());
+		args+="&arg"+(j+2)+"="+encodeURIComponent(ins.eq(j).val());
 	}
 	$.ajax({
 		url:"./handler/LondonData.ashx",
@@ -50,6 +51,11 @@ function SetupTabLinks(){
 	$("#TabArts,#TabBegging,#TabCrimes").click(function(){
 		SelectTab(TabNameFromId(this.id),true);
 		return false;
+	});
+}
+function SetupInputChanges(){
+	$("#Tabbing").find(":input:not(button,[type=submit])").change(function(){
+		createData();
 	});
 }
 
