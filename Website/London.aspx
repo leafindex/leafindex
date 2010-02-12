@@ -50,17 +50,14 @@
     <div id="OptionsCrimes" class="TabOptions" >
     <asp:DropDownList ID="ddlCrime" runat="server" />
     <asp:DropDownList ID="ddlYear" runat="server" />
-    <asp:Button ID="Button2" runat="server" Text="Display" OnClick="RefreshClick" CssClass="DisplayButton" />
     <a href="javascript:ShowColumn(2);">Number of Offences</a>
     <a href="javascript:ShowColumn(3);">per 1,000 Population</a>
     </div>
     <div id="OptionsArts" class="TabOptions" >
     <asp:DropDownList ID="ddlArtType" runat="server" />
-    <asp:Button ID="Button1" runat="server" Text="Display" OnClick="RefreshClick" CssClass="DisplayButton" />
     </div>
     <div id="OptionsBegging" class="TabOptions" >            
     <asp:DropDownList ID="ddlBeggingYear" runat="server" />
-    <asp:Button ID="Button3" runat="server" Text="Display" OnClick="RefreshClick" CssClass="DisplayButton" />
     </div>
     
     <div style="height:5px;"></div>
