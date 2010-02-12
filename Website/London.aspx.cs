@@ -102,11 +102,6 @@ namespace Website
 
             b.AppendLine("<script type='text/javascript'>");
 
-            b.AppendLine("function SelectCurrentTab()");
-            b.AppendLine("{");
-            b.AppendLine("SelectTab( '" + TabSelected + "' );");
-            b.AppendLine("}");
-
             _timer.StartSubset("MakeScript GetData");
             Mensa.SetConnectionString(ConfigurationManager.ConnectionStrings["datasets"].ToString());
             // DataTable dt = GetCrimeData();
