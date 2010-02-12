@@ -7,10 +7,26 @@ $(document).ready(function() {
     SetupTabLinks();
     SelectTab();
     // FillBoroughData();
+    GetAjaxData();
     LoadKmlMaps();
     DrawMap();
 });
-
+function GetAjaxData(){
+	$.ajax({
+		url:"/handler/LondonData.ashx",
+		cache:false,
+		data:$(":not(#__VIEWSTATE,#__EVENTVALIDATION)","#form1").serialize(),
+		dataType:"json",
+		success:function(data){
+			$.each(data,function(i,item){
+				//access item.? & item.? etc
+			});
+		},
+		error:function(r){
+			alert(r.responseText);
+		}
+	});
+}
 function TabNameFromId(id){
 	return id.substring(3);
 }
