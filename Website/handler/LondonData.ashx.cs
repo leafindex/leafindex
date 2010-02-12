@@ -10,9 +10,6 @@ using System.Data;
 
 namespace Website.handler
 {
-    /// <summary>
-    /// Summary description for $codebehindclassname$
-    /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     public class LondonData : IHttpHandler
@@ -111,10 +108,11 @@ namespace Website.handler
         };
 
 
-        // http://weblogs.asp.net/navaidakhtar/archive/2008/07/08/converting-data-table-dataset-into-json-string.aspx
-
         public static string GetJSONString(DataTable dt)
         {
+			string s;
+			decimal d;
+
             StringBuilder sb = new StringBuilder();
             sb.Append("[");
 
@@ -136,14 +134,13 @@ namespace Website.handler
                         int figno = j - 2;
                         column_name = "Fig" + figno.ToString().PadLeft(2, '0');
                     }
-                    if( j > 0 )
-                        sb.Append( ", " );
-                    sb.Append( String.Format( "{0} : {1}", AddQuotes( column_name ), AddQuotes( dt.Rows[i][j].ToString() ) ) );
-                }
-                if (dt.Columns.Count == 3)
-                {
-                    sb.Append( ", " );
-                    sb.Append(String.Format("{0} : {1}", AddQuotes("Fig01"), AddQuotes("0")));
+					if (j > 0)
+					{
+						sb.Append(", ");
+					}
+					s = dt.Rows[i][j].ToString();
+					s = (j > 1 && decimal.TryParse(s, out d)) ? Convert.ToInt32(d).ToString() : AddQuotes(s);
+					sb.Append(String.Format("{0} : {1}", AddQuotes(column_name), s));
                 }
                 sb.Append(" }");
             }
