@@ -102,20 +102,20 @@ namespace Website
 
             b.AppendLine("<script type='text/javascript'>");
 
-            _timer.StartSubset("MakeScript GetData");
-            Mensa.SetConnectionString(ConfigurationManager.ConnectionStrings["datasets"].ToString());
-            // DataTable dt = GetCrimeData();
-            // DataTable dt = GetArtsData();
-            DataTable dt;
-            if( TabSelected == "Crimes" )
-                dt = GetCrimeData();
-            else if( TabSelected == "Arts" )
-                dt = GetArtsData();
-            else
-                dt = GetBeggingData();
+            //_timer.StartSubset("MakeScript GetData");
+            //Mensa.SetConnectionString(ConfigurationManager.ConnectionStrings["datasets"].ToString());
+            //// DataTable dt = GetCrimeData();
+            //// DataTable dt = GetArtsData();
+            //DataTable dt;
+            //if( TabSelected == "Crimes" )
+            //    dt = GetCrimeData();
+            //else if( TabSelected == "Arts" )
+            //    dt = GetArtsData();
+            //else
+            //    dt = GetBeggingData();
 
-            _timer.StartSubset("MakeScript MakeTable");
-            JsMaker.MakeTable(b, "_borough_data", "FillBoroughData", dt);
+            //_timer.StartSubset("MakeScript MakeTable");
+            //JsMaker.MakeTable(b, "_borough_data", "FillBoroughData", dt);
 
             b.AppendLine("var _kmlmap = new Array();");
 

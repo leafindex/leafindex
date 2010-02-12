@@ -1,10 +1,12 @@
 ﻿var _elt_array;
 var _column_index = 2;
+var _borough_data;
 
 $(document).ready(function() {
-		SetupTabLinks();
+    _borough_data = new Array();
+    SetupTabLinks();
     SelectTab();
-    FillBoroughData();
+    // FillBoroughData();
     LoadKmlMaps();
     DrawMap();
 });
@@ -78,6 +80,8 @@ function DrawMap() {
 function GetMinValue() {
     var i, itm, result = null;
 
+    if (_borough_data == null)
+        return 0;
     for (i = 0; i < _borough_data.length; i++) {
         itm = _borough_data[i];
         if (result == null || itm[_column_index] < result)
@@ -87,6 +91,8 @@ function GetMinValue() {
 }
 function GetMaxValue() {
     var i, itm, result = null;
+    if (_borough_data == null)
+        return 100;
     for (i = 0; i < _borough_data.length; i++) {
         itm = _borough_data[i];
         if (result == null || itm[_column_index] > result)
@@ -105,6 +111,8 @@ function GetBoroughColour(boro) {
 
 function GetBoroughItem(borocode) {
     var i, itm, result = null;
+    if (_borough_data == null)
+        return null;
     for (i = 0; i < _borough_data.length; i++) {
         itm = _borough_data[i];
         if (itm[1] == borocode)
