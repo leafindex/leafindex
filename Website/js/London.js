@@ -16,7 +16,7 @@ function createData(){
 		args+="&arg"+j+1+"="+encodeURIComponent(ins.eq(j).val());
 	}
 	$.ajax({
-		url:"/handler/LondonData.ashx",
+		url:"./handler/LondonData.ashx",
 		cache:false,
 		data:args,
 		dataType:"json",
