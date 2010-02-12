@@ -18,12 +18,15 @@ function GetAjaxData(){
 		data:$(":not(#__VIEWSTATE,#__EVENTVALIDATION)","#form1").serialize(),
 		dataType:"json",
 		success:function(data){
+			alert("good");
 			$.each(data,function(i,item){
+				console.log(item(0));
 				//access item.? & item.? etc
 			});
 		},
 		error:function(r){
-			alert(r.status + ": " + r.statusText);
+			alert("error: " + r.status + ": " + r.statusText);
+//			alert(r.responseText);
 		}
 	});
 }
