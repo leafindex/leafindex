@@ -29,6 +29,7 @@ namespace Website
 
         protected void RefreshClick(object sender, EventArgs e)
         {
+            _timer = new LiTimer("RefreshClick at " + DateTime.Now.ToString("HH:mm:ss dd/MM/yy"));
             MakeScript();
         }
 
