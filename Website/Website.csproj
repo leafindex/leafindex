@@ -81,6 +81,9 @@
       <DependentUpon>datasetsList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="handler\LondonData.ashx.cs">
+      <DependentUpon>LondonData.ashx</DependentUpon>
+    </Compile>
     <Compile Include="London.aspx.cs">
       <DependentUpon>London.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -172,6 +175,9 @@
     <Content Include="js\London.js" />
     <Content Include="London.aspx" />
     <Content Include="UKMaps.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="handler\LondonData.ashx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
