@@ -49,9 +49,9 @@
     <form id="form1" runat="server">
     <div>
     <div class="TabStopContainer">
-    <span id="TabArts" class="TabStop"><a href="javascript:SelectTab('Arts');">Arts</a></span>
-    <span id="TabBegging" class="TabStop"><a href="javascript:SelectTab('Begging');">Begging</a></span>
-    <span id="TabCrimes" class="TabStop"><a href="javascript:SelectTab('Crimes');">Crimes</a></span>
+    <span id="TabArts" class="TabStop"><a href="javascript:ClickOnTab('Arts');">Arts</a></span>
+    <span id="TabBegging" class="TabStop"><a href="javascript:ClickOnTab('Begging');">Begging</a></span>
+    <span id="TabCrimes" class="TabStop"><a href="javascript:ClickOnTab('Crimes');">Crimes</a></span>
     <span id="lblSayuser"></span>
     <input type="hidden" id="hdnTabSelected" value="NotSet" runat="server" />
     

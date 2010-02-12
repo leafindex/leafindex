@@ -7,8 +7,12 @@ $(document).ready(function() {
     LoadKmlMaps();
     DrawMap();
     $("#WaitLoading").hide();
-    $(".DisplayButton").click(function() { $("#WaitLoading").show(); })
 });
+
+function ClickOnTab(tabname) {
+    $("#hdnTabSelected").val(tabname);
+    $("#Button1").click();
+}
 
 function SelectTab(tabname) {
     $(".TabStop").removeClass("TabStopSelected");
@@ -16,6 +20,7 @@ function SelectTab(tabname) {
     $(".TabOptions").hide();
     $("#Options" + tabname).show();
     $("#hdnTabSelected").val(tabname);
+    
 }
 
 function ShowColumn(idx) {
