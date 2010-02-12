@@ -19,7 +19,7 @@ namespace Website
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            _timer = new LiTimer( "Page_Load" );
+            _timer = new LiTimer("Page_Load at " + DateTime.Now.ToString("HH:mm:ss dd/MM/yy"));
             if (!IsPostBack)
             {
                 FillDropDowns();
@@ -90,8 +90,14 @@ namespace Website
             int width = 1000, height = 500, mapcount = 0;
             StringBuilder b = new StringBuilder();
 
-            _timer.StartSubset("MakeScript UKLocationsFromKml ctor");
-            UKLocationsFromKml u = new UKLocationsFromKml(UKLocationsFromKml.KmlSet.Counties, this.DataSetDirectory);
+            //_timer.StartSubset("MakeScript UKLocationsFromKml ctor");
+            //UKLocationsFromKml u = new UKLocationsFromKml(UKLocationsFromKml.KmlSet.Counties, this.DataSetDirectory);
+            //_timer.StartSubset("MakeScript UKLocationsFromKml Load");
+            //u.Load();
+
+            _timer.StartSubset("MakeScript Static Fetch");
+            UKLocationsFromKml u = UKLocationsDictionary.Fetch(UKLocationsFromKml.KmlSet.Counties, this.DataSetDirectory);
+            _timer.StartSubset("MakeScript after Fetch");
 
             b.AppendLine("<script type='text/javascript'>");
 

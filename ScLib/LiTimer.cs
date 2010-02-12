@@ -21,7 +21,8 @@ namespace ScLib
                 _current.Stop();
             if (!_dict.ContainsKey(subset))
                 _dict.Add(subset, new LiTimerSubset(subset));
-            _dict[subset].Start();
+            _current = _dict[subset];
+            _current.Start();
         }
         public List<string> GetResults()
         {

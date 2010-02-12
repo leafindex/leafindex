@@ -8,6 +8,21 @@ using System.IO;
 
 namespace ScLib
 {
+    public static class UKLocationsDictionary
+    {
+        private static Dictionary<UKLocationsFromKml.KmlSet, UKLocationsFromKml> _dict = new Dictionary<UKLocationsFromKml.KmlSet, UKLocationsFromKml>();
+
+        public static UKLocationsFromKml Fetch(UKLocationsFromKml.KmlSet set, string directory)
+        {
+            if (!_dict.ContainsKey(set))
+            {
+                _dict.Add(set, new UKLocationsFromKml(set, directory));
+                _dict[set].Load();
+            }
+            return _dict[set];
+        }
+    }
+
     public class UKLocationsFromKml
     {
         private string _xmlfilename;
@@ -74,7 +89,6 @@ namespace ScLib
             if (_places == null)
                 Load();
             return _places;
-
         }
         public List<string> GetPlacenames()
         {
