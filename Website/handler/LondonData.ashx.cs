@@ -19,8 +19,18 @@ namespace Website.handler
     {
         public void ProcessRequest(HttpContext context)
         {
+            string data_set_name = context.Request["arg1"] ?? "";
+            string arg2 = context.Request["arg2"] ?? "";
+            string arg3 = context.Request["arg3"] ?? "";
+
+            //DataTable dt;
+            //if (data_set_name == "Crimes")
+            //    dt = GetCrimeData();
+
             Mensa.SetConnectionString(ConfigurationManager.ConnectionStrings["datasets"].ToString());
             DataTable dt = GetArtsData();
+
+            context.Response.ContentType = "application/json; charset=utf-8";
             context.Response.Write(GetJSONString(dt));
         }
 
@@ -35,7 +45,6 @@ namespace Website.handler
 
         public static string GetJSONString(DataTable Dt)
         {
-
             string[] StrDc = new string[Dt.Columns.Count];
             string HeadStr = string.Empty;
 
@@ -50,7 +59,8 @@ namespace Website.handler
             HeadStr = HeadStr.Substring(0, HeadStr.Length - 1);
 
             StringBuilder Sb = new StringBuilder();
-            Sb.Append("{\"" + Dt.TableName + "\" : [");
+            //Sb.Append("{\"" + Dt.TableName + "\" : [");
+            Sb.Append("{ [");
 
             for (int i = 0; i < Dt.Rows.Count; i++)
             {
