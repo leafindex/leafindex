@@ -16,9 +16,15 @@ function GetAjaxData(){
 		data:$(":not(#__VIEWSTATE,#__EVENTVALIDATION)","#form1").serialize(),
 		dataType:"json",
 		success:function(data){
-			$.each(data,function(i,item){
-				if(item.Fig1){
-					_borough_data.push([item.Name,item.Code,item.Fig1]);
+			$.each(data,function(i,v){
+				if (v && typeof v==='object'){
+					var a=[]
+					for(var j in v){
+						if (v.hasOwnProperty(j)){
+							a.push(v[j]);
+						}
+					}
+					_borough_data.push(a);
 				}
 			});
 		},
