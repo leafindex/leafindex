@@ -1,25 +1,32 @@
 ﻿var _elt_array;
 var _column_index = 2;
-var _borough_data=[];
+var _borough_data;
 
 $(document).ready(function() {
     SetupTabLinks();
     SelectTab();
     LoadKmlMaps();
-    GetAjaxData();
+    createData();
 });
-function GetAjaxData(){
+function createData(){
+	var args="arg1="+encodeURIComponent(SelectedTabName());
+	var ins=$("#Tabbing").find(":input:not(button,[type=submit]):visible");
+	var l=ins.length;
+	for(var j=0;j<l&&j<2;j++){
+		args+="&arg"+j+1+"="+encodeURIComponent(ins.eq(j).val());
+	}
 	$.ajax({
 		url:"/handler/LondonData.ashx",
 		cache:false,
-		data:$(":not(#__VIEWSTATE,#__EVENTVALIDATION)","#form1").serialize(),
+		data:args,
 		dataType:"json",
 		success:function(data){
+			_borough_data=[];
 			$.each(data,function(i,v){
 				if (v && typeof v==='object'){
-					var a=[]
+					var a=[];
 					for(var j in v){
-						if (v.hasOwnProperty(j)){
+						if(v.hasOwnProperty(j)){
 							a.push(v[j]);
 						}
 					}
@@ -27,9 +34,6 @@ function GetAjaxData(){
 				}
 			});
 	    DrawMap();
-		},
-		error:function(r){
-			alert("error: " + r.status + ": " + r.statusText);
 		}
 	});
 }
@@ -39,27 +43,34 @@ function TabNameFromId(id){
 function FirstTabName(){
 	return TabNameFromId($(".TabStop:first","#Tabbing").attr("id"));
 }
+function SelectedTabName(){
+	return TabNameFromId($(".TabStopSelected","#Tabbing").attr("id"));
+}
 function SetupTabLinks(){
 	$("#TabArts,#TabBegging,#TabCrimes").click(function(){
-		ClickOnTab(TabNameFromId(this.id));
+		SelectTab(TabNameFromId(this.id),true);
 		return false;
 	});
 }
 
-function ClickOnTab(tabname) {
-    $("#hdnTabSelected").val(tabname);
-    $("#Button1").click();
-}
-
-function SelectTab(tabname) {
+function SelectTab(tabname,getdata) {
 		if(!tabname){
 			tabname=$("#hdnTabSelected").val();
 			if(tabname==="NotSet"){
 				tabname=FirstTabName();
 			}
 		}
-    $("#Tab" + tabname).addClass("TabStopSelected").show();
+		$("#Tabbing")
+			.find(".TabStop")
+				.removeClass("TabStopSelected")
+				.end()
+			.find(".TabOptions")
+				.hide();
+    $("#Tab" + tabname).addClass("TabStopSelected");
     $("#Options" + tabname).show();
+    if(getdata){
+			createData();
+		}
 }
 
 function ShowColumn(idx) {
