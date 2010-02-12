@@ -5,9 +5,8 @@ var _borough_data=[];
 $(document).ready(function() {
     SetupTabLinks();
     SelectTab();
-    GetAjaxData();
     LoadKmlMaps();
-    DrawMap();
+    GetAjaxData();
 });
 function GetAjaxData(){
 	$.ajax({
@@ -27,6 +26,7 @@ function GetAjaxData(){
 					_borough_data.push(a);
 				}
 			});
+	    DrawMap();
 		},
 		error:function(r){
 			alert("error: " + r.status + ": " + r.statusText);
