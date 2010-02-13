@@ -1,101 +1,82 @@
 ﻿var _elt_array;
 var _column_index = 2;
-var _borough_data = [];
-var _tab_selected = 'Arts';
+var _borough_data;
 
 $(document).ready(function() {
     SetupTabLinks();
-    SelectTab(_tab_selected);
+    SetupInputChanges();
+    SelectTab();
     LoadKmlMaps();
-    GetAjaxData();
-    //Is AJAX nippy enough to work with ddl.change() = autopostback?
-    //$(".DisplayButton").click(function() { GetAjaxData(); });
-    $(".DisplayButton").hide();
-    $(".OptionDdl").change(function() { GetAjaxData(); });
+    createData();
 });
-function GetAjaxData(){
-    $.ajax({
-        url: "./handler/LondonData.ashx?" + GetAjaxArgs(),
-        cache: false,
-        data: $(":not(#__VIEWSTATE,#__EVENTVALIDATION)", "#form1").serialize(),
-        dataType: "json",
-        success: function(data) {
-            _borough_data = []; // todo - hold each set as used
-            $.each(data, function(i, v) {
-                if (v && typeof v === 'object') {
-                    var a = []
-                    for (var j in v) {
-                        if (v.hasOwnProperty(j)) {
-                            a.push(v[j]);
-                        }
-                    }
-                    _borough_data.push(a);
-                }
-            });
-            DrawMap();
-        },
-        error: function(r) {
-            alert("error: " + r.status + ": " + r.statusText);
-        }
-    });
+function createData(){
+	var args="arg1="+encodeURIComponent(SelectedTabName());
+	var ins=$("#Tabbing").find(":input:not(button,[type=submit]):visible");
+	var l=ins.length;
+	for(var j=0;j<l&&j<2;j++){
+		args+="&arg"+(j+2)+"="+encodeURIComponent(ins.eq(j).val());
+	}
+	$.ajax({
+		url:"./handler/LondonData.ashx",
+		cache:false,
+		data:args,
+		dataType:"json",
+		success:function(data){
+			_borough_data=[];
+			$.each(data,function(i,v){
+				if (v && typeof v==='object'){
+					var a=[];
+					for(var j in v){
+						if(v.hasOwnProperty(j)){
+							a.push(v[j]);
+						}
+					}
+					_borough_data.push(a);
+				}
+			});
+	    DrawMap();
+		}
+	});
 }
-
-function GetAjaxArgs() {
-    var i, j, msg, result, result_array = [];
-    if (_tab_selected == "Arts") 
-        result_array = new Array( _tab_selected, $("#ddlArtType").val() );
-    if (_tab_selected == "Begging")            
-        result_array = new Array( _tab_selected, $("#ddlBeggingYear").val() );
-    if (_tab_selected == "Crimes")            
-        result_array = new Array( _tab_selected, $("#ddlCrime").val(), $("#ddlYear").val() );
-    
-    msg = result = "";
-    for( i = 0; i < result_array.length; i++ ) {
-        if( i > 0 ) {
-            msg += " / ";
-            result += "&";
-        }
-        j = i + 1;
-        result += "arg" + j + "=" + encodeURI(result_array[i]);
-        msg += result_array[i];
-    }
-    Sayuser( msg );
-    return result;
-}
-
 function TabNameFromId(id){
 	return id.substring(3);
 }
 function FirstTabName(){
 	return TabNameFromId($(".TabStop:first","#Tabbing").attr("id"));
 }
+function SelectedTabName(){
+	return TabNameFromId($(".TabStopSelected","#Tabbing").attr("id"));
+}
 function SetupTabLinks(){
 	$("#TabArts,#TabBegging,#TabCrimes").click(function(){
-		ClickOnTab(TabNameFromId(this.id));
+		SelectTab(TabNameFromId(this.id),true);
 		return false;
 	});
 }
-
-function ClickOnTab(tabname) {
-    _tab_selected = tabname;
-    SelectTab(tabname);
-    Sayuser("Tab now " + _tab_selected);
-    GetAjaxData();
-//    $("#hdnTabSelected").val(tabname);
-//    $("#Button1").click();
+function SetupInputChanges(){
+	$("#Tabbing").find(":input:not(button,[type=submit])").change(function(){
+		createData();
+	});
 }
 
-function SelectTab(tabname) {
-//		if(!tabname){
-//			tabname=$("#hdnTabSelected").val();
-//			if(tabname==="NotSet"){
-//				tabname=FirstTabName();
-//			}
-    //		}
-    $(".TabStop").removeClass("TabStopSelected");
-    $(".TabOptions").hide();
-    $("#Tab" + tabname).addClass("TabStopSelected").show();
+function SelectTab(tabname,getdata) {
+		if(!tabname){
+			tabname=$("#hdnTabSelected").val();
+			if(tabname==="NotSet"){
+				tabname=FirstTabName();
+			}
+		}
+		$("#Tabbing")
+			.find(".TabStop")
+				.removeClass("TabStopSelected")
+				.end()
+			.find(".TabOptions")
+				.hide();
+    $("#Tab" + tabname).addClass("TabStopSelected");
     $("#Options" + tabname).show();
+    if(getdata){
+			createData();
+		}
 }
 
 function ShowColumn(idx) {
