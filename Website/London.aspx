@@ -74,7 +74,6 @@
 	    <option selected="selected">2008/09</option> 
     </select>
 
-    <input type="button" class="DisplayButton" value="Display" />
     <a href="javascript:ShowColumn(2);">Number of Offences</a>
     <a href="javascript:ShowColumn(3);">per 1,000 Population</a>
     </div>
@@ -84,14 +83,12 @@
 	    <option selected="selected">Museum or Gallery</option> 
 	    <option>Public Library</option> 
     </select>    
-    <input type="button" class="DisplayButton" value="Display" />
     </div>
     <div id="OptionsBegging" class="TabOptions" >
     <select id="ddlBeggingYear" class="OptionDdl">
         <option>2008</option>
         <option selected="selected">2009</option>
     </select>            
-    <input type="button" class="DisplayButton" value="Display" />
     </div>
     
     <div style="height:5px;"></div>
