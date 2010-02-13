@@ -1,7 +1,8 @@
-25 Jan 2009 : 16:37
+13 Feb 2009
 
-AJC made the ACOAssaults a purist LINQ thing
+Aggressive refactor : removing ASP.Net Controls and trusting to JQuery. Figures displayed are not to be trusted.
 
 AJC
+
 
 	

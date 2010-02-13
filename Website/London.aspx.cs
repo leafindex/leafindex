@@ -6,8 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Text;
 using ScLib;
-using System.Data;
-using System.Configuration;
+//using System.Data;
+//using System.Configuration;
 
 namespace Website
 {
@@ -15,79 +15,74 @@ namespace Website
     {
         private string _myscript = "";
         protected string MyScript { get { return _myscript; } }
-        private LiTimer _timer;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            _timer = new LiTimer("Page_Load at " + DateTime.Now.ToString("HH:mm:ss dd/MM/yy"));
             if (!IsPostBack)
             {
-                FillDropDowns();
+                // FillDropDowns();
                 MakeScript();
             }
         }
 
-        protected void RefreshClick(object sender, EventArgs e)
-        {
-            _timer = new LiTimer("RefreshClick at " + DateTime.Now.ToString("HH:mm:ss dd/MM/yy"));
-            MakeScript();
-        }
+        //protected void RefreshClick(object sender, EventArgs e)
+        //{
+        //    MakeScript();
+        //}
 
-        private void FillDropDowns()
-        {
-            _timer.StartSubset("FillDropDowns");
-            Mensa.SetConnectionString(ConfigurationManager.ConnectionStrings["datasets"].ToString());
-            Mensa m = new Mensa();
-            DataSet ds = m.LondonBoroughCrime3OffencesPerBorough("?", "?");
-            FillDropDown( ddlCrime, ds.Tables[0], 0, false );
-            FillDropDown( ddlYear, ds.Tables[1], 0, true );
+        //private void FillDropDowns()
+        //{
+        //    Mensa.SetConnectionString(ConfigurationManager.ConnectionStrings["datasets"].ToString());
+        //    Mensa m = new Mensa();
+        //    DataSet ds = m.LondonBoroughCrime3OffencesPerBorough("?", "?");
+        //    FillDropDown( ddlCrime, ds.Tables[0], 0, false );
+        //    FillDropDown( ddlYear, ds.Tables[1], 0, true );
 
-            ds = m.LondonArtsEngagement("?");
-            FillDropDown(ddlArtType, ds.Tables[0], 0, false);
+            //ds = m.LondonArtsEngagement("?");
+            //FillDropDown(ddlArtType, ds.Tables[0], 0, false);
 
-            FillDropDown(ddlBeggingYear, true, "2008", "2009" );
-        }
+            // FillDropDown(ddlBeggingYear, true, "2008", "2009" );
+        //}
 
-        private void FillDropDown(DropDownList ddl, bool select_last, params string [] values )
-        {
-            ddl.Items.Clear();
-            foreach (string value in values)
-                ddl.Items.Add(value);
-            SelectDdlItem(ddl, select_last);
-        }
-        private void FillDropDown(DropDownList ddl, DataTable dt, int colno, bool select_last )
-        {
-            ddl.Items.Clear();
-            foreach (DataRow dr in dt.Rows)
-                ddl.Items.Add(dr[colno].ToString());
-            SelectDdlItem(ddl, select_last);
+        //private void FillDropDown(DropDownList ddl, bool select_last, params string [] values )
+        //{
+        //    ddl.Items.Clear();
+        //    foreach (string value in values)
+        //        ddl.Items.Add(value);
+        //    SelectDdlItem(ddl, select_last);
+        //}
+        //private void FillDropDown(DropDownList ddl, DataTable dt, int colno, bool select_last )
+        //{
+        //    ddl.Items.Clear();
+        //    foreach (DataRow dr in dt.Rows)
+        //        ddl.Items.Add(dr[colno].ToString());
+        //    SelectDdlItem(ddl, select_last);
 
-        }
-        private void SelectDdlItem( DropDownList ddl, bool select_last )
-        {
-            if (ddl.Items.Count > 0)
-            {
-                if (select_last)
-                    ddl.SelectedIndex = ddl.Items.Count - 1;
-                else
-                    ddl.SelectedIndex = 0;
-            }
-        }
+        //}
+        //private void SelectDdlItem( DropDownList ddl, bool select_last )
+        //{
+        //    if (ddl.Items.Count > 0)
+        //    {
+        //        if (select_last)
+        //            ddl.SelectedIndex = ddl.Items.Count - 1;
+        //        else
+        //            ddl.SelectedIndex = 0;
+        //    }
+        //}
 
-        private string TabSelected
-        {
-            get
-            {
-                return this.Request["hdnTabSelected"] ?? "Arts";
-            }
-        }
+        //private string TabSelected
+        //{
+        //    get
+        //    {
+        //        return this.Request["hdnTabSelected"] ?? "Arts";
+        //    }
+        //}
 
-        private void MakeScriptNull()
-        {
-        }
+        //private void MakeScriptNull()
+        //{
+        //}
         private void MakeScript()
         {
-            _timer.StartSubset("MakeScript Start");
             int width = 1000, height = 500, mapcount = 0;
             StringBuilder b = new StringBuilder();
 
@@ -96,9 +91,7 @@ namespace Website
             //_timer.StartSubset("MakeScript UKLocationsFromKml Load");
             //u.Load();
 
-            _timer.StartSubset("MakeScript Static Fetch");
             UKLocationsFromKml u = UKLocationsDictionary.Fetch(UKLocationsFromKml.KmlSet.Counties, this.DataSetDirectory);
-            _timer.StartSubset("MakeScript after Fetch");
 
             b.AppendLine("<script type='text/javascript'>");
 
@@ -119,12 +112,9 @@ namespace Website
 
             b.AppendLine("var _kmlmap = new Array();");
 
-            _timer.StartSubset("MakeScript CombinePlaces");
             PlaceWithLoops combined = u.CombinePlaces(Boroughs);
             for( int i = 0; i < Boroughs.Length; i++ )
             {
-                _timer.StartSubset("MakeScript Boroughs Loop");
-
                 PlaceWithLoops p = u.GetPlace(Boroughs[i]);
                 if (p == null)
                     continue;
@@ -142,57 +132,53 @@ namespace Website
                 b.AppendLine("}");
                 mapcount++;
             }
-            _timer.StartSubset("MakeScript Last Few Lines");
             b.AppendLine("function LoadKmlMaps() {");
             for (int i = 0; i < mapcount; i++)
                 b.AppendLine("LoadKmlMap" + i + "();");
             b.AppendLine("}");
             b.AppendLine("</script>");
 
-            foreach (string timer_result in _timer.GetResults())
-                b.AppendLine("<!-- " + timer_result + " -->");
-
             _myscript = b.ToString();
         }
 
-        private DataTable GetBeggingData()
-        {
-            Mensa m = new Mensa();
-            return m.LondonBoroughBegging(ddlBeggingYear.Text).Tables[0];
-        }
+        //private DataTable GetBeggingData()
+        //{
+        //    Mensa m = new Mensa();
+        //    return m.LondonBoroughBegging(ddlBeggingYear.Text).Tables[0];
+        //}
 
-        private DataTable GetArtsData()
-        {
-            Mensa m = new Mensa();
-            return m.LondonArtsEngagement(ddlArtType.Text).Tables[0];
-        }
+        //private DataTable GetArtsData()
+        //{
+        //    Mensa m = new Mensa();
+        //    return m.LondonArtsEngagement(ddlArtType.Text).Tables[0];
+        //}
 
-        private DataTable GetCrimeData()
-        {
-            Mensa m = new Mensa();
-            DataTable dt_all = m.LondonBoroughCrime3OffencesPerBorough(ddlCrime.Text, ddlYear.Text).Tables[0];
-            DataTable dt = dt_all.Clone();
-            foreach (DataRow dr in dt_all.Select(MakeBoroughSelect()))
-            {
-                DataRow dr2 = dt.NewRow();
-                for (int i = 0; i < dt.Columns.Count; i++)
-                    dr2[i] = dr[i];
-                dt.Rows.Add(dr2);
-            }
-            return dt;
-        }
+        //private DataTable GetCrimeData()
+        //{
+        //    Mensa m = new Mensa();
+        //    DataTable dt_all = m.LondonBoroughCrime3OffencesPerBorough(ddlCrime.Text, ddlYear.Text).Tables[0];
+        //    DataTable dt = dt_all.Clone();
+        //    foreach (DataRow dr in dt_all.Select(MakeBoroughSelect()))
+        //    {
+        //        DataRow dr2 = dt.NewRow();
+        //        for (int i = 0; i < dt.Columns.Count; i++)
+        //            dr2[i] = dr[i];
+        //        dt.Rows.Add(dr2);
+        //    }
+        //    return dt;
+        //}
 
-        private string MakeBoroughSelect()
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (string code in DistrictCodes)
-            {
-                if (sb.Length > 0)
-                    sb.Append(" or ");
-                sb.Append("[ONS Code] = '" + code + "'");
-            }
-            return sb.ToString();
-        }
+        //private string MakeBoroughSelect()
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    foreach (string code in DistrictCodes)
+        //    {
+        //        if (sb.Length > 0)
+        //            sb.Append(" or ");
+        //        sb.Append("[ONS Code] = '" + code + "'");
+        //    }
+        //    return sb.ToString();
+        //}
 
         private string[] Boroughs = new string[] { 
                 "City of London", "Barking and Dagenham", "Barnet", "Bexley", "Brent", "Bromley", "Camden", "Croydon", 

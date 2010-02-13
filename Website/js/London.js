@@ -1,38 +1,68 @@
 ﻿var _elt_array;
 var _column_index = 2;
-var _borough_data=[];
+var _borough_data = [];
+var _tab_selected = 'Arts';
 
 $(document).ready(function() {
     SetupTabLinks();
-    SelectTab();
+    SelectTab(_tab_selected);
     LoadKmlMaps();
     GetAjaxData();
+    //Is AJAX nippy enough to work with ddl.change() = autopostback?
+    //$(".DisplayButton").click(function() { GetAjaxData(); });
+    $(".DisplayButton").hide();
+    $(".OptionDdl").change(function() { GetAjaxData(); });
 });
 function GetAjaxData(){
-	$.ajax({
-		url:"./handler/LondonData.ashx",
-		cache:false,
-		data:$(":not(#__VIEWSTATE,#__EVENTVALIDATION)","#form1").serialize(),
-		dataType:"json",
-		success:function(data){
-			$.each(data,function(i,v){
-				if (v && typeof v==='object'){
-					var a=[]
-					for(var j in v){
-						if (v.hasOwnProperty(j)){
-							a.push(v[j]);
-						}
-					}
-					_borough_data.push(a);
-				}
-			});
-	    DrawMap();
-		},
-		error:function(r){
-			alert("error: " + r.status + ": " + r.statusText);
-		}
-	});
+    $.ajax({
+        url: "./handler/LondonData.ashx?" + GetAjaxArgs(),
+        cache: false,
+        data: $(":not(#__VIEWSTATE,#__EVENTVALIDATION)", "#form1").serialize(),
+        dataType: "json",
+        success: function(data) {
+            _borough_data = []; // todo - hold each set as used
+            $.each(data, function(i, v) {
+                if (v && typeof v === 'object') {
+                    var a = []
+                    for (var j in v) {
+                        if (v.hasOwnProperty(j)) {
+                            a.push(v[j]);
+                        }
+                    }
+                    _borough_data.push(a);
+                }
+            });
+            DrawMap();
+        },
+        error: function(r) {
+            alert("error: " + r.status + ": " + r.statusText);
+        }
+    });
 }
+
+function GetAjaxArgs() {
+    var i, j, msg, result, result_array = [];
+    if (_tab_selected == "Arts") 
+        result_array = new Array( _tab_selected, $("#ddlArtType").val() );
+    if (_tab_selected == "Begging")            
+        result_array = new Array( _tab_selected, $("#ddlBeggingYear").val() );
+    if (_tab_selected == "Crimes")            
+        result_array = new Array( _tab_selected, $("#ddlCrime").val(), $("#ddlYear").val() );
+    
+    msg = result = "";
+    for( i = 0; i < result_array.length; i++ ) {
+        if( i > 0 ) {
+            msg += " / ";
+            result += "&";
+        }
+        j = i + 1;
+        result += "arg" + j + "=" + encodeURI(result_array[i]);
+        msg += result_array[i];
+    }
+    Sayuser( msg );
+    return result;
+}
+
 function TabNameFromId(id){
 	return id.substring(3);
 }
@@ -47,17 +77,23 @@ function SetupTabLinks(){
 }
 
 function ClickOnTab(tabname) {
-    $("#hdnTabSelected").val(tabname);
-    $("#Button1").click();
+    _tab_selected = tabname;
+    SelectTab(tabname);
+    Sayuser("Tab now " + _tab_selected);
+    GetAjaxData();
+//    $("#hdnTabSelected").val(tabname);
+//    $("#Button1").click();
 }
 
 function SelectTab(tabname) {
-		if(!tabname){
-			tabname=$("#hdnTabSelected").val();
-			if(tabname==="NotSet"){
-				tabname=FirstTabName();
-			}
-		}
+//		if(!tabname){
+//			tabname=$("#hdnTabSelected").val();
+//			if(tabname==="NotSet"){
+//				tabname=FirstTabName();
+//			}
+    //		}
+    $(".TabStop").removeClass("TabStopSelected");
+    $(".TabOptions").hide();
     $("#Tab" + tabname).addClass("TabStopSelected").show();
     $("#Options" + tabname).show();
 }
