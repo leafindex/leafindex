@@ -218,13 +218,14 @@ function DrawSideBySide() {
     msg = _borough_data.length + " boroughs " + _borough_data[0].length + " data points";
     Sayuser(msg);
 
-    var width, height, x, series_count, idx, series_width, bidx, b, pathstr, elt, bcolour, side_margin;
+    var width, height, x, series_count, idx, series_width, bidx, b, pathstr, elt, bcolour, left_margin, right_margin;
     width = 1000;
     height = 500;
-    side_margin = 150;
+    right_margin = 180;
+    left_margin = 80;
 
     series_count = _borough_data[0].length - 2;
-    series_width = (width - (side_margin*2)) / (series_count - 1);
+    series_width = (width - (left_margin + right_margin)) / (series_count - 1);
 
     _elt_array = [];
 
@@ -232,7 +233,7 @@ function DrawSideBySide() {
     FloatingInfoBoxHide();
 
     var paper = Raphael("notepad", width + 1, height + 1);
-    x = side_margin;
+    x = left_margin;
     for (idx = 0; idx < series_count; idx++) {
         paper.path(MakePathString(x, 100, x, 400));
 
@@ -244,7 +245,7 @@ function DrawSideBySide() {
     }
     //Raphael.getColor.reset();
     for (bidx = 0; bidx < _borough_data.length; bidx++) {
-        x = side_margin;
+        x = left_margin;
         b = _borough_data[bidx];
         bcolour = GetColour(bidx);
         pathstr = "";
@@ -256,7 +257,7 @@ function DrawSideBySide() {
             pathstr += x + " " + CalcSideBySideY(b[2 + idx], GetMinValue(2 + idx), GetMaxValue(2 + idx));
             x += series_width;
         }
-        elt = paper.text(width - side_margin / 2, 10 + bidx * (480 / _borough_data.length), b[0]).attr({ stroke: bcolour });
+        elt = paper.text(width - right_margin / 2, 10 + bidx * (480 / _borough_data.length), b[0]).attr({ stroke: bcolour });
         _elt_array[_elt_array.length] = new Array(elt, b);
         elt.mouseover(function(event) {
             DoSideBySideMouseOver(this, event);
