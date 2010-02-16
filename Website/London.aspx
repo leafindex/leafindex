@@ -90,10 +90,11 @@
     </div>
     <div id="OptionsArts" class="TabOptions" >
     <select id="ddlArtType" class="OptionDdl"> 
-	    <option>Arts Event or Activity</option> 
-	    <option selected="selected">Museum or Gallery</option> 
+	    <option selected="selected">Arts Event or Activity</option> 
+	    <option>Museum or Gallery</option> 
 	    <option>Public Library</option> 
     </select>    
+    <a href="javascript:ShowSideBySide('arts');">Side by Side</a>  
     <span class="Explanation">The percentage of adults in a borough who have used a public library service, visited a museum or gallery, or attended / participated in an arts activity in the past 12 months.
     <a target="_blank" href="http://data.london.gov.uk/datastore/package/use-public-libraries-visits-museums-and-galleries-and-engagement-arts">More...</a></span>
     </div>

@@ -62,8 +62,8 @@ namespace Website.handler
             if (arttype == "all")
             {
                 DataTable dt1 = GetArtsData("Arts Event or Activity");
-                DataTable dt2 = GetArtsData("Public Library");
-                DataTable dt3 = GetArtsData("Museum or Gallery");
+                DataTable dt2 = GetArtsData("Museum or Gallery");
+                DataTable dt3 = GetArtsData("Public Library");
                 dt1.Columns.Add(new DataColumn("Fig01", dt2.Columns[FIGURE_COLUMN].DataType));
                 dt1.Columns.Add(new DataColumn("Fig02", dt3.Columns[FIGURE_COLUMN].DataType));
                 PopulateTable(dt1, "Fig01", dt2, FIGURE_COLUMN);
