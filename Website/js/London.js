@@ -218,12 +218,13 @@ function DrawSideBySide() {
     msg = _borough_data.length + " boroughs " + _borough_data[0].length + " data points";
     Sayuser(msg);
 
-    var width, height, x, series_count, idx, series_width, bidx, b, pathstr, elt;
+    var width, height, x, series_count, idx, series_width, bidx, b, pathstr, elt, bcolour, side_margin;
     width = 1000;
     height = 500;
+    side_margin = 150;
 
     series_count = _borough_data[0].length - 2;
-    series_width = ( width - 200 ) / ( series_count - 1 );
+    series_width = (width - (side_margin*2)) / (series_count - 1);
 
     _elt_array = [];
 
@@ -231,7 +232,7 @@ function DrawSideBySide() {
     FloatingInfoBoxHide();
 
     var paper = Raphael("notepad", width + 1, height + 1);
-    x = 100;
+    x = side_margin;
     for (idx = 0; idx < series_count; idx++) {
         paper.path(MakePathString(x, 100, x, 400));
 
@@ -241,10 +242,11 @@ function DrawSideBySide() {
         
         x += series_width;
     }
-    Raphael.getColor.reset();
+    //Raphael.getColor.reset();
     for (bidx = 0; bidx < _borough_data.length; bidx++) {
-        x = 100;
+        x = side_margin;
         b = _borough_data[bidx];
+        bcolour = GetColour(bidx);
         pathstr = "";
         for (idx = 0; idx < series_count; idx++) {
             if (idx == 0)
@@ -254,7 +256,13 @@ function DrawSideBySide() {
             pathstr += x + " " + CalcSideBySideY(b[2 + idx], GetMinValue(2 + idx), GetMaxValue(2 + idx));
             x += series_width;
         }
-        elt = paper.path(pathstr).attr({stroke: Raphael.getColor(), 'stroke-width':2 });;
+        elt = paper.text(width - side_margin / 2, 10 + bidx * (480 / _borough_data.length), b[0]).attr({ stroke: bcolour });
+        _elt_array[_elt_array.length] = new Array(elt, b);
+        elt.mouseover(function(event) {
+            DoSideBySideMouseOver(this, event);
+        });
+        
+        elt = paper.path(pathstr).attr({ stroke: bcolour, 'stroke-width': 2 }); ;
         _elt_array[_elt_array.length] = new Array(elt, b);
         elt.mouseover(function(event) {
             DoSideBySideMouseOver(this, event );
@@ -298,4 +306,29 @@ function CalcSideBySideY(val, min, max) {
 }
 function MakePathString(x0, y0, x1, y1) {
     return "M" + x0 + " " + y0 + "L" + x1 + " " + y1;
+}
+
+var colours = new Array(
+    "#ff0000", "#bb0000", "#770000", //"#330000",
+    "#00ff00", "#00bb00", "#007700", //"#003300",
+    "#0000ff", "#0000bb", "#000077", //"#000033",
+
+    "#ffff00", "#bbbb00", "#777700",
+    "#ff00ff", "#bb00bb", "#770077",
+    "#00ffff", "#00bbbb", "#007777",
+
+    "#ffff44", "#bbbb44", "#777744",
+    "#ff44ff", "#bb44bb", "#774477",
+    "#44ffff", "#44bbbb", "#447777",
+
+    "#ffff88", "#bbbb88", "#777788",
+    "#ff88ff", "#bb88bb", "#778877",
+    "#88ffff", "#88bbbb", "#887777",
+
+    "#ffbb77", "#bbff77", "#bb77ff", "#ff77bb", "#77ffbb", "#77bbff"
+);
+
+function GetColour(i) {
+    var idx = i % colours.length;
+    return colours[idx];
 }
