@@ -24,6 +24,10 @@
         margin-right:5px;
         padding:5px;
     }
+    .TabStop A
+    {
+        margin:1px;
+    }
     .TabStopSelected, .TabOptions
     {
         background-color:white;
