@@ -8,6 +8,7 @@ $(document).ready(function() {
     SelectTab();
     LoadKmlMaps();
     createData();
+    FloatingInfoBoxHide();
 });
 function createData(){
 	var args="arg1="+encodeURIComponent(SelectedTabName());
@@ -92,6 +93,7 @@ function DrawMap() {
     _elt_array = [];
 
     $("#notepad").html("");
+    FloatingInfoBoxHide();
 
     var paper = Raphael("notepad", width + 1, height + 1);
     for (i = 0; i < _kmlmap.length; i++) {
@@ -226,6 +228,7 @@ function DrawSideBySide() {
     _elt_array = [];
 
     $("#notepad").html("");
+    FloatingInfoBoxHide();
 
     var paper = Raphael("notepad", width + 1, height + 1);
     x = 100;
@@ -254,7 +257,7 @@ function DrawSideBySide() {
         elt = paper.path(pathstr).attr({stroke: Raphael.getColor(), 'stroke-width':2 });;
         _elt_array[_elt_array.length] = new Array(elt, b);
         elt.mouseover(function(event) {
-            DoSideBySideMouseOver(this);
+            DoSideBySideMouseOver(this, event );
         });        
     }
 }
@@ -267,7 +270,7 @@ function GetSeriesName(idx) {
     return "Public Library";                
 }
 
-function DoSideBySideMouseOver(elt) {
+function DoSideBySideMouseOver(elt, event ) {
     var i, pair, b;
     for (i = 0; i < _elt_array.length; i++) {
         pair = _elt_array[i];
@@ -276,11 +279,18 @@ function DoSideBySideMouseOver(elt) {
             if (b == null)
                 Sayuser(pair[1]);
             else
-                Sayuser(b[0] + " " + b[2] + "% " + b[3] + "% " + b[4] + "%" );
+                FloatingInfoBox(event.x + 20, event.y, b[0] + " " + b[2] + "% " + b[3] + "% " + b[4] + "%" );
             return;
         }
     }
     Sayuser("Looked through " + _elt_array.length + " elements");
+}
+
+function FloatingInfoBox(x, y, str) {
+    $("#FloatingInfoBox").text(str).show().css({ top: y, left:x });
+}
+function FloatingInfoBoxHide() {
+    $("#FloatingInfoBox").hide();
 }
 function CalcSideBySideY(val, min, max) {
     var ratio = ((1.0 * val) - min) / (max - min);

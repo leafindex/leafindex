@@ -46,6 +46,17 @@
     {
     
     }
+    #FloatingInfoBox
+    {
+        position:absolute;
+        padding:2px;
+        border:solid 1px #a659aa;
+        color:#a659aa;
+        font-size:0.8em;
+        top:0px;
+        left:0px;
+        background-color:#ffefd1;
+    }
     </style>
 </head>
 <body>
@@ -111,7 +122,9 @@
     
     <div style="height:5px;"></div>
     <div id="notepad"></div>
+    <div id="FloatingInfoBox">FloatingInfoBox</div>
     </div>
+    
     </form>
 </body>
 </html>
