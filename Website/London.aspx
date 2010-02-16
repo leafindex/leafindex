@@ -36,10 +36,15 @@
     {   
         border-bottom:solid 1px #a659aa;
         border-left:solid 1px #a659aa;
+        padding:2px 5px 2px 5px;
         display: none;
     }
     .OptionDdl
     {
+    }
+    .Explanation
+    {
+    
     }
     </style>
 </head>
@@ -79,7 +84,9 @@
     </select>
 
     <a href="javascript:ShowColumn(2);">Number of Offences</a>
-    <a href="javascript:ShowColumn(3);">per 1,000 Population</a>
+    <a href="javascript:ShowColumn(3);">per 1,000 Population</a><br />
+    <span class="Explanation">Counts and rates of crime at local authority level for England and Wales, 2002 to 2009.
+    <a target="_blank" href="http://www.homeoffice.gov.uk/rds/soti.html">More...</a></span>
     </div>
     <div id="OptionsArts" class="TabOptions" >
     <select id="ddlArtType" class="OptionDdl"> 
@@ -87,12 +94,17 @@
 	    <option selected="selected">Museum or Gallery</option> 
 	    <option>Public Library</option> 
     </select>    
+    <span class="Explanation">The percentage of adults in a borough who have used a public library service, visited a museum or gallery, or attended / participated in an arts activity in the past 12 months.
+    <a target="_blank" href="http://data.london.gov.uk/datastore/package/use-public-libraries-visits-museums-and-galleries-and-engagement-arts">More...</a></span>
     </div>
     <div id="OptionsBegging" class="TabOptions" >
     <select id="ddlBeggingYear" class="OptionDdl">
         <option>2008</option>
         <option selected="selected">2009</option>
-    </select>            
+    </select>  
+    <br /> 
+    <span class="Explanation">Count of begging incidents recorded by British Transport Police.
+    <a target="_blank" href="http://data.london.gov.uk/datastore/package/begging-incidents-recorded-british-transport-police">More...</a></span>           
     </div>
     
     <div style="height:5px;"></div>

@@ -24,6 +24,7 @@ namespace Website.handler
             string data_set_name = context.Request["arg1"] ?? "";
             string arg2 = context.Request["arg2"] ?? "";
             string arg3 = context.Request["arg3"] ?? "";
+            string fmt = context.Request["fmt"] ?? "";
 
             if (String.Compare(data_set_name, "Help", true) == 0)
             {
@@ -41,7 +42,10 @@ namespace Website.handler
             else
                 dt = GetArtsData(arg2);
 
-            context.Response.ContentType = "application/json; charset=utf-8";
+            if( fmt.ToUpper().StartsWith( "T" ) )
+                context.Response.ContentType = "text/plain";
+            else
+                context.Response.ContentType = "application/json; charset=utf-8";
             context.Response.Write(GetJSONString(dt));
         }
 
@@ -54,9 +58,36 @@ namespace Website.handler
 
         private DataTable GetArtsData(string arttype )
         {
+            const string FIGURE_COLUMN = "Percentage";
+            if (arttype == "all")
+            {
+                DataTable dt1 = GetArtsData("Arts Event or Activity");
+                DataTable dt2 = GetArtsData("Public Library");
+                DataTable dt3 = GetArtsData("Museum or Gallery");
+                dt1.Columns.Add(new DataColumn("Fig01", dt2.Columns[FIGURE_COLUMN].DataType));
+                dt1.Columns.Add(new DataColumn("Fig02", dt3.Columns[FIGURE_COLUMN].DataType));
+                PopulateTable(dt1, "Fig01", dt2, FIGURE_COLUMN);
+                PopulateTable(dt1, "Fig02", dt3, FIGURE_COLUMN);
+                return dt1;
+            }
             if (arttype == "") arttype = "Public Library";
             Mensa m = new Mensa();
             return m.LondonArtsEngagement(arttype).Tables[0];
+        }
+
+        private void PopulateTable(DataTable dt1, string colname1, DataTable dt2, string colname2 )
+        {
+            foreach (DataRow dr1 in dt1.Rows)
+            {
+                foreach (DataRow dr2 in dt2.Rows)
+                {
+                    if (dr1[0].ToString() == dr2[0].ToString())
+                    {
+                        dr1[colname1] = dr2[colname2];
+                        break;
+                    }
+                }
+            }
         }
 
         private DataTable GetCrimeData( string crime, string year )
@@ -114,7 +145,7 @@ namespace Website.handler
 			decimal d;
 
             StringBuilder sb = new StringBuilder();
-            sb.Append("[");
+            sb.AppendLine("[");
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -142,7 +173,7 @@ namespace Website.handler
 					s = (j > 1 && decimal.TryParse(s, out d)) ? Convert.ToInt32(d).ToString() : AddQuotes(s);
 					sb.Append(String.Format("{0} : {1}", AddQuotes(column_name), s));
                 }
-                sb.Append(" }");
+                sb.AppendLine(" }");
             }
             sb.Append("]");
             return sb.ToString();
