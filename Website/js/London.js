@@ -238,6 +238,7 @@ function DrawSideBySide() {
         
         x += series_width;
     }
+    Raphael.getColor.reset();
     for (bidx = 0; bidx < _borough_data.length; bidx++) {
         x = 100;
         b = _borough_data[bidx];
