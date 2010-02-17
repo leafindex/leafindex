@@ -72,8 +72,7 @@
     </div>
     <div id="OptionsCrimes" class="TabOptions" >
     <select id="ddlCrime" class="OptionDdl"> 
-        <option selected="selected">Total</option> 
-	    <option>Against Vehicles</option> 
+	    <option selected="selected">Against Vehicles</option> 
 	    <option>Burglary</option> 
 	    <option>Criminal Damage</option> 
 	    <option>Drug</option> 
@@ -83,6 +82,7 @@
 	    <option>Robbery</option> 
 	    <option>Sexual</option> 
 	    <option>Violence Against The Person</option> 
+        <option>Total</option> 
     </select> 
     <select id="ddlYear" class="OptionDdl"> 
 	    <option>2002/03</option> 
@@ -95,7 +95,9 @@
     </select>
 
     <a href="javascript:ShowColumn(2);">Number of Offences</a>
-    <a href="javascript:ShowColumn(3);">per 1,000 Population</a><br />
+    <a href="javascript:ShowColumn(3);">per 1,000 Population</a>
+    <a href="javascript:DrawDistribution();">Distribution</a>
+    <br />
     <span class="Explanation">Counts and rates of crime at local authority level for England and Wales, 2002 to 2009.
     <a target="_blank" href="http://www.homeoffice.gov.uk/rds/soti.html">More...</a></span>
     </div>

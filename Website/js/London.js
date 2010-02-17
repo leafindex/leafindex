@@ -1,6 +1,7 @@
 ﻿var _elt_array;
 var _column_index = 2;
 var _borough_data;
+var _do_distribution = false;
 
 $(document).ready(function() {
     SetupTabLinks();
@@ -81,6 +82,7 @@ function SelectTab(tabname,getdata) {
 }
 
 function ShowColumn(idx) {
+    _do_distribution = false;
     _column_index = idx;
     DrawMap();
 }
@@ -89,6 +91,11 @@ function DrawMap() {
     var width, height, i, j, x, y, kmap, colour;
     width = 1000;
     height = 500;
+
+    if (_do_distribution && SelectedTabName() == "Crimes") {
+        DrawDistribution();
+        return;
+    }
 
     _elt_array = [];
 
@@ -187,6 +194,127 @@ function Sayuser(str) {
     $("#lblSayuser").text(str);
 }
 
+var DIST_COL0 = 2;
+var DIST_COL1 = 3;
+
+function DrawDistribution() {
+    var stats0, stats1;
+    var width, height, x, series_count, idx, series_width, bidx, b, pathstr, elt, bcolour, left_margin, right_margin;
+
+    stats0 = GetPopStatsFromArrays(_borough_data, DIST_COL0);
+    stats1 = GetPopStatsFromArrays(_borough_data, DIST_COL1);
+    _do_distribution = true;
+    
+    width = 1000;
+    height = 500;
+    
+    left_margin = 80;   
+    right_margin = 180; 
+
+    _elt_array = [];
+
+    $("#notepad").html("");
+    FloatingInfoBoxHide();
+
+    var paper = Raphael("notepad", width + 1, height + 1);
+    MakeYAxisTicks(paper, stats1, 400, 100, left_margin );
+    MakeXAxisTicks(paper, stats0, left_margin, width - right_margin, 400);
+
+    for (bidx = 0; bidx < _borough_data.length; bidx++) {
+        b = _borough_data[bidx];
+        bcolour = GetColour(bidx);
+
+        x = DistribPos(b[DIST_COL0], stats0, left_margin, width - right_margin);
+        y = DistribPos(b[DIST_COL1], stats1, 400, 100);
+        elt = paper.circle(x, y, 3).attr({ stroke: bcolour });
+        _elt_array[_elt_array.length] = new Array(elt, b);
+        elt.mouseover(function(event) {
+            DoDistribMouseOver(this, event);
+        });
+        elt = paper.text(width - right_margin / 2, 10 + bidx * (480 / _borough_data.length), b[0]).attr({ stroke: bcolour });
+        _elt_array[_elt_array.length] = new Array(elt, b);
+        elt.mouseover(function(event) {
+        DoDistribMouseOver(this, event);
+        });        
+    }
+}
+
+function DoDistribMouseOver(elt, event) {
+    var i, pair, b;
+    for (i = 0; i < _elt_array.length; i++) {
+        pair = _elt_array[i];
+        if (pair[0] == elt) {
+            b = pair[1];
+            if (b == null)
+                Sayuser(pair[1]);
+            else
+                FloatingInfoBox(event.x + 20, event.y, b[0] + " " + b[DIST_COL0] + " " + b[DIST_COL1] );
+            return;
+        }
+    }
+    Sayuser("Looked through " + _elt_array.length + " elements");
+}
+
+function MakeXAxisTicks(paper, stats, zero_pos, max_pos, margin) {
+    var pos0, pos1, pos, ticklen, gap;
+
+    ticklen = 5;
+    gap = 30;
+    pos0 = DistribPos(stats[MIN_IDX], stats, zero_pos, max_pos);
+    pos1 = DistribPos(stats[MAX_IDX], stats, zero_pos, max_pos);
+    paper.path(MakePathString(pos0, margin, pos1, margin ));
+
+    paper.text(pos0, margin + ticklen + gap, stats[MIN_IDX] + "\nMinimum");
+    paper.text(pos1, margin + ticklen + gap, stats[MAX_IDX] + "\nMaximum");
+
+    paper.path(MakePathString(pos0, margin + ticklen, pos0, margin));
+    paper.path(MakePathString(pos1, margin + ticklen, pos1, margin));
+
+    pos = DistribPos(stats[MEDIAN_IDX], stats, zero_pos, max_pos);
+    paper.path(MakePathString(pos, margin + ticklen, pos, margin));
+    paper.text(pos, margin + ticklen + gap, stats[MEDIAN_IDX] + "\nMedian");
+
+    pos = DistribPos(stats[LQ_IDX], stats, zero_pos, max_pos);
+    paper.path(MakePathString(pos, margin + ticklen, pos, margin));
+    paper.text(pos, margin + ticklen + gap, stats[LQ_IDX] + "\nLower\nQuartile");
+
+    pos = DistribPos(stats[UQ_IDX], stats, zero_pos, max_pos);
+    paper.path(MakePathString(pos, margin + ticklen, pos, margin));
+    paper.text(pos, margin + ticklen + gap, stats[UQ_IDX] + "\nUpper\nQuartile");
+}
+
+function MakeYAxisTicks(paper, stats, zero_pos, max_pos, margin) {
+    var pos0, pos1, pos, ticklen;
+
+    ticklen = 5;
+    pos0 = DistribPos(stats[MIN_IDX], stats, zero_pos, max_pos);
+    pos1 = DistribPos(stats[MAX_IDX], stats, zero_pos, max_pos);
+    paper.path(MakePathString(margin, pos0, margin, pos1));
+
+    paper.text(margin / 2, pos0, stats[MIN_IDX] + " Min");
+    paper.text(margin / 2, pos1, stats[MAX_IDX] + " Max");
+
+    paper.path(MakePathString(margin - ticklen, pos0, margin, pos0));
+    paper.path(MakePathString(margin - ticklen, pos1, margin, pos1));
+    
+    pos = DistribPos(stats[MEDIAN_IDX], stats, zero_pos, max_pos);
+    paper.path(MakePathString(margin - ticklen, pos, margin, pos));
+    paper.text(margin / 2, pos, stats[MEDIAN_IDX] + " Med");
+
+    pos = DistribPos(stats[LQ_IDX], stats, zero_pos, max_pos);
+    paper.path(MakePathString(margin - ticklen, pos, margin, pos));
+    paper.text(margin / 2, pos, stats[LQ_IDX] + " LQ");
+    
+    pos = DistribPos(stats[UQ_IDX], stats, zero_pos, max_pos);
+    paper.path(MakePathString(margin - ticklen, pos, margin, pos));
+    paper.text(margin / 2, pos, stats[UQ_IDX] + " UQ");
+} 
+
+function DistribPos(val, stats, zero_pos, max_pos) {
+    var ratio = val / stats[MAX_IDX];   //(val - stats[MIN_IDX]) / (stats[MAX_IDX] - stats[MIN_IDX]);
+    return Math.floor(zero_pos + ratio * (max_pos - zero_pos));
+}
+
 function ShowSideBySide(tabname) {
     Sayuser("SideBySide " + tabname);
     var args = "arg1=" + encodeURIComponent(tabname) + "&arg2=all";
@@ -214,10 +342,6 @@ function ShowSideBySide(tabname) {
 }
 
 function DrawSideBySide() {
-    var msg;
-    msg = _borough_data.length + " boroughs " + _borough_data[0].length + " data points";
-    Sayuser(msg);
-
     var width, height, x, series_count, idx, series_width, bidx, b, pathstr, elt, bcolour, left_margin, right_margin;
     width = 1000;
     height = 500;
@@ -263,7 +387,7 @@ function DrawSideBySide() {
             DoSideBySideMouseOver(this, event);
         });
         
-        elt = paper.path(pathstr).attr({ stroke: bcolour, 'stroke-width': 2 }); ;
+        elt = paper.path(pathstr).attr({ stroke: bcolour, 'stroke-width': 2 });
         _elt_array[_elt_array.length] = new Array(elt, b);
         elt.mouseover(function(event) {
             DoSideBySideMouseOver(this, event );
@@ -314,15 +438,15 @@ var colours = new Array(
     "#00ff00", "#00bb00", "#007700", //"#003300",
     "#0000ff", "#0000bb", "#000077", //"#000033",
 
-    "#ffff00", "#bbbb00", "#777700",
+    "#FF8C00", "#bbbb00", "#777700",
     "#ff00ff", "#bb00bb", "#770077",
     "#00ffff", "#00bbbb", "#007777",
 
-    "#ffff44", "#bbbb44", "#777744",
+    "#8B4513", "#bbbb44", "#777744",
     "#ff44ff", "#bb44bb", "#774477",
     "#44ffff", "#44bbbb", "#447777",
 
-    "#ffff88", "#bbbb88", "#777788",
+    "#8E388E", "#bbbb88", "#777788",
     "#ff88ff", "#bb88bb", "#778877",
     "#88ffff", "#88bbbb", "#887777",
 
@@ -332,4 +456,36 @@ var colours = new Array(
 function GetColour(i) {
     var idx = i % colours.length;
     return colours[idx];
+}
+
+// array comprising Min, Max, Mean, Median, LowerQuartile, UpperQuartile in that order
+var MIN_IDX = 0;
+var MAX_IDX = 1;
+var MEAN_IDX = 2;
+var MEDIAN_IDX = 3;
+var LQ_IDX = 4;
+var UQ_IDX = 5;
+
+function GetPopStatsFromArrays(dataset, column_idx) {
+    var i, array = [];
+    for (i = 0; i < dataset.length; i++)
+        array[i] = dataset[i][column_idx];
+    return GetPopStats(array);    
+}
+
+function GetPopStats(array) {
+    var i, total, result = new Array(0, 0, 0, 0, 0, 0);
+    if (array.length == 0)
+        return result;
+    var sorted_array = array.sort(function(a, b) { return a - b });
+    result[MIN_IDX] = sorted_array[0];
+    result[MAX_IDX] = sorted_array[sorted_array.length - 1];
+    result[MEDIAN_IDX] = sorted_array[Math.floor(sorted_array.length / 2)];
+    result[LQ_IDX] = sorted_array[Math.floor(sorted_array.length / 4)];
+    result[UQ_IDX] = sorted_array[Math.floor(sorted_array.length * 3 / 4)];
+    total = 0;
+    for (i = 0; i < sorted_array.length; i++)
+        total += sorted_array[i];
+    result[MEAN_IDX] = total / sorted_array.length;            
+    return result;
 }
