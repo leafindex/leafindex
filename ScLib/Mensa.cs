@@ -36,6 +36,32 @@ namespace ScLib
             string sql = "pr_rpt_crime_5_Begging '" + year + "'";
             return ExecuteDataSet(sql);
         }
+        public DataSet LondonSuicideData(string fact, string year)
+        {
+            return ExecuteDataSet(MakeSpCallTextArgs("pr_rpt_death_7_suicide", fact, year));
+        }
+        public DataSet LondonTourismData(string fact, string year)
+        {
+            return ExecuteDataSet(MakeSpCallTextArgs("pr_rpt_tourism_6_trips", fact, year ));
+        }
+        public DataSet LondonWasteData(string fact, string year)
+        {
+            return ExecuteDataSet(MakeSpCallTextArgs("pr_rpt_waste_8_reuse", fact, year));
+        }
+
+        private string MakeSpCallTextArgs( params string [] strs )
+        {
+            StringBuilder args = new StringBuilder();
+            for (int i = 1; i < strs.Length; i++)
+            {
+                if (args.Length > 0)
+                    args.Append(",");
+                args.Append("'" + strs[i] + "'");
+            }
+            return strs[0] + " " + args.ToString();
+        }
+
+
 
         public DataSet ExecuteDataSet(string sql)
         {

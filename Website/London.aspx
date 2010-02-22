@@ -66,6 +66,9 @@
     <span id="TabArts" class="TabStop"><a href="#">Arts</a></span>
     <span id="TabBegging" class="TabStop"><a href="#">Begging</a></span>
     <span id="TabCrimes" class="TabStop"><a href="#">Crimes</a></span>
+    <span id="TabSuicide" class="TabStop"><a href="#">Suicide</a></span>
+    <span id="TabTourism" class="TabStop"><a href="#">Tourism</a></span>
+    <span id="TabWaste" class="TabStop"><a href="#">Waste</a></span>
     <span id="lblSayuser"></span>
     <input type="hidden" id="hdnTabSelected" value="NotSet" runat="server" />
     
@@ -108,10 +111,12 @@
 	    <option>Public Library</option> 
     </select>    
     <a href="javascript:createData();">Map</a> 
-    <a href="javascript:ShowSideBySide('arts');">Side by Side</a>  
-    <span class="Explanation">The percentage of adults in a borough who have used a public library service, visited a museum or gallery, or attended / participated in an arts activity in the past 12 months.
+    <a href="javascript:ShowSideBySide('arts');">Side by Side</a> 
+    <br /> 
+    <span class="Explanation">The percentage of adults who have used a library, visited a museum/gallery, or attended/participated in an arts activity in the past 12 months.
     <a target="_blank" href="http://data.london.gov.uk/datastore/package/use-public-libraries-visits-museums-and-galleries-and-engagement-arts">More...</a></span>
     </div>
+    
     <div id="OptionsBegging" class="TabOptions" >
     <select id="ddlBeggingYear" class="OptionDdl">
         <option>2008</option>
@@ -122,6 +127,51 @@
     <a target="_blank" href="http://data.london.gov.uk/datastore/package/begging-incidents-recorded-british-transport-police">More...</a></span>           
     </div>
     
+    <div id="OptionsSuicide" class="TabOptions" >
+    <select id="Select1" class="OptionDdl">
+        <option selected="selected">Number of Deaths</option>
+        <option>Directly Standardised Rate of years lost</option>
+    </select>  
+    <select id="Select4" class="OptionDdl">
+        <option>2004-2006</option>
+        <option selected="selected">2005-2007</option>
+    </select>  
+    <br /> 
+    <span class="Explanation">Directly Standardised Rate of years lost due to suicide, based on those under age 75 and on the original underlying cause of death.
+    <a target="_blank" href="http://data.london.gov.uk/datastore/package/years-life-lost-due-suicide">More...</a></span>           
+    </div>
+    
+    <div id="OptionsTourism" class="TabOptions" >
+    <select id="Select2" class="OptionDdl">
+        <option>Day</option>
+        <option>Domestic staying</option>
+        <option>Overseas</option>
+    </select>  
+    <select id="Select5" class="OptionDdl">
+        <option>2004</option>
+        <option>2005</option>
+        <option>2006</option>
+        <option selected="selected">2007</option>
+    </select>  
+    <br /> 
+    <span class="Explanation">Borough-level estimates of tourism volume.
+    <a target="_blank" href="http://data.london.gov.uk/datastore/package/tourism-trips">More...</a></span>   
+    </div>
+    
+    <div id="OptionsWaste" class="TabOptions" >
+    <select id="Select3" class="OptionDdl">
+        <option>Number of charity shops</option>
+        <option>Number of reuse organisations</option>
+        <option selected="selected">Re-use activity weight (tonnes)</option>
+    </select>  
+    <select id="Select6" class="OptionDdl">
+        <option>2007</option>
+    </select>  
+    <br /> 
+    <span class="Explanation">Number of Re-Use Centres and their activity by weight - tonnes of furniture, appliances and IT equipment reused.
+    <a target="_blank" href="http://data.london.gov.uk/datastore/package/waste-re-use-centres">More...</a></span>   
+    </div>
+                
     <div style="height:5px;"></div>
     <div id="notepad"></div>
     <div id="FloatingInfoBox">FloatingInfoBox</div>

@@ -39,6 +39,12 @@ namespace Website.handler
                 dt = GetCrimeData(arg2, arg3);
             else if (String.Compare(data_set_name, "Begging", true) == 0)
                 dt = GetBeggingData(arg2);
+            else if (String.Compare(data_set_name, "Suicide", true) == 0)
+                dt = GetSuicideData(arg2,arg3);
+            else if (String.Compare(data_set_name, "Tourism", true) == 0)
+                dt = GetTourismData(arg2, arg3);
+            else if (String.Compare(data_set_name, "Waste", true) == 0)
+                dt = GetWasteData(arg2, arg3);
             else
                 dt = GetArtsData(arg2);
 
@@ -48,6 +54,23 @@ namespace Website.handler
                 context.Response.ContentType = "application/json; charset=utf-8";
             context.Response.Write(GetJSONString(dt));
         }
+
+        private DataTable GetSuicideData(string fact, string year)
+        {
+            Mensa m = new Mensa();
+            return m.LondonSuicideData(fact, year).Tables[0];
+        }
+        private DataTable GetTourismData(string fact, string year)
+        {
+            Mensa m = new Mensa();
+            return m.LondonTourismData(fact, year).Tables[0];
+        }
+        private DataTable GetWasteData(string fact, string year)
+        {
+            Mensa m = new Mensa();
+            return m.LondonWasteData(fact, year).Tables[0];
+        }
+
 
         private DataTable GetBeggingData(string year)
         {

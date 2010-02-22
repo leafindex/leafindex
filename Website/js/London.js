@@ -50,7 +50,7 @@ function SelectedTabName(){
 	return TabNameFromId($(".TabStopSelected","#Tabbing").attr("id"));
 }
 function SetupTabLinks(){
-	$("#TabArts,#TabBegging,#TabCrimes").click(function(){
+	$(".TabStop").click(function(){
 		SelectTab(TabNameFromId(this.id),true);
 		return false;
 	});
