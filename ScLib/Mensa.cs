@@ -18,8 +18,13 @@ namespace ScLib
 
         public DataSet LondonArtsEngagement(string arttype)
         {
+            string sql = "";
             string year = "2008/09";
-            string sql = "pr_rpt_arts_4_Engagement '" + arttype + "', '" + year + "'";
+            if (arttype == "all")
+                sql = MakeSpCallTextArgs("pr_rpt_arts_4_EngagementAll", year);
+            else
+                sql = MakeSpCallTextArgs("pr_rpt_arts_4_Engagement", arttype, year);
+            //string sql = "pr_rpt_arts_4_Engagement '" + arttype + "', '" + year + "'";
             return ExecuteDataSet(sql);
         }
         public DataSet LondonBoroughCrime3OffencesPerBorough( string crime, string year )

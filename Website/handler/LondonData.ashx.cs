@@ -81,18 +81,6 @@ namespace Website.handler
 
         private DataTable GetArtsData(string arttype )
         {
-            const string FIGURE_COLUMN = "Percentage";
-            if (arttype == "all")
-            {
-                DataTable dt1 = GetArtsData("Arts Event or Activity");
-                DataTable dt2 = GetArtsData("Museum or Gallery");
-                DataTable dt3 = GetArtsData("Public Library");
-                dt1.Columns.Add(new DataColumn("Fig01", dt2.Columns[FIGURE_COLUMN].DataType));
-                dt1.Columns.Add(new DataColumn("Fig02", dt3.Columns[FIGURE_COLUMN].DataType));
-                PopulateTable(dt1, "Fig01", dt2, FIGURE_COLUMN);
-                PopulateTable(dt1, "Fig02", dt3, FIGURE_COLUMN);
-                return dt1;
-            }
             if (arttype == "") arttype = "Public Library";
             Mensa m = new Mensa();
             return m.LondonArtsEngagement(arttype).Tables[0];
