@@ -200,12 +200,13 @@ var DIST_COL0 = 2;
 var DIST_COL1 = 3;
 
 function DrawDistribution() {
-    var stats0, stats1;
+    var pop, stats0, stats1;
     var width, height, x, series_count, idx, series_width, bidx, b, pathstr, elt, bcolour, left_margin, right_margin;
 
     RemoveCityIfNotSelected();
-    stats0 = new Population(_borough_data, DIST_COL0);
-    stats1 = new Population(_borough_data, DIST_COL1);
+    pop = Population(_borough_data);
+    stats0 = new pop(DIST_COL0);
+    stats1 = new pop(DIST_COL1);
     _do_distribution = true;
     
     width = 1000;
@@ -522,6 +523,44 @@ function GetColour(i) {
 //        + " " + pop.UpperQuartile() + " " + pop.MaxVal()  + " mean=" + pop.Mean() );
 //}
 
+var Population=function(dataset){
+  function array(column_idx){
+		var temparray = [];
+		for (var i = 0; i < dataset.length; i++){
+			temparray[i] = dataset[i][column_idx];
+		}
+		return temparray.sort(function(a, b) {return a - b;});
+	}
+	function p(column_idx){
+		this._array=array(column_idx);
+	}
+	p.prototype={
+		Mean: function(){
+			var total = 0;
+			for (var i = 0; i < this._array.length; i++){
+				total += this._array[i];
+			}
+			return total / this._array.length;
+		},
+		MinVal: function() {
+				return this._array[0];
+		},
+		MaxVal: function() {
+				return this._array[this._array.length - 1];
+		},
+		Median: function() {
+				return this._array[Math.floor(this._array.length / 2)];
+		},
+		LowerQuartile: function() {
+				return this._array[Math.floor(this._array.length / 4)];
+		},
+		UpperQuartile: function() {
+				return this._array[Math.floor(this._array.length * 3 / 4)];
+		}
+	};
+	return p;
+};
+/*
 function Population(dataset, column_idx) {
     var i, temparray, total;
     temparray = [];
@@ -552,3 +591,4 @@ function Population(dataset, column_idx) {
         return this._mean;
     }
 }
+*/
