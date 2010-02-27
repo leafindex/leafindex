@@ -202,6 +202,17 @@ function DrawDistribution() {
     var stats0, stats1;
     var width, height, x, series_count, idx, series_width, bidx, b, pathstr, elt, bcolour, left_margin, right_margin;
 
+    var do_city = $("#chkIncludeCity").is(':checked');
+    if (do_city == false) {
+        for (bidx = 0; bidx < _borough_data.length; bidx++) {
+            b = _borough_data[bidx];
+            if (b[1] == "00AA") {
+                _borough_data.splice(bidx, 1);
+                break;
+            }
+        }
+    }
+    
     stats0 = new Population(_borough_data, DIST_COL0);
     stats1 = new Population(_borough_data, DIST_COL1);
     _do_distribution = true;

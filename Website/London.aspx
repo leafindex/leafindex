@@ -100,6 +100,7 @@
     <a href="javascript:ShowColumn(2);">Number of Offences</a>
     <a href="javascript:ShowColumn(3);">per 1,000 Population</a>
     <a href="javascript:DrawDistribution();">Distribution</a>
+    <input type="checkbox" id="chkIncludeCity" checked="checked" /> include City of London
     <br />
     <span class="Explanation">Counts and rates of crime at local authority level for England and Wales, 2002 to 2009.
     <a target="_blank" href="http://www.homeoffice.gov.uk/rds/soti.html">More...</a></span>
