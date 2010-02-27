@@ -97,6 +97,7 @@ function DrawMap() {
         DrawDistribution();
         return;
     }
+    RemoveCityIfNotSelected();
 
     _elt_array = [];
 
@@ -182,7 +183,7 @@ function DoMouseOver(elt) {
         if (pair[0] == elt) {
             b = GetBoroughItem(pair[1]);
             if (b == null)
-                Sayuser(pair[1]);
+                Sayuser("");    // pair[1] + " not found" ); e.g. City of London excluded
             else
                 Sayuser(b[0] + " " + b[_column_index]);
             return;
@@ -202,17 +203,7 @@ function DrawDistribution() {
     var stats0, stats1;
     var width, height, x, series_count, idx, series_width, bidx, b, pathstr, elt, bcolour, left_margin, right_margin;
 
-    var do_city = $("#chkIncludeCity").is(':checked');
-    if (do_city == false) {
-        for (bidx = 0; bidx < _borough_data.length; bidx++) {
-            b = _borough_data[bidx];
-            if (b[1] == "00AA") {
-                _borough_data.splice(bidx, 1);
-                break;
-            }
-        }
-    }
-    
+    RemoveCityIfNotSelected();
     stats0 = new Population(_borough_data, DIST_COL0);
     stats1 = new Population(_borough_data, DIST_COL1);
     _do_distribution = true;
@@ -248,6 +239,21 @@ function DrawDistribution() {
         elt.mouseover(function(event) {
         DoDistribMouseOver(this, event);
         });        
+    }
+}
+
+function RemoveCityIfNotSelected() {
+    if (SelectedTabName() != "Crimes")
+        return;
+    var do_city = $("#chkIncludeCity").is(':checked');
+    if (do_city == false) {
+        for (bidx = 0; bidx < _borough_data.length; bidx++) {
+            b = _borough_data[bidx];
+            if (b[1] == "00AA") {
+                _borough_data.splice(bidx, 1);
+                return;
+            }
+        }
     }
 }
 
