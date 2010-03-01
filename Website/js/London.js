@@ -1,5 +1,4 @@
-﻿var _elt_array;
-var _column_index = 2;
+﻿var _column_index = 2;
 var _borough_data;
 var _do_distribution = false;
 
@@ -62,7 +61,8 @@ function SetupInputChanges(){
 	});
 }
 
-function SelectTab(tabname,getdata) {
+function SelectTab(tabname, getdata) {
+    _column_index = 2;
 		if(!tabname){
 			tabname=$("#hdnTabSelected").val();
 			if(tabname==="NotSet"){
@@ -89,7 +89,7 @@ function ShowColumn(idx) {
 }
 
 function DrawMap() {
-    var width, height, i, j, x, y, kmap, colour;
+    var width, height, i, j, x, y, kmap, colour, msg, b;
     width = 1000;
     height = 500;
 
@@ -98,8 +98,6 @@ function DrawMap() {
         return;
     }
     RemoveCityIfNotSelected();
-
-    _elt_array = [];
 
     $("#notepad").html("");
     FloatingInfoBoxHide();
@@ -110,10 +108,13 @@ function DrawMap() {
         for (j = 2; j < kmap.length; j++) {
             elt = paper.path(kmap[j]);
             elt.attr("fill", GetBoroughColour(kmap[1]));
-            _elt_array[_elt_array.length] = new Array(elt, kmap[1]);
-            elt.mouseover(function(event) {
-                DoMouseOver(this);
-            });
+
+            b = GetBoroughItem(kmap[1]);
+            if (b == null)
+                msg = "";
+            else
+                msg = b[0] + " " + b[_column_index];
+            elt.mouseover(function(str) { return function() { Sayuser(str); } } (msg));
         }
     }
     x = 400;
@@ -176,21 +177,7 @@ function GetStrengthColour(perc) {
     return "rgb(" + perc2 + "%," + perc2 + "%,100%)";
 }
 
-function DoMouseOver(elt) {
-    var i, pair, b;
-    for (i = 0; i < _elt_array.length; i++) {
-        pair = _elt_array[i];
-        if (pair[0] == elt) {
-            b = GetBoroughItem(pair[1]);
-            if (b == null)
-                Sayuser("");    // pair[1] + " not found" ); e.g. City of London excluded
-            else
-                Sayuser(b[0] + " " + b[_column_index]);
-            return;
-        }
-    }
-    Sayuser("Looked through " + _elt_array.length + " elements");
-}
+
 
 function Sayuser(str) {
     $("#lblSayuser").text(str);
@@ -201,7 +188,7 @@ var DIST_COL1 = 3;
 
 function DrawDistribution() {
     var pop, stats0, stats1;
-    var width, height, x, series_count, idx, series_width, bidx, b, pathstr, elt, bcolour, left_margin, right_margin;
+    var width, height, x, series_count, idx, series_width, bidx, b, pathstr, elt, bcolour, left_margin, right_margin, msg;
 
     RemoveCityIfNotSelected();
     pop = Population(_borough_data);
@@ -214,8 +201,6 @@ function DrawDistribution() {
     
     left_margin = 80;   
     right_margin = 180; 
-
-    _elt_array = [];
 
     $("#notepad").html("");
     FloatingInfoBoxHide();
@@ -230,16 +215,13 @@ function DrawDistribution() {
 
         x = DistribPos(b[DIST_COL0], stats0, left_margin, width - right_margin);
         y = DistribPos(b[DIST_COL1], stats1, 400, 100);
+
+        msg = b[0] + " " + b[DIST_COL0] + " " + b[DIST_COL1];
         elt = paper.circle(x, y, 3).attr({ stroke: bcolour });
-        _elt_array[_elt_array.length] = new Array(elt, b);
-        elt.mouseover(function(event) {
-            DoDistribMouseOver(this, event);
-        });
+        elt.mouseover(function(str) { return function(event) { FloatingInfoBox(event.pageX + 20, event.pageY, str); } } (msg));
+
         elt = paper.text(width - right_margin / 2, 10 + bidx * (480 / _borough_data.length), b[0]).attr({ stroke: bcolour });
-        _elt_array[_elt_array.length] = new Array(elt, b);
-        elt.mouseover(function(event) {
-        DoDistribMouseOver(this, event);
-        });        
+        elt.mouseover(function(str) { return function(event) { FloatingInfoBox(event.pageX + 20, event.pageY, str); } } (msg));
     }
 }
 
@@ -256,22 +238,6 @@ function RemoveCityIfNotSelected() {
             }
         }
     }
-}
-
-function DoDistribMouseOver(elt, event) {
-    var i, pair, b;
-    for (i = 0; i < _elt_array.length; i++) {
-        pair = _elt_array[i];
-        if (pair[0] == elt) {
-            b = pair[1];
-            if (b == null)
-                Sayuser(pair[1]);
-            else
-                FloatingInfoBox(event.x + 20, event.y, b[0] + " " + b[DIST_COL0] + " " + b[DIST_COL1] );
-            return;
-        }
-    }
-    Sayuser("Looked through " + _elt_array.length + " elements");
 }
 
 function MakeXAxisTicks(paper, stats, zero_pos, max_pos, margin) {
@@ -335,7 +301,6 @@ function DistribPos(val, stats, zero_pos, max_pos) {
 }
 
 function ShowSideBySide(tabname) {
-    Sayuser("SideBySide " + tabname);
     var args = "arg1=" + encodeURIComponent(tabname) + "&arg2=all";
     $.ajax({
         url: "./handler/LondonData.ashx",
@@ -361,7 +326,7 @@ function ShowSideBySide(tabname) {
 }
 
 function DrawSideBySide() {
-    var width, height, x, series_count, idx, series_width, bidx, b, pathstr, elt, bcolour, left_margin, right_margin;
+    var width, height, x, series_count, idx, series_width, bidx, b, pathstr, elt, bcolour, left_margin, right_margin, msg;
     width = 1000;
     height = 500;
     right_margin = 180;
@@ -369,8 +334,6 @@ function DrawSideBySide() {
 
     series_count = _borough_data[0].length - 2;
     series_width = (width - (left_margin + right_margin)) / (series_count - 1);
-
-    _elt_array = [];
 
     $("#notepad").html("");
     FloatingInfoBoxHide();
@@ -400,17 +363,13 @@ function DrawSideBySide() {
             pathstr += x + " " + CalcSideBySideY(b[2 + idx], GetMinValue(2 + idx), GetMaxValue(2 + idx));
             x += series_width;
         }
+
+        msg = b[0] + " " + b[2] + "% " + b[3] + "% " + b[4] + "%"
         elt = paper.text(width - right_margin / 2, 10 + bidx * (480 / _borough_data.length), b[0]).attr({ stroke: bcolour });
-        _elt_array[_elt_array.length] = new Array(elt, b);
-        elt.mouseover(function(event) {
-            DoSideBySideMouseOver(this, event);
-        });
-        
+        elt.mouseover(function(str) { return function(event) { FloatingInfoBox(event.pageX + 20, event.pageY, str); } } (msg));
+
         elt = paper.path(pathstr).attr({ stroke: bcolour, 'stroke-width': 2 });
-        _elt_array[_elt_array.length] = new Array(elt, b);
-        elt.mouseover(function(event) {
-            DoSideBySideMouseOver(this, event );
-        });        
+        elt.mouseover(function(str) { return function(event) { FloatingInfoBox(event.pageX + 20, event.pageY, str); } } (msg ));
     }
 }
 
@@ -420,22 +379,6 @@ function GetSeriesName(idx) {
     if (idx == 1)
         return "Museum or Gallery";
     return "Public Library";                
-}
-
-function DoSideBySideMouseOver(elt, event ) {
-    var i, pair, b;
-    for (i = 0; i < _elt_array.length; i++) {
-        pair = _elt_array[i];
-        if (pair[0] == elt) {
-            b = pair[1];
-            if (b == null)
-                Sayuser(pair[1]);
-            else
-                FloatingInfoBox(event.x + 20, event.y, b[0] + " " + b[2] + "% " + b[3] + "% " + b[4] + "%" );
-            return;
-        }
-    }
-    Sayuser("Looked through " + _elt_array.length + " elements");
 }
 
 function FloatingInfoBox(x, y, str) {
@@ -477,64 +420,18 @@ function GetColour(i) {
     return colours[idx];
 }
 
-// array comprising Min, Max, Mean, Median, LowerQuartile, UpperQuartile in that order
-//var MIN_IDX = 0;
-//var MAX_IDX = 1;
-//var MEAN_IDX = 2;
-//var MEDIAN_IDX = 3;
-//var LQ_IDX = 4;
-//var UQ_IDX = 5;
-
-//function GetPopStatsFromArrays(dataset, column_idx) {
-//    var i, array = [];
-//    for (i = 0; i < dataset.length; i++)
-//        array[i] = dataset[i][column_idx];
-//    return GetPopStats(array);    
-//}
-
-//function GetPopStats(array) {
-//    var i, total, result = new Array(0, 0, 0, 0, 0, 0);
-//    if (array.length == 0)
-//        return result;
-//    var sorted_array = array.sort(function(a, b) { return a - b });
-//    result[MIN_IDX] = sorted_array[0];
-//    result[MAX_IDX] = sorted_array[sorted_array.length - 1];
-//    result[MEDIAN_IDX] = sorted_array[Math.floor(sorted_array.length / 2)];
-//    result[LQ_IDX] = sorted_array[Math.floor(sorted_array.length / 4)];
-//    result[UQ_IDX] = sorted_array[Math.floor(sorted_array.length * 3 / 4)];
-//    total = 0;
-//    for (i = 0; i < sorted_array.length; i++)
-//        total += sorted_array[i];
-//    result[MEAN_IDX] = total / sorted_array.length;            
-//    return result;
-//}
-
-//function AJCTest() {
-//    var i = 0, test = [];
-//    test[i++] = new Array(1, 14);
-//    test[i++] = new Array(2, 27);
-//    test[i++] = new Array(3, 18);
-//    test[i++] = new Array(3, 10);
-//    test[i++] = new Array(3, 15);
-//    test[i++] = new Array(3, 19);
-//    test[i++] = new Array(3, 27);
-//    var pop = new Population(test, 1);
-//    Sayuser("AJCTest " + pop.MinVal() + " " + pop.LowerQuartile() + " " + pop.Median() 
-//        + " " + pop.UpperQuartile() + " " + pop.MaxVal()  + " mean=" + pop.Mean() );
-//}
-
 var Population=function(dataset){
-  function array(column_idx){
+  function ColumnToSortedArray(column_idx){
 		var temparray = [];
 		for (var i = 0; i < dataset.length; i++){
 			temparray[i] = dataset[i][column_idx];
 		}
 		return temparray.sort(function(a, b) {return a - b;});
 	}
-	function p(column_idx){
-		this._array=array(column_idx);
+	function PopPrototype(column_idx){
+	    this._array = ColumnToSortedArray(column_idx);
 	}
-	p.prototype={
+	PopPrototype.prototype = {
 		Mean: function(){
 			var total = 0;
 			for (var i = 0; i < this._array.length; i++){
@@ -558,7 +455,7 @@ var Population=function(dataset){
 				return this._array[Math.floor(this._array.length * 3 / 4)];
 		}
 	};
-	return p;
+	return PopPrototype;
 };
 /*
 function Population(dataset, column_idx) {
