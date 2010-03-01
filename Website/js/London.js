@@ -218,10 +218,10 @@ function DrawDistribution() {
 
         msg = b[0] + " " + b[DIST_COL0] + " " + b[DIST_COL1];
         elt = paper.circle(x, y, 3).attr({ stroke: bcolour });
-        elt.mouseover(function(str) { return function(event) { FloatingInfoBox(event.pageX + 20, event.pageY, str); } } (msg));
+        elt.mouseover(function(str) { return function(event) { FloatingInfoBox(event, str); } } (msg));
 
         elt = paper.text(width - right_margin / 2, 10 + bidx * (480 / _borough_data.length), b[0]).attr({ stroke: bcolour });
-        elt.mouseover(function(str) { return function(event) { FloatingInfoBox(event.pageX + 20, event.pageY, str); } } (msg));
+        elt.mouseover(function(str) { return function(event) { FloatingInfoBox(event, str); } } (msg));
     }
 }
 
@@ -366,10 +366,10 @@ function DrawSideBySide() {
 
         msg = b[0] + " " + b[2] + "% " + b[3] + "% " + b[4] + "%"
         elt = paper.text(width - right_margin / 2, 10 + bidx * (480 / _borough_data.length), b[0]).attr({ stroke: bcolour });
-        elt.mouseover(function(str) { return function(event) { FloatingInfoBox(event.pageX + 20, event.pageY, str); } } (msg));
+        elt.mouseover(function(str) { return function(event) { FloatingInfoBox(event, str); } } (msg));
 
         elt = paper.path(pathstr).attr({ stroke: bcolour, 'stroke-width': 2 });
-        elt.mouseover(function(str) { return function(event) { FloatingInfoBox(event.pageX + 20, event.pageY, str); } } (msg ));
+        elt.mouseover(function(str) { return function(event) { FloatingInfoBox(event, str); } } (msg ));
     }
 }
 
@@ -381,7 +381,14 @@ function GetSeriesName(idx) {
     return "Public Library";                
 }
 
-function FloatingInfoBox(x, y, str) {
+function FloatingInfoBox(event, str) {
+    var x, y;
+    x = event.pageX;
+    y = event.pageY;
+    if (x == null) {
+        x = event.x;
+        y = event.y;
+    }
     $("#FloatingInfoBox").text(str).show().css({ top: y, left:x });
 }
 function FloatingInfoBoxHide() {
