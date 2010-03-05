@@ -207,7 +207,9 @@ function DrawIsotype() {
     ia.AddIsotype(4, "./images/House2.PNG", w, h);
     ia.AddIsotype(5, "./images/House3.PNG", w, h);
     ia.AddIsotype(6, "./images/House4.PNG", w, h);
-    ia.Draw();    
+    ia.Draw();
+
+    Sayuser("Each house represents 5,000 households");
 }
 
 var DIST_COL0 = 2;
