@@ -185,6 +185,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="handler\LondonData.ashx" />
+    <Content Include="images\House0.png" />
+    <Content Include="images\House1.png" />
+    <Content Include="images\House2.png" />
+    <Content Include="images\House3.png" />
+    <Content Include="images\House4.png" />
+    <Content Include="js\Isotype.js" />
     <Content Include="js\MashThatStat.js" />
     <Content Include="MashThatStat.aspx" />
   </ItemGroup>
