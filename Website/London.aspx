@@ -11,6 +11,7 @@
     <script type="text/javascript" src="./js/raphael-min.js"></script>
     <%=MyScript %>
     <script type="text/javascript" src="./js/London.js"></script>
+    <script type="text/javascript" src="./js/Isotype.js"></script>
     <style type="text/css">
     .TabStopContainer
     {
@@ -65,6 +66,7 @@
     <div class="TabStopContainer">
     <span id="TabArts" class="TabStop"><a href="#">Arts</a></span>
     <span id="TabBegging" class="TabStop"><a href="#">Begging</a></span>
+    <span id="TabCars" class="TabStop"><a href="#">Cars</a></span>
     <span id="TabCrimes" class="TabStop"><a href="#">Crimes</a></span>
     <span id="TabSuicide" class="TabStop"><a href="#">Suicide</a></span>
     <span id="TabTourism" class="TabStop"><a href="#">Tourism</a></span>
@@ -140,6 +142,19 @@
     <br /> 
     <span class="Explanation">Directly Standardised Rate of years lost due to suicide, based on those under age 75 and on the original underlying cause of death.
     <a target="_blank" href="http://data.london.gov.uk/datastore/package/years-life-lost-due-suicide">More...</a></span>           
+    </div>
+
+    <div id="OptionsCars" class="TabOptions" >
+    <a href="javascript:ShowColumn(2);">No cars households</a>
+    <a href="javascript:ShowColumn(3);">One car</a>
+    <a href="javascript:ShowColumn(4);">Two cars</a>
+    <a href="javascript:ShowColumn(5);">Three cars</a>
+    <a href="javascript:ShowColumn(6);">Four or more cars</a>
+    <a href="javascript:DrawIsotype();">Isotype</a>
+    
+    &nbsp;<br /> 
+    <span class="Explanation">Census 2001 Key Statistics 17: Cars and Vans.
+    <a target="_blank" href="http://data.london.gov.uk/datastore/package/census-2001-key-statistics-17-cars-and-vans">More...</a></span>           
     </div>
     
     <div id="OptionsTourism" class="TabOptions" >

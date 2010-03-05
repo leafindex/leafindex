@@ -183,6 +183,33 @@ function Sayuser(str) {
     $("#lblSayuser").text(str);
 }
 
+function DrawIsotype() {
+    var width, height, w, h;
+    w = 17;
+    h = 25;
+    width = 1000;
+    height = _borough_data.length * (h + 2) + 20;
+    $("#notepad").html("");
+    FloatingInfoBoxHide();
+
+    var paper = Raphael("notepad", width, height);
+
+    var ia = new IsotypeArtist();
+    ia.SetData(_borough_data);
+    ia.SetPaper(paper, width, height);
+    ia.SetMaxRepeats(20);
+    ia.SetScale(5000);
+    ia.SetTextWidth(200);
+    ia.ShowKey(false);
+
+    ia.AddIsotype(2, "./images/House0.PNG", w, h);
+    ia.AddIsotype(3, "./images/House1.PNG", w, h);
+    ia.AddIsotype(4, "./images/House2.PNG", w, h);
+    ia.AddIsotype(5, "./images/House3.PNG", w, h);
+    ia.AddIsotype(6, "./images/House4.PNG", w, h);
+    ia.Draw();    
+}
+
 var DIST_COL0 = 2;
 var DIST_COL1 = 3;
 

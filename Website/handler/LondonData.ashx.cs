@@ -34,7 +34,7 @@ namespace Website.handler
             }
 
             Mensa.SetConnectionString(ConfigurationManager.ConnectionStrings["datasets"].ToString());
-            DataTable dt;
+            DataTable dt = new DataTable();
             if (String.Compare(data_set_name, "Crimes", true) == 0)
                 dt = GetCrimeData(arg2, arg3);
             else if (String.Compare(data_set_name, "Begging", true) == 0)
@@ -45,8 +45,10 @@ namespace Website.handler
                 dt = GetTourismData(arg2, arg3);
             else if (String.Compare(data_set_name, "Waste", true) == 0)
                 dt = GetWasteData(arg2, arg3);
-            else
+            else if (String.Compare(data_set_name, "Arts", true) == 0)
                 dt = GetArtsData(arg2);
+            else if (String.Compare(data_set_name, "Cars", true) == 0)
+                dt = GetCarsData();
 
             if( fmt.ToUpper().StartsWith( "T" ) )
                 context.Response.ContentType = "text/plain";
@@ -55,6 +57,53 @@ namespace Website.handler
             context.Response.Write(GetJSONString(dt));
         }
 
+        private DataTable GetCarsData()
+        {
+            DataTable result = new DataTable();
+            result.Columns.Add(new DataColumn("Code", typeof(string)));
+            result.Columns.Add(new DataColumn("Name", typeof(string)));
+            result.Columns.Add( new DataColumn( "Val0", typeof(int)));
+            result.Columns.Add( new DataColumn( "Val1", typeof(int)));
+            result.Columns.Add( new DataColumn( "Val2", typeof(int)));
+            result.Columns.Add( new DataColumn( "Val3", typeof(int)));
+            result.Columns.Add( new DataColumn( "Val4", typeof(int)));
+
+result.Rows.Add( "City of London","00AA",2691,1417,184,29,17 );
+result.Rows.Add( "Barking and Dagenham","00AB",25511,30279,9688,1441,354 );
+result.Rows.Add( "Barnet","00AC",33925,57039,28680,5648,1652 );
+result.Rows.Add( "Bexley","00AD",21217,41958,20986,4160,1130 );
+result.Rows.Add( "Brent","00AE",37287,42606,16207,3135,756 );
+result.Rows.Add( "Bromley","00AF",28950,57751,31154,6180,1831 );
+result.Rows.Add( "Camden","00AG",50946,33084,6280,984,309 );
+result.Rows.Add( "Croydon","00AH",41461,63286,27640,5066,1546 );
+result.Rows.Add( "Ealing","00AJ",37372,54259,21761,3742,889 );
+result.Rows.Add( "Enfield","00AK",31496,50201,22814,4586,1301 );
+result.Rows.Add( "Greenwich","00AL",37883,40160,12260,1976,509 );
+result.Rows.Add( "Hackney","00AM",48219,31876,5018,689,240 );
+result.Rows.Add( "Hammersmith and Fulham","00AN",36630,30461,7032,1058,257 );
+result.Rows.Add( "Haringey","00AP",42820,38005,9622,1374,349 );
+result.Rows.Add( "Harrow","00AQ",17972,34900,20789,4286,1165 );
+result.Rows.Add( "Havering","00AR",21374,42078,22131,4734,1405 );
+result.Rows.Add( "Hillingdon","00AS",20972,43116,25690,5225,1640 );
+result.Rows.Add( "Hounslow","00AT",24049,38920,16868,3316,841 );
+result.Rows.Add( "Islington","00AU",47413,29194,4795,670,209 );
+result.Rows.Add( "Kensington and Chelsea","00AW",39870,31041,6633,1184,418 );
+result.Rows.Add( "Kingston upon Thames","00AX",14621,29049,14336,2669,751 );
+result.Rows.Add( "Lambeth","00AY",60338,46080,10166,1446,417 );
+result.Rows.Add( "Lewisham","00AZ",45941,46679,12484,1831,477 );
+result.Rows.Add( "Merton","00BA",23775,38143,13803,2517,646 );
+result.Rows.Add( "Newham","00BB",44866,37811,7789,1089,266 );
+result.Rows.Add( "Redbridge","00BC",24198,43047,20140,3856,1047 );
+result.Rows.Add( "Richmond upon Thames","00BD",18047,37723,16871,2811,694 );
+result.Rows.Add( "Southwark","00BE",54940,40947,8454,1120,345 );
+result.Rows.Add( "Sutton","00BF",17790,35264,18470,3750,1128 );
+result.Rows.Add( "Tower Hamlets","00BG",44582,28997,4250,545,156 );
+result.Rows.Add( "Waltham Forest","00BH",34975,39562,12512,2177,562 );
+result.Rows.Add( "Wandsworth","00BJ",47066,51440,14437,2164,546 );
+result.Rows.Add( "Westminster","00BK",51452,32108,6241,1012,359 );
+
+            return result;
+        }
         private DataTable GetSuicideData(string fact, string year)
         {
             Mensa m = new Mensa();
