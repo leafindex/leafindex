@@ -23,11 +23,11 @@
     ia.ShowKey(false);
     w = 17;
     
-    ia.AddIsotype(1, "./images/House.PNG", w, h);
-    ia.AddIsotype(2, "./images/House1.PNG", w, h);
-    ia.AddIsotype(3, "./images/House2.PNG", w, h);
-    ia.AddIsotype(4, "./images/House3.PNG", w, h);
-    ia.AddIsotype(5, "./images/House4.PNG", w, h);
+    ia.AddIsotype(1, "./images/House0a.PNG", w, h);
+    ia.AddIsotype(2, "./images/House1a.PNG", w, h);
+    ia.AddIsotype(3, "./images/House2a.PNG", w, h);
+    ia.AddIsotype(4, "./images/House3a.PNG", w, h);
+    ia.AddIsotype(5, "./images/House4a.PNG", w, h);
     ia.Draw();
 }
 
