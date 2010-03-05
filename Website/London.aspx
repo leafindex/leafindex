@@ -13,30 +13,49 @@
     <script type="text/javascript" src="./js/London.js"></script>
     <script type="text/javascript" src="./js/Isotype.js"></script>
     <style type="text/css">
+    .TabRemainder
+    {
+        border-top:solid 1px white;
+        border-left:solid 1px #a659aa;  
+        padding:6px 10px 6px 10px;
+        float:left;
+    }
     .TabStopContainer
     {
-        padding-bottom:5px;
+        list-style:none;
+        margin:0;
+        padding:0 0 5px 0;
+    }
+    #TabContent
+    {
+        border:solid 1px #a659aa;
+        margin-top:-1px;
     }
     .TabStop { 
-        background-color:#cccccc;
+        background-color:#eeeeee;
         border-left:solid 1px #a659aa;
-        border-right:solid 1px #a659aa;
         border-top:solid 1px #a659aa;
-        margin-right:5px;
-        padding:5px;
+        border-bottom:solid 1px #a659aa;
+        padding:6px 10px 6px 10px;
+        float:left;
+        margin:0px;
+        display:list-item;
+        list-style:none;
     }
     .TabStop A
     {
         margin:1px;
     }
-    .TabStopSelected, .TabOptions
+    .TabStopSelected
     {
         background-color:white;
+        border-bottom:solid 1px white;
+        border-top:solid 4px  #a659aa;
+        border-left:solid 1px #a659aa;
+        padding-top:3px;
     }
     .TabOptions
     {   
-        border-bottom:solid 1px #a659aa;
-        border-left:solid 1px #a659aa;
         padding:2px 5px 2px 5px;
         display: none;
     }
@@ -63,18 +82,20 @@
 <body>
     <form id="form1" runat="server">
     <div id="Tabbing">
-    <div class="TabStopContainer">
-    <span id="TabArts" class="TabStop"><a href="#">Arts</a></span>
-    <span id="TabBegging" class="TabStop"><a href="#">Begging</a></span>
-    <span id="TabCars" class="TabStop"><a href="#">Cars</a></span>
-    <span id="TabCrimes" class="TabStop"><a href="#">Crimes</a></span>
-    <span id="TabSuicide" class="TabStop"><a href="#">Suicide</a></span>
-    <span id="TabTourism" class="TabStop"><a href="#">Tourism</a></span>
-    <span id="TabWaste" class="TabStop"><a href="#">Waste</a></span>
-    <span id="lblSayuser"></span>
-    <input type="hidden" id="hdnTabSelected" value="NotSet" runat="server" />
+    <ul class="TabStopContainer">
+        <li id="TabArts" class="TabStop"><a href="#">Arts</a></li>
+        <li id="TabBegging" class="TabStop"><a href="#">Begging</a></li>
+        <li id="TabCars" class="TabStop"><a href="#">Cars</a></li>
+        <li id="TabCrimes" class="TabStop"><a href="#">Crimes</a></li>
+        <li id="TabSuicide" class="TabStop"><a href="#">Suicide</a></li>
+        <li id="TabTourism" class="TabStop"><a href="#">Tourism</a></li>
+        <li id="TabWaste" class="TabStop"><a href="#">Waste</a></li>
+        <li class="TabRemainder"><span id="lblSayuser"></span>&nbsp;</li>
+    </ul>       
+    <div class="ClearBoth"></div>
+    <div id="TabContent">
     
-    </div>
+    <input type="hidden" id="hdnTabSelected" value="NotSet" runat="server" />
     <div id="OptionsCrimes" class="TabOptions" >
     <select id="ddlCrime" class="OptionDdl"> 
 	    <option selected="selected">Against Vehicles</option> 
@@ -187,11 +208,12 @@
     <span class="Explanation">Number of Re-Use Centres and their activity by weight - tonnes of furniture, appliances and IT equipment reused.
     <a target="_blank" href="http://data.london.gov.uk/datastore/package/waste-re-use-centres">More...</a></span>   
     </div>
+    </div>
+    </div>
                 
     <div style="height:5px;"></div>
     <div id="notepad"></div>
     <div id="FloatingInfoBox">FloatingInfoBox</div>
-    </div>
     
     </form>
 </body>
