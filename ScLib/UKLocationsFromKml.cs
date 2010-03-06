@@ -142,6 +142,9 @@ namespace ScLib
         public double MinY { get { return _MinY; } }
         public double MaxY { get { return _MaxY; } }
 
+        public double MidX { get { return (_MinX + _MaxX) / 2; } }
+        public double MidY { get { return (_MinY + _MaxY) / 2; } }
+
         public Extent()
         {
             _MinX = _MaxX = _MinY = _MaxY = double.MinValue;
@@ -187,6 +190,17 @@ namespace ScLib
             double result1 = width / (_MaxX - _MinX);
             double result2 = height / ( (_MaxY - _MinY) * KmlLoop.LATITUDE_53_MULTIPLIER );
             return result1 < result2 ? result1 : result2;
+        }
+
+        public int CalculateX(int width, int height, double x)
+        {
+            return KmlLoop.Scale(CalculateScaleFactor(width, height), x, _MinX, _MaxY);
+
+        }
+
+        public int CalculateY(int width, int height, double y)
+        {
+            return KmlLoop.ScaleInvertWithMultiplier(CalculateScaleFactor(width, height), y, _MinY, _MaxY);
         }
     }
 
@@ -343,14 +357,16 @@ namespace ScLib
         private string MakeSVGPoint(double scale_factor, Extent extent, double x, double y)
         {
             return Scale(scale_factor, x, extent.MinX, extent.MaxX) + " "
-                + ScaleInvert(scale_factor, y * LATITUDE_53_MULTIPLIER,
-                    extent.MinY * LATITUDE_53_MULTIPLIER, extent.MaxY * LATITUDE_53_MULTIPLIER);
+                + ScaleInvertWithMultiplier(scale_factor, y, extent.MinY, extent.MaxY );
         }
-        private int ScaleInvert(double scale_factor, double value, double minvalue, double maxvalue)
+        public static int ScaleInvertWithMultiplier(double scale_factor, double value, double minvalue, double maxvalue)
         {
+            value *= LATITUDE_53_MULTIPLIER;
+            minvalue *= LATITUDE_53_MULTIPLIER;
+            maxvalue *= LATITUDE_53_MULTIPLIER;
             return (int)(scale_factor * (maxvalue - value) + 0.5);
         }
-        private int Scale(double scale_factor, double value, double minvalue, double maxvalue)
+        public static int Scale(double scale_factor, double value, double minvalue, double maxvalue)
         {
             return (int)(scale_factor * (value - minvalue) + 0.5);
         }

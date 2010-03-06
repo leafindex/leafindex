@@ -125,6 +125,10 @@ namespace Website
                 b.AppendLine("_kmlmap" + mapcount + "[i++] = '" + p.Name +  "';");
                 b.AppendLine("_kmlmap" + mapcount + "[i++] = '" + DistrictCodes[i] + "';");
 
+                int midx = combined.MyExtent.CalculateX(width, height, p.MyExtent.MidX);
+                int midy = combined.MyExtent.CalculateY(width, height, p.MyExtent.MidY);
+                b.AppendLine("_kmlmap" + mapcount + "[i++] = new Array( " + midx + "," + midy + ");");
+
                 List<string> paths = p.MakeSVGPathStrings(width, height, combined.MyExtent);
                 foreach (string str in paths)
                     b.AppendLine("_kmlmap" + mapcount + "[i++] = '" + str + "';");

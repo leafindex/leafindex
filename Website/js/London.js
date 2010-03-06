@@ -97,6 +97,9 @@ function DrawMap() {
         DrawDistribution();
         return;
     }
+    if (SelectedTabName() == "Commuters") {
+        _column_index = $("#ddlGoingTo").val();
+    }
     RemoveCityIfNotSelected();
 
     $("#notepad").html("");
@@ -105,7 +108,7 @@ function DrawMap() {
     var paper = Raphael("notepad", width + 1, height + 1);
     for (i = 0; i < _kmlmap.length; i++) {
         kmap = _kmlmap[i];
-        for (j = 2; j < kmap.length; j++) {
+        for (j = 3; j < kmap.length; j++) {
             elt = paper.path(kmap[j]);
             elt.attr("fill", GetBoroughColour(kmap[1]));
 
@@ -210,6 +213,72 @@ function DrawIsotype() {
     ia.Draw();
 
     Sayuser("Each house represents 5,000 households");
+}
+
+function DrawFlows( bidx ) {
+    var width, height, i, j, x, y, kmap, colour, msg, b, fromboro, minval, maxval, linewidth;
+    width = 1000;
+    height = 500;
+
+    $("#notepad").html("");
+    FloatingInfoBoxHide();
+
+    var paper = Raphael("notepad", width + 1, height + 1);
+    for (i = 0; i < _kmlmap.length; i++) {
+        kmap = _kmlmap[i];
+        msg = i;
+        if (i == bidx) {
+            Sayuser("Commuter numbers from " + kmap[0]);
+            colour = "yellow";
+        }
+        else {
+            colour = "white";
+        }
+        for (j = 3; j < kmap.length; j++) {
+            elt = paper.path(kmap[j]).attr( { fill:colour, stroke:"#ccc" } );
+            elt.click(function(arg) { return function() { DrawFlows(arg); } } (i));
+        }
+        /*elt = paper.circle(kmap[2][0], kmap[2][1], 4).attr("fill", colour);
+        elt.click(function(arg) { return function() { DrawFlows(arg); } } (i)); */
+    }
+    b = _borough_data[bidx];
+    kmap = _kmlmap[bidx];
+    x = kmap[2][0];
+    y = kmap[2][1];
+
+
+    minval = maxval = null;
+    for (i = 0; i < _kmlmap.length; i++) {
+        if (i == bidx)
+            continue;
+        if (minval == null || b[2 + i] < minval)
+            minval = b[2 + i];
+        if (maxval == null || b[2 + i] > maxval)
+            maxval = b[2 + i];
+    }
+    
+    for (i = 0; i < _kmlmap.length; i++) {
+        if (i == bidx)
+            continue;
+
+        perc = 100 * (b[2 + i] - minval) / (maxval - minval);
+        linewidth = 1 + ( 5 * perc / 100 );
+        perc = 50 + perc / 2;
+        colour = GetStrengthColour(Math.floor(perc + 0.5));
+            
+        kmap = _kmlmap[i];
+        elt = paper.path(MakePathString(x, y, kmap[2][0], kmap[2][1])).attr({ stroke:colour, "stroke-width":linewidth } );
+        msg = b[0] + " to " + kmap[0] + " : " + b[2 + i];
+        elt.mouseover(function(arg) { return function() { Sayuser(arg); } }(msg));
+    }
+    for (i = 0; i < _kmlmap.length; i++) {
+        if (i == bidx)
+            continue;
+        kmap = _kmlmap[i];
+        /*paper.path(MakePathString(x, y, kmap[2][0], kmap[2][1]));*/
+        elt = paper.text(kmap[2][0], kmap[2][1], b[2 + i]);
+        elt.click(function(arg) { return function() { DrawFlows(arg); } } (i));
+    }
 }
 
 var DIST_COL0 = 2;

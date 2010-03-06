@@ -86,6 +86,7 @@
         <li id="TabArts" class="TabStop"><a href="#">Arts</a></li>
         <li id="TabBegging" class="TabStop"><a href="#">Begging</a></li>
         <li id="TabCars" class="TabStop"><a href="#">Cars</a></li>
+        <li id="TabCommuters" class="TabStop"><a href="#">Commuters</a></li>
         <li id="TabCrimes" class="TabStop"><a href="#">Crimes</a></li>
         <li id="TabSuicide" class="TabStop"><a href="#">Suicide</a></li>
         <li id="TabTourism" class="TabStop"><a href="#">Tourism</a></li>
@@ -176,6 +177,68 @@
     &nbsp;<br /> 
     <span class="Explanation">Census 2001 Key Statistics 17: Cars and Vans.
     <a target="_blank" href="http://data.london.gov.uk/datastore/package/census-2001-key-statistics-17-cars-and-vans">More...</a></span>           
+    </div>
+    
+    <div id="OptionsCommuters" class="TabOptions">
+    Going to
+        <select id="ddlGoingTo">
+            <option value="2">City of London</option>	
+            <option value="3">Barking and Dagenham</option>	
+            <option value="4">Barnet</option>
+            <option value="5">Bexley</option>
+            <option value="6">Brent</option>
+            <option value="7">Bromley</option>
+            <option value="8">Camden</option>
+            <option value="9">Croydon</option>
+            <option value="10">Ealing</option>
+            <option value="11">Enfield</option>
+            <option value="12">Greenwich</option>
+            <option value="13">Hackney</option>
+            <option value="14">Hammersmith and Fulham</option>
+            <option value="15">Haringey</option>
+            <option value="16">Harrow</option>
+            <option value="17">Havering</option>
+            <option value="18">Hillingdon</option>
+            <option value="19">Hounslow</option>
+            <option value="20">Islington</option>
+            <option value="21">Kensington and Chelsea</option>
+            <option value="22">Kingston upon Thames</option>	
+            <option value="23">Lambeth</option>
+            <option value="24">Lewisham</option>
+            <option value="25">Merton</option>
+            <option value="26">Newham</option>
+            <option value="27">Redbridge</option>
+            <option value="28">Richmond upon Thames</option>	
+            <option value="29">Southwark</option>	
+            <option value="30">Sutton</option>	
+            <option value="31">Tower Hamlets</option>	
+            <option value="32">Waltham Forest</option>	
+            <option value="33">Wandsworth</option>	
+            <option value="34">Westminster</option>	
+            <option value="35">East</option>	
+            <option value="36">East Midlands</option>	
+            <option value="37">North East</option>	
+            <option value="38">North West</option>	
+            <option value="39">South East</option>	
+            <option value="40">South West</option>	
+            <option value="41">Wales</option>	
+            <option value="42">West Midlands</option>	
+            <option value="43">Yorkshire and the Humber</option>	
+            <option value="44">Northern Ireland</option>	
+            <option value="45">Scotland</option>	
+            <option value="46">Offshore</option>	
+            <option value="47">Outside UK</option>	
+            <option value="48">Residents commuting (excludes home-workers)</option>	
+            <option value="49">Within Borough (includes home-workers)</option>	
+            <option value="50">Within Borough (excludes home-workers)</option>	
+            <option value="51" selected="selected">Into area (A)</option>	
+            <option value="52">Out of area (B)</option>
+            <option value="52">In-Out (A-B)</option>
+        </select>
+        <a href="javascript:DrawFlows(27);">Flows</a>
+        <br />
+    <span class="Explanation">Commuter movements of Londoners by borough, from 2001 Census.
+    <a target="_blank" href="http://data.london.gov.uk/datastore/package/borough-commuting-patterns">More...</a></span>           
     </div>
     
     <div id="OptionsTourism" class="TabOptions" >
